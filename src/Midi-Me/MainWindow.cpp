@@ -1,16 +1,22 @@
 // Includes
 #include "MainWindow.h"
-#include <Converter/ConverterManager.h>
-#include <Converter/AxisConverter.h>
+#include <libMidi-Me/DeviceManager.h>
+#include <libMidi-Me/Chain.h>
 using namespace MidiMe;
 
 #include <QtCore/QSettings>
 #include <QtGui/QMessageBox>
 #include <QtGui/QInputDialog>
 #include <QtCore/QTimer>
+#include <QtGui/QCloseEvent>
+#include <QtGui/QFileDialog>
+
+// TEMP
+#include "InputDeviceWidget.h"
 
 
 //! The (hardcoded) maximum number of recently opened files
+//! @todo Make this a setting
 static const unsigned int s_numRecentFiles = 5;
 
 
@@ -19,14 +25,15 @@ static const unsigned int s_numRecentFiles = 5;
 ******************************/
 
 MainWindow::MainWindow()
-: m_pConverter(0), m_timerId(0)
+: m_pChain(0), m_timerId(0)
 {
 	createWidgets();
-	loadSettings();
+	loadWindowSettings();
 
 	// Create the converter
-	m_pConverter = new ConverterManager();
+	m_pChain = new Chain();
 
+#if 0
 	// TEMP: hardcoded settings
 	AxisConverter *pAxis = m_pConverter->addAxisConverter(2);
 	AxisConverter::Slice slice;
@@ -44,14 +51,23 @@ MainWindow::MainWindow()
 	slice.endOutputValue = 0;
 	slice.controller = 17;
 	pAxis->addSlice(slice);
+#endif
+
+	// Add ourself as a device listener (to update the device menu)
+	populateInputDeviceMenu();
+	DeviceManager::getInstance().addListener(this);
+	connect(menuInputDevice, SIGNAL(triggered(QAction *)), SLOT(selectInputDevice(QAction *)));
 }
 
 MainWindow::~MainWindow()
 {
-	// Destroy the converter
-	delete m_pConverter;
+	// Remove ourself as a device listener
+	DeviceManager::getInstance().removeListener(this);
 
-	saveSettings();
+	// Destroy the converter
+	delete m_pChain;
+
+	saveWindowSettings();
 }
 
 
@@ -61,51 +77,91 @@ MainWindow::~MainWindow()
 
 void MainWindow::newFile()
 {
+	// Ask to save the current file if necessary
+	if(!checkDirty()) return;
+
 	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
 }
 
 void MainWindow::openFile()
 {
-	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
+	// Ask to save the current file if necessary
+	if(!checkDirty()) return;
+
+	// Ask for the filename
+	QString filter = "Midi-Me files (*.mm)";
+	QString filename = QFileDialog::getOpenFileName(this, "Open Midi-Me File", "", filter);
+	if(filename.isNull()) return;
+
+	// Load the settings
+	if(!m_pChain->loadSettings(filename.toStdString()))
+	{
+		QString message = "Error loading from '" + filename + "': " + m_pChain->getLastError().c_str();
+		QMessageBox::warning(this, "Error loading settings!", message);
+	}
 }
 
 void MainWindow::saveFile()
 {
-	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
+	// If no current file yet, use save as dialog
+	if(m_pChain->getCurrentFile().empty())
+		return saveFileAs();
+
+	// Save the settings
+	if(!m_pChain->saveSettings())
+	{
+		QString message = QString("Error saving : ") + m_pChain->getLastError().c_str();
+		QMessageBox::warning(this, "Error saving settings!", message);
+	}
 }
 
 void MainWindow::saveFileAs()
 {
-	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
+	// Ask for the filename
+	QString filter = "Midi-Me files (*.mm)";
+	QString filename = QFileDialog::getSaveFileName(this, "Save Midi-Me File", "", filter);
+	if(filename.isNull()) return;
+
+	// Give a warning if the file exists already
+	if(QFile::exists(filename))
+	{
+		int ret = QMessageBox::warning(this, tr("Midi-Me"),
+			tr("File %1 already exists.\nDo you want to overwrite it?")
+				.arg(QDir::convertSeparators(filename)),
+			QMessageBox::Yes | QMessageBox::Default,
+			QMessageBox::No | QMessageBox::Escape);
+
+		if(ret == QMessageBox::No)
+			return;
+	}
+
+	// Save the settings
+	if(!m_pChain->saveSettings(filename.toStdString()))
+	{
+		QString message = "Error saving to '" + filename + "': " + m_pChain->getLastError().c_str();
+		QMessageBox::warning(this, "Error saving settings!", message);
+	}
 }
 
 void MainWindow::openRecentFile(QAction *pAction)
 {
+	// Ask to save the current file if necessary
+	if(!checkDirty()) return;
+
 	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
 }
 
 void MainWindow::setStarted(bool started)
 {
-	assert(m_pConverter);
+	assert(m_pChain);
 
 	//! @todo Make settings
 	static const int interval = 20;
-	static const int midiPort = 1;
 
 	if(started)
-	{
-		if(m_pConverter->start((size_t) winId(), midiPort))
-			m_timerId = startTimer(interval);
-		else
-			QMessageBox::warning(this, "Error starting converter", m_pConverter->getLastError().c_str());
-	}
+		m_timerId = startTimer(interval);
 	else
-	{
 		killTimer(m_timerId);
-
-		if(!m_pConverter->stop())
-			QMessageBox::warning(this, "Error stopping converter", m_pConverter->getLastError().c_str());
-	}
 }
 
 /**********************
@@ -114,8 +170,17 @@ void MainWindow::setStarted(bool started)
 
 void MainWindow::timerEvent(QTimerEvent *pEvent)
 {
-	assert(m_pConverter);
-	m_pConverter->update();
+	// Capture the input devices and generate events
+	DeviceManager::getInstance().capture();
+}
+
+/* Intercept the close event for the window, to save the current file if needed */
+void MainWindow::closeEvent(QCloseEvent *pEvent)
+{
+	if(!checkDirty())
+		pEvent->ignore();
+
+	pEvent->accept();
 }
 
 void MainWindow::createWidgets()
@@ -143,23 +208,19 @@ void MainWindow::aboutDialog()
 		"This application can be used to easily convert OIS device input (mouse, keyboard, joysticks, ...) to midi signals.");
 }
 
-void MainWindow::loadSettings()
+void MainWindow::loadWindowSettings()
 {
 	// Get the application settings
 	QSettings settings;
 	settings.beginGroup("MainWindow");
 
+	// Window settings
+	if(settings.contains("geometry"))
+		restoreGeometry(settings.value("geometry").toByteArray());
+
 	// Toolbar and docking widgets state
 	if(settings.contains("state"))
 		restoreState(settings.value("state").toByteArray());
-
-	// Window settings
-	if(settings.contains("position"))
-		move(settings.value("Position").toPoint());
-	if(settings.contains("size"))
-		resize(settings.value("size").toSize());
-	if(settings.value("maximized", false).toBool())
-		showMaximized();
 
 	settings.endGroup();
 
@@ -167,19 +228,17 @@ void MainWindow::loadSettings()
 	updateRecentFiles();
 }
 
-void MainWindow::saveSettings()
+void MainWindow::saveWindowSettings()
 {
 	// Get the application settings
 	QSettings settings;
 	settings.beginGroup("MainWindow");
 
+	// Window settings
+	settings.setValue("geometry", saveGeometry());
+
 	// Toolbar and docking widgets state
 	settings.setValue("state", saveState());
-
-	// Window settings
-	settings.setValue("position", pos());
-	settings.setValue("size", size());
-	settings.setValue("maximized", isMaximized());
 
 	settings.endGroup();
 }
@@ -203,4 +262,68 @@ void MainWindow::updateRecentFiles()
 
 	// Disable the menu when no files are present
 	pMenu->setEnabled(!pMenu->isEmpty());
+}
+
+/** Check if the current file has changes, and ask the user if he wants to save them.
+	@return False when the user cancelled, so true if we should continue
+*/
+bool MainWindow::checkDirty()
+{
+	if(!m_pChain->isDirty())
+		return true;
+
+	int ret = QMessageBox::question(this, "Midi-Me",
+		"The file has been modified.\nDo you want to save your changes?",
+		QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+		QMessageBox::Cancel);
+	
+	if(ret == QMessageBox::Cancel)
+		return false;
+
+	else if(ret == QMessageBox::Save)
+		saveFile();
+
+	return true;
+}
+
+void MainWindow::onDeviceAdded(InputDevice *pDevice)
+{
+	menuInputDevice->addAction(pDevice->getName().c_str());
+}
+
+void MainWindow::onDeviceRemoving(InputDevice *pDevice)
+{
+	QList<QAction *> actions = menuInputDevice->actions();
+	QAction *pAction = 0;
+	
+	for(int i = 0; i < actions.size() && !pAction; ++i)
+	{
+		if(actions.at(i)->text().toStdString() == pDevice->getName())
+			pAction = actions.at(i);
+	}
+
+	if(pAction)
+		removeAction(pAction);
+}
+
+void MainWindow::populateInputDeviceMenu()
+{
+	menuInputDevice->clear();
+
+	const InputDeviceMap &devices = DeviceManager::getInstance().getInputDevices();
+	InputDeviceMap::const_iterator it;
+	for(it = devices.begin(); it != devices.end(); ++it)
+		menuInputDevice->addAction(it->second->getName().c_str());
+}
+
+void MainWindow::selectInputDevice(QAction *pAction)
+{
+	InputDevice *pDevice = DeviceManager::getInstance().getInputDevice(pAction->text().toStdString());
+	if(pDevice)
+	{
+		// Show the device input widget
+		InputDeviceWidget *pDevWidget = new InputDeviceWidget(pDevice, this);
+		pDevWidget->setAttribute(Qt::WA_DeleteOnClose);
+		pDevWidget->show();
+	}
 }

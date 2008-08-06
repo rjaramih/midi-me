@@ -66,7 +66,19 @@
     <addaction name="action_About" />
     <addaction name="actionAbout_Qt" />
    </widget>
+   <widget class="QMenu" name="menuView" >
+    <property name="title" >
+     <string>&amp;View</string>
+    </property>
+    <widget class="QMenu" name="menuInputDevice" >
+     <property name="title" >
+      <string>InputDevice</string>
+     </property>
+    </widget>
+    <addaction name="menuInputDevice" />
+   </widget>
    <addaction name="menu_File" />
+   <addaction name="menuView" />
    <addaction name="menuHelp" />
   </widget>
   <widget class="QToolBar" name="toolBar" >
@@ -145,6 +157,11 @@
    </property>
    <property name="shortcut" >
     <string>Space</string>
+   </property>
+  </action>
+  <action name="actionLkjsd" >
+   <property name="text" >
+    <string>lkjsd</string>
    </property>
   </action>
  </widget>
