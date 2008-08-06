@@ -4,17 +4,17 @@
 // Includes
 #include "global.h"
 #include "MainWindowBase.h"
+#include <libMidi-Me/DeviceManager.h>
 
 namespace MidiMe
 {
 	// Forward declarations
-	class ConverterManager;
+	class Chain;
 
 	/** The main window of our OIS 2 midi application
-		@todo Maximum number of recent files (setting)
 		@todo Check if file dirty, add asteriks to title bar and ask to save when opening or quitting
 	*/
-	class MainWindow : public QMainWindow, private Ui::MainWindowBase
+	class MainWindow : public QMainWindow, private Ui::MainWindowBase, protected DeviceManager::Listener
 	{
 		Q_OBJECT
 
@@ -34,18 +34,26 @@ namespace MidiMe
 
 	protected slots:
 		void openRecentFile(QAction *pAction);
+		void populateInputDeviceMenu();
+		void selectInputDevice(QAction *pAction);
 
 	protected:
 		// Events
 		void timerEvent(QTimerEvent *pEvent);
+		void closeEvent(QCloseEvent *pEvent);
+
+		// DeviceManager::Listener functions
+		void onDeviceAdded(InputDevice *pDevice);
+		void onDeviceRemoving(InputDevice *pDevice);
 
 		void createWidgets();
-		void loadSettings();
-		void saveSettings();
+		void loadWindowSettings();
+		void saveWindowSettings();
 		void updateRecentFiles();
+		bool checkDirty();
 
 		// Member variables
-		ConverterManager *m_pConverter;
+		Chain *m_pChain;
 		int m_timerId;
 	};
 }

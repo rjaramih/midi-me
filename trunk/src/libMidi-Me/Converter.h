@@ -10,7 +10,7 @@ namespace MidiMe
 	class ConverterManager;
 
 	/** Class Description */
-	class Converter
+	class LIBMIDIME_API Converter
 	{
 	public:
 		// Constructors and destructor
