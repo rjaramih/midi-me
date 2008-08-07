@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="win32_dll"
+	InheritedPropertySheets="common.vsprops"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="../../deps/include_win32"
+	/>
+	<Tool
+		Name="VCLibrarianTool"
+		OutputFile="../../lib/win32_$(ConfigurationName)/$(ProjectName).lib"
+		AdditionalLibraryDirectories="../../lib/win32_$(ConfigurationName);../../deps/lib/win32_$(ConfigurationName)"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		OutputFile="../../bin/win32_$(ConfigurationName)/$(ProjectName).dll"
+		AdditionalLibraryDirectories="../../lib/win32_$(ConfigurationName);../../deps/lib/win32_$(ConfigurationName)"
+		ImportLibrary="../../lib/win32_$(ConfigurationName)/$(ProjectName).lib"
+	/>
+	<Tool
+		Name="VCPostBuildEventTool"
+		CommandLine="cd ..\..\include&#x0D;&#x0A;buildincludes.bat $(ProjectName)&#x0D;&#x0A;"
+	/>
+</VisualStudioPropertySheet>
