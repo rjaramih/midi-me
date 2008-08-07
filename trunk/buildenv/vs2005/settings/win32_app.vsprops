@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="win32_app"
+	InheritedPropertySheets="common.vsprops"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="../../deps/include_win32"
+	/>
+	<Tool
+		Name="VCLibrarianTool"
+		AdditionalLibraryDirectories="../../lib/win32_$(ConfigurationName);../../deps/lib/win32_$(ConfigurationName)"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		OutputFile="../../bin/win32_$(ConfigurationName)/$(ProjectName).exe"
+		AdditionalLibraryDirectories="../../lib/win32_$(ConfigurationName);../../deps/lib/win32_$(ConfigurationName)"
+	/>
+</VisualStudioPropertySheet>

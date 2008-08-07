@@ -53,23 +53,42 @@ void InputDeviceWidget::update()
 
 	if(!m_pDevice)
 	{
-		m_pScene->addText("Device unplugged!");
+		//m_pScene->addText("Device unplugged!");
+		setWindowTitle("Midi-Me :: Device unplugged");
 		return;
 	}
 
-	m_pScene->addText(m_pDevice->getName().c_str());
+	//m_pScene->addText(m_pDevice->getName().c_str());
+	setWindowTitle(QString("Midi-Me :: ") + m_pDevice->getName().c_str());
 
 	for(unsigned int i = 0; i < m_pDevice->numValueOutputs(); ++i)
 	{
-		QGraphicsEllipseItem *pItem = m_pScene->addEllipse(i * 20, 20, 15, 15);
+		QGraphicsEllipseItem *pItem = m_pScene->addEllipse(5 + i * 20, 5, 15, 15);
 		pItem->setBrush(Qt::red);
 		m_valueItems[m_pDevice->getValueOutput(i)] = pItem;
 	}
 
 	for(unsigned int i = 0; i < m_pDevice->numRangeOutputs(); ++i)
 	{
-		QGraphicsRectItem *pItem = m_pScene->addRect(i * 20, 40, 15, 50);
-		pItem->setBrush(Qt::red);
+		//QList<QGraphicsItem *> items;
+
+		// Bounding rectangle
+		QRectF rect(5 + i * 20, 25, 15, 50);
+		QGraphicsRectItem *pItem = m_pScene->addRect(rect);
+		pItem->setBrush(Qt::NoBrush);
+		//items.push_back(pItem);
+
+		// Meter rectangle
+		//pItem = m_pScene->addRect(i * 20, 40, 15, 0);
+		rect.setTop(rect.bottom());
+		QGraphicsRectItem *pMeterItem = new QGraphicsRectItem(rect, pItem, m_pScene);
+		pMeterItem->setBrush(Qt::green);
+		//items.push_back(pItem);
+
+		// Group the items
+		/*QGraphicsItemGroup *pGroup = m_pScene->createItemGroup(items);
+		m_rangeItems[m_pDevice->getRangeOutput(i)] = pGroup;*/
+
 		m_rangeItems[m_pDevice->getRangeOutput(i)] = pItem;
 	}
 }
@@ -100,7 +119,12 @@ void InputDeviceWidget::onValueStop(ValueOutput *pOutput)
 void InputDeviceWidget::onValueChanged(RangeOutput *pOutput, int value)
 {
 	float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
-	m_rangeItems[pOutput]->setBrush(QColor::fromRgbF(1.0f - u, u, 0));
+	QGraphicsRectItem *pItem = (QGraphicsRectItem *) m_rangeItems[pOutput]->childItems().first();
+
+	QRectF rect = m_rangeItems[pOutput]->rect();
+	//rect.setTop(rect.height() * u);
+	rect.setTop(rect.bottom() - rect.height() * u);
+	pItem->setRect(rect);
 }
 
 // TEMP
