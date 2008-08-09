@@ -186,6 +186,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libMidi-Me\ChainEnd.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\ChainStart.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libMidi-Me\ControllerSignal.cpp"
 				>
 			</File>
@@ -214,6 +222,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libMidi-Me\Processor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\ProcessorFactory.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libMidi-Me\Serializer.cpp"
 				>
 			</File>
@@ -225,6 +241,14 @@
 			>
 			<File
 				RelativePath="..\..\src\libMidi-Me\Chain.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\ChainEnd.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\ChainStart.h"
 				>
 			</File>
 			<File
@@ -261,6 +285,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libMidi-Me\Output.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\Processor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\ProcessorFactory.h"
 				>
 			</File>
 			<File

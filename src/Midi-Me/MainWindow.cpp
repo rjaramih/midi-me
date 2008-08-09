@@ -1,5 +1,6 @@
 // Includes
 #include "MainWindow.h"
+#include "ChainWidget.h"
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/Chain.h>
 using namespace MidiMe;
@@ -25,13 +26,14 @@ static const unsigned int s_numRecentFiles = 5;
 ******************************/
 
 MainWindow::MainWindow()
-: m_pChain(0), m_timerId(0)
+: m_pChain(0), m_pChainEditor(0), m_timerId(0)
 {
 	createWidgets();
-	loadWindowSettings();
 
 	// Create the converter
 	m_pChain = new Chain();
+	m_pChainEditor = new ChainWidget(m_pChain, this);
+	setCentralWidget(m_pChainEditor);
 
 #if 0
 	// TEMP: hardcoded settings
@@ -57,17 +59,20 @@ MainWindow::MainWindow()
 	populateInputDeviceMenu();
 	DeviceManager::getInstance().addListener(this);
 	connect(menuInputDevice, SIGNAL(triggered(QAction *)), SLOT(selectInputDevice(QAction *)));
+
+	loadWindowSettings();
 }
 
 MainWindow::~MainWindow()
 {
+	saveWindowSettings();
+
 	// Remove ourself as a device listener
 	DeviceManager::getInstance().removeListener(this);
 
 	// Destroy the converter
+	delete m_pChainEditor;
 	delete m_pChain;
-
-	saveWindowSettings();
 }
 
 
@@ -94,7 +99,7 @@ void MainWindow::openFile()
 	if(filename.isNull()) return;
 
 	// Load the settings
-	if(!m_pChain->loadSettings(filename.toStdString()))
+	if(!m_pChain->load(filename.toStdString()))
 	{
 		QString message = "Error loading from '" + filename + "': " + m_pChain->getLastError().c_str();
 		QMessageBox::warning(this, "Error loading settings!", message);
@@ -108,7 +113,7 @@ void MainWindow::saveFile()
 		return saveFileAs();
 
 	// Save the settings
-	if(!m_pChain->saveSettings())
+	if(!m_pChain->save())
 	{
 		QString message = QString("Error saving : ") + m_pChain->getLastError().c_str();
 		QMessageBox::warning(this, "Error saving settings!", message);
@@ -136,7 +141,7 @@ void MainWindow::saveFileAs()
 	}
 
 	// Save the settings
-	if(!m_pChain->saveSettings(filename.toStdString()))
+	if(!m_pChain->save(filename.toStdString()))
 	{
 		QString message = "Error saving to '" + filename + "': " + m_pChain->getLastError().c_str();
 		QMessageBox::warning(this, "Error saving settings!", message);
@@ -178,7 +183,7 @@ void MainWindow::timerEvent(QTimerEvent *pEvent)
 void MainWindow::closeEvent(QCloseEvent *pEvent)
 {
 	if(!checkDirty())
-		pEvent->ignore();
+		return pEvent->ignore();
 
 	pEvent->accept();
 }
@@ -321,8 +326,9 @@ void MainWindow::selectInputDevice(QAction *pAction)
 	InputDevice *pDevice = DeviceManager::getInstance().getInputDevice(pAction->text().toStdString());
 	if(pDevice)
 	{
-		// Show the device input widget
+		// Show the device input widget as a tool
 		InputDeviceWidget *pDevWidget = new InputDeviceWidget(pDevice, this);
+		pDevWidget->setWindowFlags(Qt::Tool);
 		pDevWidget->setAttribute(Qt::WA_DeleteOnClose);
 		pDevWidget->show();
 	}

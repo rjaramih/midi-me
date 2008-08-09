@@ -17,9 +17,6 @@ using namespace MidiMe;
 InputDeviceWidget::InputDeviceWidget(InputDevice *pDevice, QWidget *pParent)
 : QGraphicsView(pParent), m_pDevice(pDevice)
 {
-	// Setup window geometry
-	setWindowFlags(Qt::Tool);
-
 	assert(m_pDevice);
 
 	m_pScene = new QGraphicsScene(this);
