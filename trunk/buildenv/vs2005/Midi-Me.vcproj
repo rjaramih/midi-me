@@ -191,7 +191,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\src\Midi-Me\ChainStartItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\ChainWidget.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Midi-Me\InputDeviceWidget.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\InputItem.cpp"
 				>
 			</File>
 			<File
@@ -202,6 +214,14 @@
 				RelativePath="..\..\src\Midi-Me\MainWindow.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\OutputItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\ProcessorItem.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -209,11 +229,51 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\..\src\Midi-Me\ChainStartItem.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\ChainWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\src\Midi-Me\global.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\Midi-Me\InputDeviceWidget.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\InputItem.h"
 				>
 			</File>
 			<File
@@ -234,6 +294,14 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\OutputItem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\ProcessorItem.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -245,6 +313,14 @@
 			Name="QT generated files"
 			Filter="$(OutDir)\qt_generated\*"
 			>
+			<File
+				RelativePath=".\tmp\Midi-Me\Win32\qt_generated\ChainStartItem_moc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tmp\Midi-Me\Win32\qt_generated\ChainWidget_moc.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\tmp\Midi-Me\Win32\qt_generated\MainWindow_moc.cpp"
 				>

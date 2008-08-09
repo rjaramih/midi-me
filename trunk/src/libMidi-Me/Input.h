@@ -10,8 +10,23 @@ namespace MidiMe
 	class ValueOutput;
 	class RangeOutput;
 
+	enum InputType { IT_Value, IT_Range };
+
+	/** The base class for inputs */
+	class LIBMIDIME_API Input
+	{
+	public:
+		InputType getType() const { return m_type; }
+
+	protected:
+		Input(InputType type): m_type(type) {}
+		virtual ~Input() {}
+		
+		InputType m_type;
+	};
+
 	/** An instance of the ValueInput class accepts values from a connected ValueOutput class. */
-	class LIBMIDIME_API ValueInput
+	class LIBMIDIME_API ValueInput: public Input
 	{
 	public:
 		// Listener
@@ -24,7 +39,7 @@ namespace MidiMe
 		};
 
 		// Constructors and destructor
-		ValueInput(): m_pOutput(0) {}
+		ValueInput(): Input(IT_Value), m_pOutput(0) {}
 		virtual ~ValueInput() {}
 
 		// Connection (handled by ValueOutput)
@@ -42,7 +57,7 @@ namespace MidiMe
 	};
 
 	/** An instance of the RangeInput class accepts values from a connected RangeOutput class. */
-	class LIBMIDIME_API RangeInput
+	class LIBMIDIME_API RangeInput: public Input
 	{
 	public:
 		// Listener
@@ -54,7 +69,7 @@ namespace MidiMe
 		};
 
 		// Constructors and destructor
-		RangeInput(): m_pOutput(0) {}
+		RangeInput(): Input(IT_Range), m_pOutput(0) {}
 		virtual ~RangeInput() {}
 
 		// Connection (handled by RangeOutput)
