@@ -45,34 +45,3 @@ void Input::processValue(int value)
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
 		(*it)->onValue(this, mappedValue);
 }
-
-
-#if 0
-/*************
-* ValueInput *
-*************/
-
-bool ValueInput::processValueStart(int value)
-{
-	//! @todo Implement this
-	return false;
-}
-
-bool ValueInput::processValueStop(int value)
-{
-	//! @todo Implement this
-	return false;
-}
-
-
-/*************
-* RangeInput *
-*************/
-
-bool RangeInput::processValueChanged(int value)
-{
-	//! @todo Implement this
-	return false;
-}
-
-#endif

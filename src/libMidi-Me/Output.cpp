@@ -24,4 +24,18 @@ void Output::sendValue(int value)
 {
 	if(isConnected())
 		m_pInput->processValue(value);
+
+	ListenerSet::iterator it;
+	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
+		(*it)->onValue(this, value);
+}
+
+void Output::addListener(Listener *pListener)
+{
+	m_listeners.insert(pListener);
+}
+
+void Output::removeListener(Listener *pListener)
+{
+	m_listeners.erase(pListener);
 }
