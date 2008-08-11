@@ -4,6 +4,7 @@
 // Includes
 #include "global.h"
 #include <QtGui/QGraphicsRectItem>
+#include <libMidi-Me/Output.h>
 
 namespace MidiMe
 {
@@ -11,7 +12,7 @@ namespace MidiMe
 	class Output;
 
 	/** Class Description */
-	class OutputItem: public QGraphicsRectItem
+	class OutputItem: public QGraphicsRectItem, protected Output::Listener
 	{
 	public:
 		// Constructors and destructor
@@ -26,8 +27,12 @@ namespace MidiMe
 		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
+		// Output::Listener functions
+		void onValue(Output *pOutput, int value);
+
 		// Member variables
 		Output *m_pOutput;
+		QGraphicsRectItem *m_pMeterItem;
 	};
 }
 

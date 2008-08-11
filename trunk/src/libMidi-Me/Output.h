@@ -4,6 +4,7 @@
 // Includes
 #include "global.h"
 #include "Input.h"
+#include <set>
 
 namespace MidiMe
 {
@@ -15,6 +16,13 @@ namespace MidiMe
 	class LIBMIDIME_API Output
 	{
 	public:
+		class Listener
+		{
+		public:
+			virtual ~Listener() {}
+			virtual void onValue(Output *pOutput, int value) = 0;
+		};
+
 		// Constructors and destructors
 		Output(int minValue = 0, int maxValue = 100, bool analog = true);
 		virtual ~Output();
@@ -40,6 +48,10 @@ namespace MidiMe
 		void sendMinValue() { sendValue(m_minValue); }
 		void sendMaxValue() { sendValue(m_maxValue); }
 
+		// Listeners
+		void addListener(Listener *pListener);
+		void removeListener(Listener *pListener);
+
 	protected:
 		/// The connected input
 		Input *m_pInput;
@@ -53,6 +65,9 @@ namespace MidiMe
 			so they can choose to visualize the output as a slider or a button).
 		*/
 		bool m_analog;
+
+		typedef std::set<Listener *>ListenerSet;
+		ListenerSet m_listeners;
 	};
 }
 
