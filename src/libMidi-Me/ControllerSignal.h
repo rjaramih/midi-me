@@ -10,12 +10,12 @@ namespace MidiMe
 	// Forward declarations
 	class MidiOutput;
 
-	/** Connect to this range input to convert the incoming value to a midi CC.
+	/** Connect to this input to convert the incoming value to a midi CC.
 		You can set the midi channel and controller ID to use.
 		You can also set the start and end values (defaulting to resp. 0 and 128).
 		The incoming value range is mapped on the start-end range, linearly interpolating inbetween.
 	*/
-	class LIBMIDIME_API ControllerSignal: public RangeInput, RangeInput::Listener
+	class LIBMIDIME_API ControllerSignal: public Input, Input::Listener
 	{
 	public:
 		// Constructors and destructor
@@ -39,8 +39,8 @@ namespace MidiMe
 		void setEndValue(unsigned int value) { m_endValue = value; }
 
 	protected:
-		// RangeInput::Listener functions
-		void onValueChanged(RangeInput *pInput, int value);
+		// Input::Listener functions
+		void onValue(Input *pInput, int value);
 
 		// Member variables
 		MidiOutput *m_pMidiOutput;

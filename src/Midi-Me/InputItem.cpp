@@ -16,9 +16,11 @@ static const float g_height(15.0f);
 * InputItem *
 ************/
 
-InputItem::InputItem(QGraphicsItem *pParent)
-: QGraphicsRectItem(pParent)
+InputItem::InputItem(Input *pInput, QGraphicsItem *pParent)
+: QGraphicsRectItem(pParent), m_pInput(pInput)
 {
+	assert(m_pInput);
+
 	// Setup item
 	setFlag(ItemIsSelectable);
 	//setFlag(ItemIsMovable);
@@ -39,40 +41,4 @@ void InputItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 QVariant InputItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	return QGraphicsRectItem::itemChange(change, value);
-}
-
-
-/*****************
-* ValueInputItem *
-*****************/
-
-ValueInputItem::ValueInputItem(ValueInput *pInput, QGraphicsItem *pParent)
-: InputItem(pParent), m_pInput(pInput)
-{
-	assert(m_pInput);
-
-	// TEMP
-	setBrush(Qt::red);
-}
-
-ValueInputItem::~ValueInputItem()
-{
-}
-
-
-/*****************
-* RangeInputItem *
-*****************/
-
-RangeInputItem::RangeInputItem(RangeInput *pInput, QGraphicsItem *pParent)
-: InputItem(pParent), m_pInput(pInput)
-{
-	assert(m_pInput);
-
-	// TEMP
-	setBrush(Qt::blue);
-}
-
-RangeInputItem::~RangeInputItem()
-{
 }

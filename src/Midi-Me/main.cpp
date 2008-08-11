@@ -17,8 +17,8 @@ class DummyDevice: public InputDevice
 public:
 	DummyDevice(): InputDevice("Dummy")
 	{
-		addValueOutput(0);
-		addRangeOutput(0, 100);
+		addOutput(0, 0, 100, false);
+		addOutput(1, 0, 100, true);
 	}
 
 	~DummyDevice() {}
@@ -30,14 +30,14 @@ protected:
 		static int counter = 0;
 
 		if(counter % 200 == 0)
-			sendValueStop(0);
+			sendMinValue(0);
 		else if(counter % 100 == 0)
-			sendValueStart(0);
+			sendMaxValue(0);
 
 		if(counter % 200 < 100)
-			sendValueChanged(0, counter % 200);
+			sendValue(1, counter % 200);
 		else
-			sendValueChanged(0, 200 - (counter % 200));
+			sendValue(1, 200 - (counter % 200));
 
 		++counter;
 		return true;
@@ -87,8 +87,7 @@ int main(int argc, char *argv[])
 		InputDevice *pDevice = it->second;
 		cerr << "  * " << pDevice->getName() << endl;
 		cerr << "    -> ";
-		cerr << pDevice->numValueOutputs() << " value output(s), ";
-		cerr << pDevice->numRangeOutputs() << " range output(s)" << endl;
+		cerr << pDevice->numOutputs() << " output(s)" << endl;
 	}
 	
 	cerr << endl;

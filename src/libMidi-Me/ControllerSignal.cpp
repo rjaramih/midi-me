@@ -28,7 +28,7 @@ ControllerSignal::~ControllerSignal()
 * Protected functions *
 **********************/
 
-void ControllerSignal::onValueChanged(RangeInput *pInput, int value)
+void ControllerSignal::onValue(Input *pInput, int value)
 {
 	assert(pInput == this);
 	if(!m_pOutput) return;

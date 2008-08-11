@@ -59,16 +59,10 @@ void ChainStartItem::selectDevice(QAction *pAction)
 	m_pChainStart->setDevice(DeviceManager::getInstance().getInputDevice(name));
 }
 
-void ChainStartItem::selectValueOutput(QAction *pAction)
+void ChainStartItem::selectOutput(QAction *pAction)
 {
-	size_t i = pAction->data().toInt();
-	m_pChainStart->setOutput(m_pChainStart->getDevice()->getValueOutput(i));
-}
-
-void ChainStartItem::selectRangeOutput(QAction *pAction)
-{
-	size_t i = pAction->data().toInt();
-	m_pChainStart->setOutput(m_pChainStart->getDevice()->getRangeOutput(i));
+	size_t id = pAction->data().toInt();
+	m_pChainStart->setOutput(m_pChainStart->getDevice()->getOutput(id));
 }
 
 void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
@@ -100,44 +94,35 @@ void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 	
 	// Outputs for the selected input device
 	QMenu *pOutputMenu = pMenu->addMenu("Signal");
+	connect(pOutputMenu, SIGNAL(triggered(QAction *)), SLOT(selectOutput(QAction *)));
 
 	if(pDevice)
 	{
-		// Value outputs
-		QMenu *pValueOutputMenu = pOutputMenu->addMenu("Value output");
-		connect(pValueOutputMenu, SIGNAL(triggered(QAction *)), SLOT(selectValueOutput(QAction *)));
-
-		size_t num = pDevice->numValueOutputs();
-		for(size_t i = 0; i < num; ++i)
+		const OutputMap &outputs = pDevice->getAllOutputs();
+		OutputMap::const_iterator it;
+		
+		for(it = outputs.begin(); it != outputs.end(); ++it)
 		{
-			QAction *pAction = pValueOutputMenu->addAction(QString("Value output %1").arg(i + 1));
-			pAction->setData(i);
+			unsigned int id = it->first;
+			Output *pOutput = it->second;
+
+			QString name = "Output %1";
+			name.arg(id);
+			if(pOutput->isAnalog())
+				name += " (analog)";
+			else
+				name += " (digital)";
+
+			QAction *pAction = pOutputMenu->addAction(name);
+			pAction->setData(id);
 			pAction->setCheckable(true);
 
-			if(m_pChainStart->getOutput() == pDevice->getValueOutput(i))
+			if(m_pChainStart->getOutput() == pOutput)
 				pAction->setChecked(true);
 		}
 
-		if(num == 0)
-			pValueOutputMenu->setEnabled(false);
-
-		// Range outputs
-		QMenu *pRangeOutputMenu = pOutputMenu->addMenu("Range output");
-		connect(pRangeOutputMenu, SIGNAL(triggered(QAction *)), SLOT(selectRangeOutput(QAction *)));
-
-		num = pDevice->numRangeOutputs();
-		for(size_t i = 0; i < num; ++i)
-		{
-			QAction *pAction = pRangeOutputMenu->addAction(QString("Range output %1").arg(i + 1));
-			pAction->setData(i);
-			pAction->setCheckable(true);
-
-			if(m_pChainStart->getOutput() == pDevice->getRangeOutput(i))
-				pAction->setChecked(true);
-		}
-
-		if(num == 0)
-			pRangeOutputMenu->setEnabled(false);
+		if(outputs.empty())
+			pOutputMenu->setEnabled(false);
 	}
 	else
 		pOutputMenu->setEnabled(false);
@@ -202,14 +187,5 @@ void ChainStartItem::createOutputItem()
 		return;
 	}
 
-	switch(pOutput->getType())
-	{
-	case OT_Value:
-		m_pOutputItem = new ValueOutputItem((ValueOutput *) pOutput, this);
-		break;
-
-	case OT_Range:
-		m_pOutputItem = new RangeOutputItem((RangeOutput *) pOutput, this);
-		break;
-	};
+	m_pOutputItem = new OutputItem(pOutput, this);
 }

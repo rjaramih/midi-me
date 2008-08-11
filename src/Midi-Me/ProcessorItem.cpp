@@ -65,26 +65,14 @@ void ProcessorItem::createInputs()
 	float x = 0.0f;
 	float y = g_margin;
 
-	// Add value inputs
-	const ValueInputSet &valueInputs = m_pProcessor->getValueInputs();
-	ValueInputSet::const_iterator valueIt;
-	for(valueIt = valueInputs.begin(); valueIt != valueInputs.end(); ++valueIt)
+	// Add inputs
+	const InputSet &inputs = m_pProcessor->getInputs();
+	InputSet::const_iterator it;
+	for(it = inputs.begin(); it != inputs.end(); ++it)
 	{
-		ValueInput *pInput = *valueIt;
+		Input *pInput = *it;
 
-		ValueInputItem *pItem = new ValueInputItem(pInput, this);
-		pItem->setPos(x,y);
-		y += pItem->rect().height() + g_margin;
-	}
-
-	// Add range inputs
-	const RangeInputSet &rangeInputs = m_pProcessor->getRangeInputs();
-	RangeInputSet::const_iterator rangeIt;
-	for(rangeIt = rangeInputs.begin(); rangeIt != rangeInputs.end(); ++rangeIt)
-	{
-		RangeInput *pInput = *rangeIt;
-
-		RangeInputItem *pItem = new RangeInputItem(pInput, this);
+		InputItem *pItem = new InputItem(pInput, this);
 		pItem->setPos(x,y);
 		y += pItem->rect().height() + g_margin;
 	}
@@ -107,26 +95,14 @@ void ProcessorItem::createOutputs()
 	float x = g_width;
 	float y = g_margin;
 
-	// Add value outputs
-	const ValueOutputSet &valueOutputs = m_pProcessor->getValueOutputs();
-	ValueOutputSet::const_iterator valueIt;
-	for(valueIt = valueOutputs.begin(); valueIt != valueOutputs.end(); ++valueIt)
+	// Add outputs
+	const OutputSet &outputs = m_pProcessor->getOutputs();
+	OutputSet::const_iterator it;
+	for(it = outputs.begin(); it != outputs.end(); ++it)
 	{
-		ValueOutput *pOutput = *valueIt;
+		Output *pOutput = *it;
 
-		ValueOutputItem *pItem = new ValueOutputItem(pOutput, this);
-		pItem->setPos(x,y);
-		y += pItem->rect().height() + g_margin;
-	}
-
-	// Add range outputs
-	const RangeOutputSet &rangeOutputs = m_pProcessor->getRangeOutputs();
-	RangeOutputSet::const_iterator rangeIt;
-	for(rangeIt = rangeOutputs.begin(); rangeIt != rangeOutputs.end(); ++rangeIt)
-	{
-		RangeOutput *pOutput = *rangeIt;
-
-		RangeOutputItem *pItem = new RangeOutputItem(pOutput, this);
+		OutputItem *pItem = new OutputItem(pOutput, this);
 		pItem->setPos(x,y);
 		y += pItem->rect().height() + g_margin;
 	}

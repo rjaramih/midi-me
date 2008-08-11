@@ -3,16 +3,16 @@
 
 // Includes
 #include "global.h"
-#include <vector>
+#include <map>
 #include <set>
 
 namespace MidiMe
 {
 	// Forward declarations
-	class ValueOutput;
-	class RangeOutput;
+	class Output;
+	typedef std::map<unsigned int, Output *> OutputMap;
 
-	/** This is the base class for a device that provides values or ranges of values to Midi-Me.
+	/** This is the base class for a device that provides signals to Midi-Me.
 		Derive from this class to provide input from any device you like. Instances of an InputDevice
 		are automatically registered in the device manager, so they become available to Midi-Me.
 		The name of the device has to be unique.
@@ -25,12 +25,8 @@ namespace MidiMe
 		{
 		public:
 			virtual ~Listener() {}
-			/// Called when there is a start signal in a value output
-			virtual void onValueStart(ValueOutput *pOutput) = 0;
-			/// Called when there is a stop signal in a value output
-			virtual void onValueStop(ValueOutput *pOutput) = 0;
-			/// Called when there is a value change in a range output
-			virtual void onValueChanged(RangeOutput *pOutput, int value) = 0;
+			/// Called when there is a signal in on of the outputs
+			virtual void onValue(Output *pOutput, int value) = 0;
 		};
 
 		// Constructors and destructor
@@ -40,13 +36,11 @@ namespace MidiMe
 		// Information
 		const string &getName() const { return m_name; }
 
-		// Value outputs
-		unsigned int numValueOutputs() const;
-		ValueOutput *getValueOutput(unsigned int i) const;
-
-		// Range outputs
-		unsigned int numRangeOutputs() const;
-		RangeOutput *getRangeOutput(unsigned int i) const;
+		// Outputs
+		const OutputMap &getAllOutputs() const;
+		unsigned int numOutputs() const;
+		bool outputExists(unsigned int id) const;
+		Output *getOutput(unsigned int id) const;
 
 		// Listeners
 		void addListener(Listener *pListener);
@@ -56,31 +50,23 @@ namespace MidiMe
 		virtual bool capture() = 0;
 
 	protected:
-		/// Derived classes call this to send a value start signal (value output)
-		bool sendValueStart(int value);
-		/// Derived classes call this to send a value stop signal (value output)
-		bool sendValueStop(int value);
-		/// Derived classes call this to send a value change signal (range output)
-		bool sendValueChanged(int id, int value);
+		/// Derived classes call this to send a signal
+		bool sendValue(unsigned int id, int value);
+		bool sendMinValue(unsigned int id);
+		bool sendMaxValue(unsigned int id);
 
 		// Output creation (used by derived classes)
-		ValueOutput *addValueOutput(int value);
-		RangeOutput *addRangeOutput(int minValue, int maxValue);
+		Output *addOutput(unsigned int id, int minValue = 0, int maxValue = 100, bool analog = true);
 
 		// Other functions
 		void destroyOutputs();
-		void fireValueStart(ValueOutput *pOutput);
-		void fireValueStop(ValueOutput *pOutput);
-		void fireValueChanged(RangeOutput *pOutput, int value);
+		void fireValue(Output *pOutput, int value);
+		void fireMinValue(Output *pOutput);
+		void fireMaxValue(Output *pOutput);
 
 		// Member variables
 		string m_name; //!< The unique name for this input device
-		
-		typedef std::vector<ValueOutput *> ValueOutputVector;
-		ValueOutputVector m_valueOutputs;
-
-		typedef std::vector<RangeOutput *> RangeOutputVector;
-		RangeOutputVector m_rangeOutputs;
+		OutputMap m_outputs;
 
 		typedef std::set<Listener *> ListenerSet;
 		ListenerSet m_listeners;

@@ -31,24 +31,25 @@ InputDevice::~InputDevice()
 * Other functions *
 ******************/
 
-unsigned int InputDevice::numValueOutputs() const
+const OutputMap &InputDevice::getAllOutputs() const
 {
-	return m_valueOutputs.size();
+	return m_outputs;
 }
 
-ValueOutput *InputDevice::getValueOutput(unsigned int i) const
+unsigned int InputDevice::numOutputs() const
 {
-	return m_valueOutputs.at(i);
+	return m_outputs.size();
 }
 
-unsigned int InputDevice::numRangeOutputs() const
+bool InputDevice::outputExists(unsigned int id) const
 {
-	return m_rangeOutputs.size();
+	return m_outputs.find(id) != m_outputs.end();
 }
 
-RangeOutput *InputDevice::getRangeOutput(unsigned int i) const
+Output *InputDevice::getOutput(unsigned int id) const
 {
-	return m_rangeOutputs.at(i);
+	OutputMap::const_iterator it = m_outputs.find(id);
+	return (it == m_outputs.end()) ? 0 : it->second;
 }
 
 void InputDevice::addListener(Listener *pListener)
@@ -66,86 +67,85 @@ void InputDevice::removeListener(Listener *pListener)
 * Protected functions *
 **********************/
 
-bool InputDevice::sendValueStart(int value)
+bool InputDevice::sendValue(unsigned int id, int value)
 {
-	if(m_valueOutputs.size() <= (size_t) value) return false;
-
-	ValueOutput *pOutput = m_valueOutputs.at(value);
-	if(!pOutput->sendValueStart())
+	Output *pOutput = getOutput(id);
+	if(!pOutput)
 		return false;
 
-	fireValueStart(pOutput);
+	pOutput->sendValue(value);
+
+	fireValue(pOutput, value);
 	return true;
 }
 
-bool InputDevice::sendValueStop(int value)
+bool InputDevice::sendMinValue(unsigned int id)
 {
-	if(m_valueOutputs.size() <= (size_t) value) return false;
-
-	ValueOutput *pOutput = m_valueOutputs.at(value);
-	if(!pOutput->sendValueStop())
+	cerr << "1" << endl;
+	Output *pOutput = getOutput(id);
+	if(!pOutput)
 		return false;
 
-	fireValueStop(pOutput);
+	cerr << "2" << endl;
+	pOutput->sendMinValue();
+	cerr << "3" << endl;
+
+	fireMinValue(pOutput);
+	cerr << "4" << endl;
 	return true;
 }
 
-bool InputDevice::sendValueChanged(int id, int value)
+bool InputDevice::sendMaxValue(unsigned int id)
 {
-	if(m_rangeOutputs.size() <= (size_t) id) return false;
-
-	RangeOutput *pOutput = m_rangeOutputs.at(id);
-	if(!pOutput->sendValueChanged(value))
+	Output *pOutput = getOutput(id);
+	if(!pOutput)
 		return false;
 
-	fireValueChanged(pOutput, value);
+	pOutput->sendMaxValue();
+
+	fireMaxValue(pOutput);
 	return true;
 }
 
-ValueOutput *InputDevice::addValueOutput(int value)
+Output *InputDevice::addOutput(unsigned int id, int minValue, int maxValue, bool analog)
 {
-	ValueOutput *pOutput = new ValueOutput(value);
-	m_valueOutputs.push_back(pOutput);
-	return pOutput;
-}
+	if(outputExists(id))
+		return 0;
 
-RangeOutput *InputDevice::addRangeOutput(int minValue, int maxValue)
-{
-	RangeOutput *pOutput = new RangeOutput(minValue, maxValue);
-	m_rangeOutputs.push_back(pOutput);
+	Output *pOutput = new Output(minValue, maxValue, analog);
+	m_outputs[id] = pOutput;
 	return pOutput;
 }
 
 void InputDevice::destroyOutputs()
 {
-	// Range outputs
-	for(unsigned int i = 0; i < m_rangeOutputs.size(); ++i)
-		delete m_rangeOutputs.at(i);
-	m_rangeOutputs.clear();
-
-	// Value outputs
-	for(unsigned int i = 0; i < m_valueOutputs.size(); ++i)
-		delete m_valueOutputs.at(i);
-	m_valueOutputs.clear();
+	OutputMap::iterator it;
+	for(it = m_outputs.begin(); it != m_outputs.end(); ++it)
+		delete it->second;
+	m_outputs.clear();
 }
 
-void InputDevice::fireValueStart(ValueOutput *pOutput)
+void InputDevice::fireValue(Output *pOutput, int value)
 {
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
-		(*it)->onValueStart(pOutput);
+		(*it)->onValue(pOutput, value);
 }
 
-void InputDevice::fireValueStop(ValueOutput *pOutput)
+void InputDevice::fireMinValue(Output *pOutput)
 {
+	int value = pOutput->getMinValue();
+
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
-		(*it)->onValueStop(pOutput);
+		(*it)->onValue(pOutput, value);
 }
 
-void InputDevice::fireValueChanged(RangeOutput *pOutput, int value)
+void InputDevice::fireMaxValue(Output *pOutput)
 {
+	int value = pOutput->getMaxValue();
+
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
-		(*it)->onValueChanged(pOutput, value);
+		(*it)->onValue(pOutput, value);
 }

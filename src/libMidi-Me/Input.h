@@ -3,86 +3,68 @@
 
 // Includes
 #include "global.h"
+#include <set>
 
 namespace MidiMe
 {
 	// Forward declarations
-	class ValueOutput;
-	class RangeOutput;
+	class Output;
 
-	enum InputType { IT_Value, IT_Range };
-
-	/** The base class for inputs */
+	/** This class represents an input to connect an output with.
+		An input has a mininum and maximum value and can be inverted.
+		
+		The input will automatically map the incoming value from an output between the minimum and maximum
+		value of this input when sending the value to the listeners.
+		
+		If you invert the input, the minimum value of the connected output will be mapped
+		to the maximum value of the input.
+	*/
 	class LIBMIDIME_API Input
 	{
 	public:
-		InputType getType() const { return m_type; }
-
-	protected:
-		Input(InputType type): m_type(type) {}
-		virtual ~Input() {}
-		
-		InputType m_type;
-	};
-
-	/** An instance of the ValueInput class accepts values from a connected ValueOutput class. */
-	class LIBMIDIME_API ValueInput: public Input
-	{
-	public:
-		// Listener
 		class Listener
 		{
 		public:
 			virtual ~Listener() {}
-			virtual void onValueStart(ValueInput *pInput) = 0;
-			virtual void onValueStop(ValueInput *pInput) = 0;
+			virtual void onValue(Input *pInput, int value) = 0;
 		};
 
-		// Constructors and destructor
-		ValueInput(): Input(IT_Value), m_pOutput(0) {}
-		virtual ~ValueInput() {}
+		// Constructors and destructors
+		Input(int minValue = 0, int maxValue = 100, bool inverted = false);
+		virtual ~Input();
 
-		// Connection (handled by ValueOutput)
-		ValueOutput *getConnectedOutput() const { return m_pOutput; }
+		// Incoming connection (handled by Output)
+		Output *getConnectedOutput() const { return m_pOutput; }
 		bool isConnected() const { return (m_pOutput != 0); }
 
-	protected:
-		/// The connected value output
-		ValueOutput *m_pOutput;
+		// Settings
+		int getMinValue() const { return m_minValue; }
+		void setMinValue(int value) { m_minValue = value; }
 
-		friend class ValueOutput;
-		void setOutput(ValueOutput *pOutput) { m_pOutput = pOutput; }
-		bool processValueStart(int value);
-		bool processValueStop(int value);
-	};
+		int getMaxValue() const { return m_maxValue; }
+		void setMaxValue(int value) { m_maxValue = value; }
 
-	/** An instance of the RangeInput class accepts values from a connected RangeOutput class. */
-	class LIBMIDIME_API RangeInput: public Input
-	{
-	public:
-		// Listener
-		class Listener
-		{
-		public:
-			virtual ~Listener() {}
-			virtual void onValueChanged(RangeInput *pInput, int value) = 0;
-		};
+		bool isInverted() const { return m_inverted; }
+		void setInverted(bool inverted) { m_inverted = inverted; }
 
-		// Constructors and destructor
-		RangeInput(): Input(IT_Range), m_pOutput(0) {}
-		virtual ~RangeInput() {}
-
-		// Connection (handled by RangeOutput)
-		RangeOutput *getConnectedOutput() const { return m_pOutput; }
-		bool isConnected() const { return (m_pOutput != 0); }
+		// Listeners
+		void addListener(Listener *pListener);
+		void removeListener(Listener *pListener);
 
 	protected:
-		/// The connected value output
-		RangeOutput *m_pOutput;
+		/// The connected output
+		Output *m_pOutput;
+		/// The minimum and maximum values for this input. Incoming values will be mapped between these two.
+		int m_minValue, m_maxValue;
+		/// If this is true, the minimum value of a connected input will be mapped on the maximum value of this input.
+		bool m_inverted;
 
-		friend class RangeOutput;
-		void setOutput(RangeOutput *pOutput) { m_pOutput = pOutput; }
-		bool processValueChanged(int value);
+		friend class Output;
+		void setOutput(Output *pOutput) { m_pOutput = pOutput; }
+		void processValue(int value);
+
+		typedef std::set<Listener *>ListenerSet;
+		ListenerSet m_listeners;
 	};
 }
 

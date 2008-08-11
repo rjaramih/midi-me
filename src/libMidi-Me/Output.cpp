@@ -2,38 +2,26 @@
 #include "Output.h"
 using namespace MidiMe;
 
+/******************************
+* Constructors and destructor *
+******************************/
 
-/**************
-* ValueOutput *
-**************/
-
-bool ValueOutput::sendValueStart()
+Output::Output(int minValue, int maxValue, bool analog)
+: m_pInput(0), m_minValue(minValue), m_maxValue(maxValue), m_analog(analog)
 {
-	if(!m_pInput) return true;
-
-	// Send through the chain
-	return m_pInput->processValueStart(m_value);
 }
 
-bool ValueOutput::sendValueStop()
+Output::~Output()
 {
-	if(!m_pInput) return true;
-
-	// Send through the chain
-	return m_pInput->processValueStop(m_value);
 }
 
 
-/**************
-* RangeOutput *
-**************/
+/******************
+* Other functions *
+******************/
 
-bool RangeOutput::sendValueChanged(int value)
+void Output::sendValue(int value)
 {
-	if(value < m_minValue || value > m_maxValue) return false;
-	if(!m_pInput) return true;
-
-	// Send through the chain
-	//! @todo Normalize value?
-	return m_pInput->processValueChanged(value);
+	if(isConnected())
+		m_pInput->processValue(value);
 }

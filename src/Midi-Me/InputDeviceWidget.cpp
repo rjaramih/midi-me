@@ -45,8 +45,7 @@ void InputDeviceWidget::update()
 {
 	// Clear the current scene
 	m_pScene->clear();
-	m_valueItems.clear();
-	m_rangeItems.clear();
+	m_items.clear();
 
 	if(!m_pDevice)
 	{
@@ -58,35 +57,39 @@ void InputDeviceWidget::update()
 	//m_pScene->addText(m_pDevice->getName().c_str());
 	setWindowTitle(QString("Midi-Me :: ") + m_pDevice->getName().c_str());
 
-	for(unsigned int i = 0; i < m_pDevice->numValueOutputs(); ++i)
+	const OutputMap &outputs = m_pDevice->getAllOutputs();
+	OutputMap::const_iterator it;
+	float xDigital = 5.0f;
+	float xAnalog = 5.0f;
+	float yDigital = 5.0f;
+	float yAnalog = 25.0f;
+
+	for(it = outputs.begin(); it != outputs.end(); ++it)
 	{
-		QGraphicsEllipseItem *pItem = m_pScene->addEllipse(5 + i * 20, 5, 15, 15);
-		pItem->setBrush(Qt::red);
-		m_valueItems[m_pDevice->getValueOutput(i)] = pItem;
-	}
+		Output *pOutput = it->second;
 
-	for(unsigned int i = 0; i < m_pDevice->numRangeOutputs(); ++i)
-	{
-		//QList<QGraphicsItem *> items;
+		QAbstractGraphicsShapeItem *pItem;
+		if(pOutput->isAnalog())
+		{
+			QRectF rect(xAnalog, yAnalog, 15, 50);
+			pItem = m_pScene->addRect(rect);
+			pItem->setBrush(Qt::NoBrush);
 
-		// Bounding rectangle
-		QRectF rect(5 + i * 20, 25, 15, 50);
-		QGraphicsRectItem *pItem = m_pScene->addRect(rect);
-		pItem->setBrush(Qt::NoBrush);
-		//items.push_back(pItem);
+			rect.setTop(rect.bottom());
+			QGraphicsRectItem *pMeterItem = new QGraphicsRectItem(rect, pItem, m_pScene);
+			pMeterItem->setBrush(Qt::green);
 
-		// Meter rectangle
-		//pItem = m_pScene->addRect(i * 20, 40, 15, 0);
-		rect.setTop(rect.bottom());
-		QGraphicsRectItem *pMeterItem = new QGraphicsRectItem(rect, pItem, m_pScene);
-		pMeterItem->setBrush(Qt::green);
-		//items.push_back(pItem);
+			xAnalog += 20.0f;
+		}
+		else
+		{
+			pItem = m_pScene->addEllipse(xDigital, yDigital, 15, 15);
+			pItem->setBrush(Qt::red);
 
-		// Group the items
-		/*QGraphicsItemGroup *pGroup = m_pScene->createItemGroup(items);
-		m_rangeItems[m_pDevice->getRangeOutput(i)] = pGroup;*/
+			xDigital += 20.0f;
+		}
 
-		m_rangeItems[m_pDevice->getRangeOutput(i)] = pItem;
+		m_items[pOutput] = pItem;
 	}
 }
 
@@ -103,25 +106,25 @@ void InputDeviceWidget::resizeEvent(QResizeEvent *pEvent)
 	QGraphicsView::resizeEvent(pEvent);
 }
 
-void InputDeviceWidget::onValueStart(ValueOutput *pOutput)
+void InputDeviceWidget::onValue(Output *pOutput, int value)
 {
-	m_valueItems[pOutput]->setBrush(Qt::green);
-}
+	if(pOutput->isAnalog())
+	{
+		QGraphicsRectItem *pItem = (QGraphicsRectItem *) m_items[pOutput];
+		QGraphicsRectItem *pMeterItem = (QGraphicsRectItem *) pItem->childItems().first();
 
-void InputDeviceWidget::onValueStop(ValueOutput *pOutput)
-{
-	m_valueItems[pOutput]->setBrush(Qt::red);
-}
+		float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
+		
+		QRectF rect = pItem->rect();
+		rect.setTop(rect.bottom() - rect.height() * u);
+		pMeterItem->setRect(rect);
+	}
+	else
+	{
+		QGraphicsEllipseItem *pItem = (QGraphicsEllipseItem *) m_items[pOutput];
+		pItem->setBrush(value == pOutput->getMinValue() ? Qt::red : Qt::green);
+	}
 
-void InputDeviceWidget::onValueChanged(RangeOutput *pOutput, int value)
-{
-	float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
-	QGraphicsRectItem *pItem = (QGraphicsRectItem *) m_rangeItems[pOutput]->childItems().first();
-
-	QRectF rect = m_rangeItems[pOutput]->rect();
-	//rect.setTop(rect.height() * u);
-	rect.setTop(rect.bottom() - rect.height() * u);
-	pItem->setRect(rect);
 }
 
 // TEMP
