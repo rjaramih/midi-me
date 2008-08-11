@@ -28,8 +28,7 @@ namespace MidiMe
     
 	protected slots:
 		void selectDevice(QAction *pAction);
-		void selectValueOutput(QAction *pAction);
-		void selectRangeOutput(QAction *pAction);
+		void selectOutput(QAction *pAction);
 
 	protected:
 		// Events

@@ -339,6 +339,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Documentation"
+			>
+			<File
+				RelativePath="..\..\src\Midi-Me\Midi-Me_doc.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

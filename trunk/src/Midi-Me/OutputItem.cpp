@@ -16,9 +16,11 @@ static const float g_height(15.0f);
 * OutputItem *
 ************/
 
-OutputItem::OutputItem(QGraphicsItem *pParent)
-: QGraphicsRectItem(pParent)
+OutputItem::OutputItem(Output *pOutput, QGraphicsItem *pParent)
+: QGraphicsRectItem(pParent), m_pOutput(pOutput)
 {
+	assert(m_pOutput);
+
 	// Setup item
 	setFlag(ItemIsSelectable);
 	//setFlag(ItemIsMovable);
@@ -39,34 +41,4 @@ void OutputItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 QVariant OutputItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	return QGraphicsRectItem::itemChange(change, value);
-}
-
-
-/*****************
-* ValueOutputItem *
-*****************/
-
-ValueOutputItem::ValueOutputItem(ValueOutput *pOutput, QGraphicsItem *pParent)
-: OutputItem(pParent), m_pOutput(pOutput)
-{
-	assert(m_pOutput);
-}
-
-ValueOutputItem::~ValueOutputItem()
-{
-}
-
-
-/*****************
-* RangeOutputItem *
-*****************/
-
-RangeOutputItem::RangeOutputItem(RangeOutput *pOutput, QGraphicsItem *pParent)
-: OutputItem(pParent), m_pOutput(pOutput)
-{
-	assert(m_pOutput);
-}
-
-RangeOutputItem::~RangeOutputItem()
-{
 }

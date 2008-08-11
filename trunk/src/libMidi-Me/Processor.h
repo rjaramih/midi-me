@@ -10,20 +10,14 @@
 namespace MidiMe
 {
 	// Forward declarations
-	class ValueInput;
-	typedef std::set<ValueInput *> ValueInputSet;
+	class Input;
+	typedef std::set<Input *> InputSet;
 
-	class RangeInput;
-	typedef std::set<RangeInput *> RangeInputSet;
-
-	class ValueOutput;
-	typedef std::set<ValueOutput *> ValueOutputSet;
-
-	class RangeOutput;
-	typedef std::set<RangeOutput *> RangeOutputSet;
+	class Output;
+	typedef std::set<Output *> OutputSet;
 
 	/** This is the base class for Midi-Me processors.
-		A processor has a set of value/range inputs and outputs.
+		A processor has a set of inputs and outputs.
 		It processes the incoming signals and sends them to the outputs.
 		@note You have to create a ProcessorCreator derivative that comes with this class,
 		so the ProcessorFactory knows how to create and destroy processor instances.
@@ -39,35 +33,25 @@ namespace MidiMe
 		const string &getType() const { return m_type; }
 
 		// Inputs
-		const ValueInputSet &getValueInputs() const;
-		size_t numValueInputs() const;
-
-		const RangeInputSet &getRangeInputs() const;
-		size_t numRangeInputs() const;
+		const InputSet &getInputs() const;
+		size_t numInputs() const;
 
 		// Outputs
-		const ValueOutputSet &getValueOutputs() const;
-		size_t numValueOutputs();
-
-		const RangeOutputSet &getRangeOutputs() const;
-		size_t numRangeOutputs();
+		const OutputSet &getOutputs() const;
+		size_t numOutputs();
     
 	protected:
 		// Protected functions
 		void clear();
 
 		// Used by derived classes
-		ValueInput *addValueInput();
-		RangeInput *addRangeInput();
-		ValueOutput *addValueOutput(int value);
-		RangeOutput *addRangeOutput(int minValue, int maxValue);
+		Input *addInput(int minValue = 0, int maxValue = 100, bool inverted = false);
+		Output *addOutput(int minValue = 0, int maxValue = 100, bool analog = true);
 
 		// Member variables
 		string m_type;
-		ValueInputSet m_valueInputs;
-		RangeInputSet m_rangeInputs;
-		ValueOutputSet m_valueOutputs;
-		RangeOutputSet m_rangeOutputs;
+		InputSet m_inputs;
+		OutputSet m_outputs;
 	};
 
 	/** Derive from this class to register a processor type in the ProcessorFactory.

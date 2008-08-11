@@ -40,17 +40,18 @@ bool JoyStick::capture()
 
 bool JoyStick::buttonPressed(const OIS::JoyStickEvent &arg, int button)
 {
-	return sendValueStart(button);
+	return sendMaxValue(button);
 }
 
 bool JoyStick::buttonReleased(const OIS::JoyStickEvent &arg, int button)
 {
-	return sendValueStop(button);
+	return sendMinValue(button);
 }
 
 bool JoyStick::axisMoved(const OIS::JoyStickEvent &arg, int axis)
 {
-	return sendValueChanged(axis, arg.state.mAxes[axis].abs);
+	unsigned int id = m_pOISJoyStick->buttons() + axis;
+	return sendValue(id, arg.state.mAxes[axis].abs);
 }
 
 bool JoyStick::sliderMoved(const OIS::JoyStickEvent &arg, int slider)
@@ -70,12 +71,12 @@ void JoyStick::createOutputs()
 	// Buttons
 	short numButtons = m_pOISJoyStick->buttons();
 	for(short i = 0; i < numButtons; ++i)
-		addValueOutput(i);
+		addOutput(i, OIS::JoyStick::MIN_AXIS, OIS::JoyStick::MAX_AXIS, false);
 
 	// Axes
 	short numAxes = m_pOISJoyStick->axes();
 	for(short i = 0; i < numAxes; ++i)
-		addRangeOutput(OIS::JoyStick::MIN_AXIS, OIS::JoyStick::MAX_AXIS);
+		addOutput(numButtons + i, OIS::JoyStick::MIN_AXIS, OIS::JoyStick::MAX_AXIS, true);
 
 	//! @todo Pods and sliders
 }

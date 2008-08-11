@@ -7,70 +7,52 @@
 
 namespace MidiMe
 {
-	enum OutputType { OT_Value, OT_Range };
-
-	/** The base class for outputs */
+	/** This class represents an output that you can connect to an input.
+		An output has a mininum and maximum value and can be analog or digital
+		(meaning the value will be between the minimum and maximum value,
+		or toggled between the minimum and maximum value).
+	*/
 	class LIBMIDIME_API Output
 	{
 	public:
-		OutputType getType() const { return m_type; }
-
-	protected:
-		Output(OutputType type): m_type(type) {}
-		virtual ~Output() {}
-		
-		OutputType m_type;
-	};
-
-	/** An instance of the ValueOutput class sends values to a connected ValueInput class. */
-	class LIBMIDIME_API ValueOutput: public Output
-	{
-	public:
-		// Constructors and destructor
-		ValueOutput(int value): Output(OT_Value), m_value(value), m_pInput(0) {}
-		virtual ~ValueOutput() {}
-
-		// Value
-		int getValue() const { return m_value; }
-		bool sendValueStart();
-		bool sendValueStop();
+		// Constructors and destructors
+		Output(int minValue = 0, int maxValue = 100, bool analog = true);
+		virtual ~Output();
 
 		// Connection
-		ValueInput *getConnectedInput() const { return m_pInput; }
+		Input *getConnectedInput() const { return m_pInput; }
 		bool isConnected() const { return (m_pInput != 0); }
-		void connect(ValueInput *pInput) { m_pInput = pInput; if(m_pInput) m_pInput->setOutput(this); }
+		void connect(Input *pInput) { m_pInput = pInput; if(m_pInput) m_pInput->setOutput(this); }
 		void disconnect() { if(m_pInput) m_pInput->setOutput(0); m_pInput = 0; }
 
-	protected:
-		/// The connected value input
-		ValueInput *m_pInput;
-		int m_value;
-	};
-
-	/** An instance of the RangeOutput class sends values to a connected RangeInput class. */
-	class LIBMIDIME_API RangeOutput: public Output
-	{
-	public:
-		// Constructors and destructor
-		RangeOutput(int minValue, int maxValue)
-			: Output(OT_Range), m_minValue(minValue), m_maxValue(maxValue), m_pInput(0) {}
-		virtual ~RangeOutput() {}
-
-		// Range
+		// Settings
 		int getMinValue() const { return m_minValue; }
-		int getMaxValue() const { return m_maxValue; }
-		bool sendValueChanged(int value);
+		void setMinValue(int value) { m_minValue = value; }
 
-		// Connection
-		RangeInput *getConnectedInput() const { return m_pInput; }
-		bool isConnected() const { return (m_pInput != 0); }
-		void connect(RangeInput *pInput) { m_pInput = pInput; if(m_pInput) m_pInput->setOutput(this); }
-		void disconnect() { if(m_pInput) m_pInput->setOutput(0); m_pInput = 0; }
+		int getMaxValue() const { return m_maxValue; }
+		void setMaxValue(int value) { m_maxValue = value; }
+
+		bool isAnalog() const { return m_analog; }
+		void setAnalog(bool analog) { m_analog = analog; }
+
+		// Other functions
+		void sendValue(int value);
+		void sendMinValue() { sendValue(m_minValue); }
+		void sendMaxValue() { sendValue(m_maxValue); }
 
 	protected:
-		/// The connected range input
-		RangeInput *m_pInput;
+		/// The connected input
+		Input *m_pInput;
+
+		/// The minimum and maximum values for this output.
 		int m_minValue, m_maxValue;
+
+		/** If this is true, a value will be send between the minimum and maximum value.
+			Otherwise, there will be toggled between the minimum and maximum values.
+			@note This is just a hint that this output exposes (for example for widgets,
+			so they can choose to visualize the output as a slider or a button).
+		*/
+		bool m_analog;
 	};
 }
 

@@ -70,6 +70,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="QtCore4.lib QtGui4.lib"
+				GenerateDebugInformation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -198,10 +199,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libMidi-Me\Converter.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libMidi-Me\DeviceManager.cpp"
 				>
 			</File>
@@ -253,10 +250,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libMidi-Me\ControllerSignal.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libMidi-Me\Converter.h"
 				>
 			</File>
 			<File
@@ -315,6 +308,14 @@
 			Name="Widgets"
 			Filter="ui"
 			>
+		</Filter>
+		<Filter
+			Name="Documentation"
+			>
+			<File
+				RelativePath="..\..\src\libMidi-Me\libMidi-Me_doc.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
