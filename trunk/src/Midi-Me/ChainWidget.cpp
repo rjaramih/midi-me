@@ -1,9 +1,12 @@
 // Includes
 #include "ChainWidget.h"
 #include "ChainStartItem.h"
-//#include "ChainEndItem.h"
+#include "ChainEndItem.h"
 #include "ProcessorItem.h"
 #include <libMidi-Me/Chain.h>
+#include <libMidi-Me/DeviceManager.h>
+#include <libMidi-Me/InputDevice.h>
+#include <libMidi-Me/Output.h>
 using namespace MidiMe;
 
 #include <QtGui/QGraphicsScene>
@@ -57,25 +60,24 @@ void ChainWidget::update()
 	distributeProcessorItems();
 }
 
-void ChainWidget::addChainStart()
-{
-	m_pChain->addChainStart();
-}
-
-void ChainWidget::addChainEnd()
-{
-	m_pChain->addChainEnd();
-}
-
-void ChainWidget::addProcessor(const QString &type)
-{
-	m_pChain->addProcessor(type.toStdString());
-}
-
 
 /**********************
 * Protected functions *
 **********************/
+
+void ChainWidget::addChainStart(QAction *pAction)
+{
+	Output *pOutput = (Output *) pAction->data().toLongLong();
+	m_pChain->addChainStart(pOutput);
+}
+
+void ChainWidget::addProcessor(QAction *pAction)
+{
+}
+
+void ChainWidget::addChainEnd(QAction *pAction)
+{
+}
 
 void ChainWidget::resizeEvent(QResizeEvent *pEvent)
 {
@@ -97,9 +99,9 @@ void ChainWidget::contextMenuEvent(QContextMenuEvent *pEvent)
 
 	// Generate the context menu
 	QMenu *pMenu = new QMenu(this);
-	pMenu->addAction("Add chain start", this, SLOT(addChainStart()));
-	//! @todo Add processor
-	pMenu->addAction("Add chain end", this, SLOT(addChainEnd()));
+	generateChainStartMenu(pMenu);
+	generateProcessorMenu(pMenu);
+	generateChainEndMenu(pMenu);
 
 	pMenu->popup(pEvent->globalPos());
 	pEvent->accept();
@@ -127,22 +129,22 @@ void ChainWidget::onStartRemoving(ChainStart *pStart)
 
 void ChainWidget::onEndAdded(ChainEnd *pEnd)
 {
-	/*assert(m_endItems.find(pEnd) == m_endItems.end());
+	assert(m_endItems.find(pEnd) == m_endItems.end());
 
-	ChainStartItem *pItem = new ChainStartItem(pStart);
-	m_startItems[pStart] = pItem;
+	ChainEndItem *pItem = new ChainEndItem(pEnd);
+	m_endItems[pEnd] = pItem;
 	m_pScene->addItem(pItem);
 
-	update();*/
+	update();
 }
 
 void ChainWidget::onEndRemoving(ChainEnd *pEnd)
 {
-	/*assert(m_endItems.find(pEnd) != m_endItems.end());
+	assert(m_endItems.find(pEnd) != m_endItems.end());
 
 	delete m_endItems[pEnd];
 	m_endItems.erase(pEnd);
-	update();*/
+	update();
 }
 
 void ChainWidget::onProcessorAdded(Processor *pProcessor)
@@ -165,11 +167,6 @@ void ChainWidget::onProcessorRemoving(Processor *pProcessor)
 	update();
 }
 
-void ChainWidget::addProcessor(QAction *pAction)
-{
-	addProcessor(pAction->text());
-}
-
 void ChainWidget::destroyItems()
 {
 	StartItemMap::iterator startIt;
@@ -186,6 +183,60 @@ void ChainWidget::destroyItems()
 	for(processorIt = m_processorItems.begin(); processorIt != m_processorItems.end(); ++processorIt)
 		delete processorIt->second;
 	m_processorItems.clear();
+}
+
+void ChainWidget::generateChainStartMenu(QMenu *pParent)
+{
+	QMenu *pMenu = pParent->addMenu("Add chain start");
+
+	// Devices
+	DeviceManager &devMgr = DeviceManager::getInstance();
+	const InputDeviceMap &devices = devMgr.getInputDevices();
+	InputDeviceMap::const_iterator devIt;
+
+	for(devIt = devices.begin(); devIt != devices.end(); ++devIt)
+	{
+		InputDevice *pDevice = devIt->second;
+		QMenu *pDevMenu = pMenu->addMenu(devIt->first.c_str());
+		connect(pDevMenu, SIGNAL(triggered(QAction *)), SLOT(addChainStart(QAction *)));
+
+		const OutputMap &outputs = pDevice->getAllOutputs();
+		OutputMap::const_iterator it;
+		
+		for(it = outputs.begin(); it != outputs.end(); ++it)
+		{
+			unsigned int id = it->first;
+			Output *pOutput = it->second;
+
+			QString name = QString("Output %1").arg(id);
+			if(pOutput->isAnalog())
+				name += " (analog)";
+			else
+				name += " (digital)";
+
+			QAction *pAction = pDevMenu->addAction(name);
+			pAction->setData((qlonglong) pOutput);
+		}
+
+		if(outputs.empty())
+			pDevMenu->setEnabled(false);
+	}
+
+	if(devices.empty())
+		pMenu->setEnabled(false);
+}
+
+void ChainWidget::generateProcessorMenu(QMenu *pParent)
+{
+	QMenu *pMenu = pParent->addMenu("Add processor");
+
+	// TEMP
+	pMenu->setEnabled(false);
+}
+
+void ChainWidget::generateChainEndMenu(QMenu *pParent)
+{
+	QMenu *pMenu = pParent->addMenu("Add chain end");
 }
 
 void ChainWidget::distributeStartItems()
@@ -214,7 +265,7 @@ void ChainWidget::distributeEndItems()
 	if(m_endItems.empty())
 		return;
 
-	float size = (sceneRect().height() - g_margin) / m_endItems.size() - g_margin;
+	/*float size = (sceneRect().height() - g_margin) / m_endItems.size() - g_margin;
 	if(size > g_maxSize)
 		size = g_maxSize;
 
@@ -227,7 +278,7 @@ void ChainWidget::distributeEndItems()
 		endIt->second->setRect(0,0, size,size);
 		endIt->second->setPos(x,y);
 		y += size + g_margin;
-	}
+	}*/
 }
 
 void ChainWidget::distributeProcessorItems()
@@ -235,7 +286,7 @@ void ChainWidget::distributeProcessorItems()
 	if(m_processorItems.empty())
 		return;
 
-	float size = (sceneRect().height() - g_margin) / m_processorItems.size() - g_margin;
+	/*float size = (sceneRect().height() - g_margin) / m_processorItems.size() - g_margin;
 	if(size > g_maxSize)
 		size = g_maxSize;
 
@@ -248,5 +299,5 @@ void ChainWidget::distributeProcessorItems()
 		processorIt->second->setRect(0,0, size,size);
 		processorIt->second->setPos(x,y);
 		y += size + g_margin;
-	}
+	}*/
 }

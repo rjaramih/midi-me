@@ -7,9 +7,10 @@ using namespace MidiMe;
 * Constructors and destructor *
 ******************************/
 
-ChainStart::ChainStart()
-: m_pDevice(0), m_pOutput(0)
+ChainStart::ChainStart(Output *pOutput)
+: /*m_pDevice(0),*/ m_pOutput(pOutput)
 {
+	assert(m_pOutput);
 }
 
 ChainStart::~ChainStart()
@@ -21,7 +22,7 @@ ChainStart::~ChainStart()
 * Other functions *
 ******************/
 
-void ChainStart::setDevice(InputDevice *pDevice)
+/*void ChainStart::setDevice(InputDevice *pDevice)
 {
 	if(m_pDevice == pDevice)
 		return;
@@ -51,14 +52,14 @@ void ChainStart::addListener(Listener *pListener)
 void ChainStart::removeListener(Listener *pListener)
 {
 	m_listeners.erase(pListener);
-}
+}*/
 
 
 /**********************
 * Protected functions *
 **********************/
 
-void ChainStart::fireDeviceChanged(InputDevice *pOldDevice)
+/*void ChainStart::fireDeviceChanged(InputDevice *pOldDevice)
 {
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
@@ -70,4 +71,4 @@ void ChainStart::fireOutputChanged(Output *pOldOutput)
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
 		(*it)->onOutputChanged(m_pOutput, pOldOutput);
-}
+}*/

@@ -3,6 +3,7 @@
 #include "ChainWidget.h"
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/Chain.h>
+#include <libMidi-Me/MidiOutput.h>
 using namespace MidiMe;
 
 #include <QtCore/QSettings>
@@ -35,30 +36,14 @@ MainWindow::MainWindow()
 	m_pChainEditor = new ChainWidget(m_pChain, this);
 	setCentralWidget(m_pChainEditor);
 
-#if 0
-	// TEMP: hardcoded settings
-	AxisConverter *pAxis = m_pConverter->addAxisConverter(2);
-	AxisConverter::Slice slice;
-
-	// Left pedal to controller 16
-	slice.minValue = -255;
-	slice.maxValue = OIS::JoyStick::MAX_AXIS;
-	slice.controller = 16;
-	pAxis->addSlice(slice);
-
-	// Right pedal (inverted) to controller 17
-	slice.minValue = OIS::JoyStick::MIN_AXIS;
-	slice.maxValue = -257;
-	slice.beginOutputValue = 128;
-	slice.endOutputValue = 0;
-	slice.controller = 17;
-	pAxis->addSlice(slice);
-#endif
-
 	// Add ourself as a device listener (to update the device menu)
 	populateInputDeviceMenu();
 	DeviceManager::getInstance().addListener(this);
 	connect(menuInputDevice, SIGNAL(triggered(QAction *)), SLOT(selectInputDevice(QAction *)));
+
+	// Populate the output device menu
+	populateMidiOutMenu();
+	connect(menuMidiOut, SIGNAL(triggered(QAction *)), SLOT(selectMidiOut(QAction *)));
 
 	loadWindowSettings();
 }
@@ -332,4 +317,39 @@ void MainWindow::selectInputDevice(QAction *pAction)
 		pDevWidget->setAttribute(Qt::WA_DeleteOnClose);
 		pDevWidget->show();
 	}
+}
+
+void MainWindow::populateMidiOutMenu()
+{
+	menuMidiOut->clear();
+
+	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
+	
+	unsigned int numPorts = pMidi->numPorts();
+	for(unsigned int i = 0; i < numPorts; ++i)
+	{
+		QAction *pAction = menuMidiOut->addAction(pMidi->getPortName(i).c_str());
+		pAction->setData(i);
+		
+		pAction->setCheckable(true);
+		if(i == pMidi->getOpenedPort())
+			pAction->setChecked(true);
+	}
+}
+
+void MainWindow::selectMidiOut(QAction *pAction)
+{
+	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
+	unsigned int port = pAction->data().toUInt();
+
+	if(pMidi->isOpened() && pMidi->getOpenedPort() == port)
+		return;
+
+	// Close if already opened
+	if(pMidi->isOpened())
+		if(!pMidi->close())
+			QMessageBox::warning(this, "Midi output error", pMidi->getLastError().c_str());
+
+	if(!pMidi->open(port))
+		QMessageBox::warning(this, "Midi output error", pMidi->getLastError().c_str());
 }

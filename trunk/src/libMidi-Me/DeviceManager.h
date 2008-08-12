@@ -18,7 +18,8 @@ namespace MidiMe
 	/** This singleton manages the available input and output devices.
 		When a device is instantiated, it automatically registers itself here.
 
-		.For the moment, there is only one midi-out device as output.
+		For the moment, there is only one midi-out device as output.
+		@todo Support multiple output devices
 	*/
 	class LIBMIDIME_API DeviceManager: public LastError
 	{
