@@ -24,7 +24,7 @@ static const float g_stdHeight(15.0f);
 ******************************/
 
 ChainStartItem::ChainStartItem(ChainStart *pChainStart, QGraphicsItem *pParent)
-: QGraphicsRectItem(pParent), m_pChainStart(pChainStart), m_pOutputItem(0)
+: OutputItem(pChainStart->getOutput(), pParent)/*QGraphicsRectItem(pParent)*/, m_pChainStart(pChainStart)/*, m_pOutputItem(0)*/
 {
 	assert(m_pChainStart);
 
@@ -33,14 +33,16 @@ ChainStartItem::ChainStartItem(ChainStart *pChainStart, QGraphicsItem *pParent)
 	setFlag(ItemIsMovable);
 	setFlag(ItemIsFocusable);
 
-	createOutputItem();
-	m_pChainStart->addListener(this);
+	/*createOutputItem();
+	m_pChainStart->addListener(this);*/
+
+	//QString toolTip = m_pChainStart->getDevice()->getName().c_str();
 }
 
 ChainStartItem::~ChainStartItem()
 {
-	m_pChainStart->removeListener(this);
-	delete m_pOutputItem;
+	/*m_pChainStart->removeListener(this);
+	delete m_pOutputItem;*/
 }
 
 
@@ -53,7 +55,7 @@ ChainStartItem::~ChainStartItem()
 * Protected functions *
 **********************/
 
-void ChainStartItem::selectDevice(QAction *pAction)
+/*void ChainStartItem::selectDevice(QAction *pAction)
 {
 	string name = pAction->text().toStdString();
 	m_pChainStart->setDevice(DeviceManager::getInstance().getInputDevice(name));
@@ -63,11 +65,11 @@ void ChainStartItem::selectOutput(QAction *pAction)
 {
 	size_t id = pAction->data().toInt();
 	m_pChainStart->setOutput(m_pChainStart->getDevice()->getOutput(id));
-}
+}*/
 
 void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 {
-	DeviceManager &devMgr = DeviceManager::getInstance();
+	/*DeviceManager &devMgr = DeviceManager::getInstance();
 	InputDevice *pDevice = m_pChainStart->getDevice();
 
 	// Generate the context menu
@@ -106,8 +108,7 @@ void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 			unsigned int id = it->first;
 			Output *pOutput = it->second;
 
-			QString name = "Output %1";
-			name.arg(id);
+			QString name = QString("Output %1").arg(id);
 			if(pOutput->isAnalog())
 				name += " (analog)";
 			else
@@ -129,7 +130,9 @@ void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 
 	
 	pMenu->popup(pEvent->screenPos());
-	pEvent->accept();
+	pEvent->accept();*/
+
+	return OutputItem::contextMenuEvent(pEvent);
 }
 
 QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -163,7 +166,7 @@ QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &v
 	return QGraphicsRectItem::itemChange(change, value);
 }
 
-void ChainStartItem::onDeviceChanged(InputDevice *pDevice, InputDevice *pOldDevice)
+/*void ChainStartItem::onDeviceChanged(InputDevice *pDevice, InputDevice *pOldDevice)
 {
 	setToolTip(pDevice->getName().c_str());
 }
@@ -188,4 +191,4 @@ void ChainStartItem::createOutputItem()
 	}
 
 	m_pOutputItem = new OutputItem(pOutput, this);
-}
+}*/

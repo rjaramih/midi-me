@@ -77,8 +77,14 @@
     </widget>
     <addaction name="menuInputDevice" />
    </widget>
+   <widget class="QMenu" name="menuMidiOut" >
+    <property name="title" >
+     <string>&amp;Midi-out</string>
+    </property>
+   </widget>
    <addaction name="menu_File" />
    <addaction name="menuView" />
+   <addaction name="menuMidiOut" />
    <addaction name="menuHelp" />
   </widget>
   <widget class="QToolBar" name="toolBar" >

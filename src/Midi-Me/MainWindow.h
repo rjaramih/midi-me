@@ -37,6 +37,8 @@ namespace MidiMe
 		void openRecentFile(QAction *pAction);
 		void populateInputDeviceMenu();
 		void selectInputDevice(QAction *pAction);
+		void populateMidiOutMenu();
+		void selectMidiOut(QAction *pAction);
 
 	protected:
 		// Events

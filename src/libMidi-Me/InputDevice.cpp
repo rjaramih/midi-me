@@ -81,17 +81,13 @@ bool InputDevice::sendValue(unsigned int id, int value)
 
 bool InputDevice::sendMinValue(unsigned int id)
 {
-	cerr << "1" << endl;
 	Output *pOutput = getOutput(id);
 	if(!pOutput)
 		return false;
 
-	cerr << "2" << endl;
 	pOutput->sendMinValue();
-	cerr << "3" << endl;
 
 	fireMinValue(pOutput);
-	cerr << "4" << endl;
 	return true;
 }
 

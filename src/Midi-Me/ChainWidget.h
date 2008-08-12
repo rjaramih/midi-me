@@ -9,6 +9,7 @@
 
 // Forward declarations
 class QGraphicsScene;
+class QMenu;
 
 namespace MidiMe
 {
@@ -28,12 +29,10 @@ namespace MidiMe
 
 	public slots:
 		void update();
-
-		void addChainStart();
-		void addChainEnd();
-		void addProcessor(const QString &type);
     
 	protected slots:
+		void addChainStart(QAction *pAction);
+		void addChainEnd(QAction *pAction);
 		void addProcessor(QAction *pAction);
 
 	protected:
@@ -51,6 +50,10 @@ namespace MidiMe
 
 		// Other functions
 		void destroyItems();
+		void generateChainStartMenu(QMenu *pParent);
+		void generateProcessorMenu(QMenu *pParent);
+		void generateChainEndMenu(QMenu *pParent);
+
 		void distributeStartItems();
 		void distributeEndItems();
 		void distributeProcessorItems();

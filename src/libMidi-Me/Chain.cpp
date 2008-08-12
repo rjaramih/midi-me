@@ -41,9 +41,9 @@ size_t Chain::numChainStartItems() const
 	return m_startItems.size();
 }
 
-ChainStart *Chain::addChainStart()
+ChainStart *Chain::addChainStart(Output *pOutput)
 {
-	ChainStart *pStart = new ChainStart();
+	ChainStart *pStart = new ChainStart(pOutput);
 	m_startItems.insert(pStart);
 	
 	fireStartAdded(pStart);
