@@ -102,14 +102,11 @@ void ChainWidget::addChainEnd(QAction *pAction)
 		}
 	}
 
-	ChainEnd *pEnd = m_pChain->addChainEnd();
 	ControllerSignal *pCC = pMidi->createControllerSignal();
-
 	// TEMP
 	pCC->setController(16);
 
-	pEnd->setMidi(pMidi);
-	pEnd->setInput(pCC);
+	ChainEnd *pEnd = m_pChain->addChainEnd(pMidi, pCC);
 }
 
 void ChainWidget::resizeEvent(QResizeEvent *pEvent)
@@ -147,6 +144,19 @@ void ChainWidget::onStartAdded(ChainStart *pStart)
 	ChainStartItem *pItem = new ChainStartItem(pStart);
 	m_startItems[pStart] = pItem;
 	m_pScene->addItem(pItem);
+	
+	// Position the item on the left side
+	float x = -1.0f;
+	float y = g_margin;
+	pItem->setPos(x,y);
+
+	// Make sure we don't collide with other items
+	//! @todo Find out why there is always one item in the collidingItems list
+	while(pItem->collidingItems().count() > 1)
+	{
+		y += 2 * g_margin;
+		pItem->setPos(x,y);
+	}
 
 	update();
 }
@@ -167,6 +177,19 @@ void ChainWidget::onEndAdded(ChainEnd *pEnd)
 	ChainEndItem *pItem = new ChainEndItem(pEnd);
 	m_endItems[pEnd] = pItem;
 	m_pScene->addItem(pItem);
+
+	// Position the item on the right side
+	float x = sceneRect().right() - pItem->rect().width() + 1.0f;
+	float y = g_margin;
+	pItem->setPos(x,y);
+
+	// Make sure we don't collide with other items
+	//! @todo Find out why there is always one item in the collidingItems list
+	while(pItem->collidingItems().count() > 1)
+	{
+		y += 2 * g_margin;
+		pItem->setPos(x,y);
+	}
 
 	update();
 }
