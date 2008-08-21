@@ -1,5 +1,6 @@
 // Includes
 #include "ChainStart.h"
+#include "InputDevice.h"
 using namespace MidiMe;
 
 
@@ -7,10 +8,10 @@ using namespace MidiMe;
 * Constructors and destructor *
 ******************************/
 
-ChainStart::ChainStart(Output *pOutput)
-: /*m_pDevice(0),*/ m_pOutput(pOutput)
+ChainStart::ChainStart(InputDevice *pDevice, unsigned int outputID)
+: m_pDevice(pDevice), m_outputID(outputID)
 {
-	assert(m_pOutput);
+	assert(m_pDevice && m_pDevice->outputExists(outputID));
 }
 
 ChainStart::~ChainStart()
@@ -22,53 +23,12 @@ ChainStart::~ChainStart()
 * Other functions *
 ******************/
 
-/*void ChainStart::setDevice(InputDevice *pDevice)
+Output *ChainStart::getOutput() const
 {
-	if(m_pDevice == pDevice)
-		return;
-
-	InputDevice *pOldDevice = m_pDevice;
-	m_pDevice = pDevice;
-
-	fireDeviceChanged(pOldDevice);
+	return m_pDevice->getOutput(m_outputID);
 }
-
-void ChainStart::setOutput(Output *pOutput)
-{
-	if(m_pOutput == pOutput)
-		return;
-
-	Output *pOldOutput = m_pOutput;
-	m_pOutput = pOutput;
-
-	fireOutputChanged(pOldOutput);
-}
-
-void ChainStart::addListener(Listener *pListener)
-{
-	m_listeners.insert(pListener);
-}
-
-void ChainStart::removeListener(Listener *pListener)
-{
-	m_listeners.erase(pListener);
-}*/
 
 
 /**********************
 * Protected functions *
 **********************/
-
-/*void ChainStart::fireDeviceChanged(InputDevice *pOldDevice)
-{
-	ListenerSet::iterator it;
-	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
-		(*it)->onDeviceChanged(m_pDevice, pOldDevice);
-}
-
-void ChainStart::fireOutputChanged(Output *pOldOutput)
-{
-	ListenerSet::iterator it;
-	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
-		(*it)->onOutputChanged(m_pOutput, pOldOutput);
-}*/

@@ -4,6 +4,7 @@
 // Includes
 #include "global.h"
 #include <QtGui/QGraphicsRectItem>
+#include <libMidi-Me/Input.h>
 
 namespace MidiMe
 {
@@ -11,7 +12,7 @@ namespace MidiMe
 	class Input;
 
 	/** Class Description */
-	class InputItem: public QGraphicsRectItem
+	class InputItem: public QGraphicsRectItem, protected Input::Listener
 	{
 	public:
 		// Constructors and destructor
@@ -23,11 +24,22 @@ namespace MidiMe
 
 	protected:
 		// Events
-		virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
-		virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
+		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
+		// Drag-and-drop
+		void mousePressEvent(QGraphicsSceneMouseEvent *pEvent);
+		void dragEnterEvent(QGraphicsSceneDragDropEvent *pEvent);
+		void dragMoveEvent(QGraphicsSceneDragDropEvent *pEvent);
+		void dragLeaveEvent(QGraphicsSceneDragDropEvent *pEvent);
+		void dropEvent(QGraphicsSceneDragDropEvent *pEvent);
+
+		// Input::Listener functions
+		void onValue(Input *pInput, int value);
 
 		// Member variables
 		Input *m_pInput;
+		QGraphicsRectItem *m_pMeterItem;
 	};
 }
 

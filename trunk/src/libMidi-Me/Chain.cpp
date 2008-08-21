@@ -41,9 +41,9 @@ size_t Chain::numChainStartItems() const
 	return m_startItems.size();
 }
 
-ChainStart *Chain::addChainStart(Output *pOutput)
+ChainStart *Chain::addChainStart(InputDevice *pDevice, unsigned int outputID)
 {
-	ChainStart *pStart = new ChainStart(pOutput);
+	ChainStart *pStart = new ChainStart(pDevice, outputID);
 	m_startItems.insert(pStart);
 	
 	fireStartAdded(pStart);
@@ -90,9 +90,9 @@ size_t Chain::numChainEndItems() const
 	return m_endItems.size();
 }
 
-ChainEnd *Chain::addChainEnd()
+ChainEnd *Chain::addChainEnd(MidiOutput *pMidi, Input *pInput)
 {
-	ChainEnd *pEnd = new ChainEnd();
+	ChainEnd *pEnd = new ChainEnd(pMidi, pInput);
 	m_endItems.insert(pEnd);
 
 	fireEndAdded(pEnd);

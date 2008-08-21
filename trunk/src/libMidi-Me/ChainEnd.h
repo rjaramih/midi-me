@@ -15,41 +15,18 @@ namespace MidiMe
 	class LIBMIDIME_API ChainEnd
 	{
 	public:
-		class Listener
-		{
-		public:
-			virtual ~Listener() {}
-			virtual void onMidiChanged(MidiOutput *pMidi, MidiOutput *pOldMidi) = 0;
-			virtual void onInputChanged(Input *pInput, Input *pOldInput) = 0;
-		};
-
 		// Constructors and destructor
-		ChainEnd();
+		ChainEnd(MidiOutput *pMidi, Input *pInput);
 		virtual ~ChainEnd();
 
-		// Device
+		// Information
 		MidiOutput *getMidi() const { return m_pMidi; }
-		void setMidi(MidiOutput *pMidi);
-
-		// Input
 		Input *getInput() const { return m_pInput; }
-		void setInput(Input *pInput);
-    
-		// Listeners
-		void addListener(Listener *pListener);
-		void removeListener(Listener *pListener);
     
 	protected:
-		// Protected functions
-		void fireMidiChanged(MidiOutput *pOldMidi);
-		void fireInputChanged(Input *pOldInput);
-
 		// Member variables
 		MidiOutput *m_pMidi;
 		Input *m_pInput;
-
-		typedef std::set<Listener *> ListenerSet;
-		ListenerSet m_listeners;
 	};
 }
 

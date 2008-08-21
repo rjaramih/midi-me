@@ -24,33 +24,24 @@ static const float g_stdHeight(15.0f);
 ******************************/
 
 ChainEndItem::ChainEndItem(ChainEnd *pChainEnd, QGraphicsItem *pParent)
-: QGraphicsRectItem(pParent), m_pChainEnd(pChainEnd), m_pInputItem(0)
+: InputItem(pChainEnd->getInput(), pParent), m_pChainEnd(pChainEnd)
 {
 	assert(m_pChainEnd);
 
 	// Setup item
-	setFlag(ItemIsSelectable);
+	//setFlag(ItemIsSelectable);
 	setFlag(ItemIsMovable);
-	setFlag(ItemIsFocusable);
-
-	createInputItem();
-	m_pChainEnd->addListener(this);
+	//setFlag(ItemIsFocusable);
 }
 
 ChainEndItem::~ChainEndItem()
 {
-	m_pChainEnd->removeListener(this);
-	delete m_pInputItem;
 }
 
 
 /******************
 * Other functions *
 ******************/
-
-void ChainEndItem::showSettings()
-{
-}
 
 
 /**********************
@@ -59,16 +50,7 @@ void ChainEndItem::showSettings()
 
 void ChainEndItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 {
-	DeviceManager &devMgr = DeviceManager::getInstance();
-	MidiOutput *pMidi = m_pChainEnd->getMidi();
-
-	// Generate the context menu
-	QMenu *pMenu = new QMenu(scene()->views().first());
-
-	pMenu->addAction("Settings...", this, SLOT(showSettings()));
-	
-	pMenu->popup(pEvent->screenPos());
-	pEvent->accept();
+	return InputItem::contextMenuEvent(pEvent);
 }
 
 QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -99,31 +81,5 @@ QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &val
 		return pos;
 	}
 
-	return QGraphicsRectItem::itemChange(change, value);
-}
-
-void ChainEndItem::onMidiChanged(MidiOutput *pMidi, MidiOutput *pOldMidi)
-{
-}
-
-void ChainEndItem::onInputChanged(Input *pInput, Input *pOldInput)
-{
-	// Recreate the input item
-	createInputItem();
-}
-
-void ChainEndItem::createInputItem()
-{
-	// Destroy old output item
-	delete m_pInputItem;
-	m_pInputItem = 0;
-
-	Input *pInput = m_pChainEnd->getInput();
-	if(!pInput)
-	{
-		setRect(0,0, g_stdWidth, g_stdHeight);
-		return;
-	}
-
-	m_pInputItem = new InputItem(pInput, this);
+	return InputItem::itemChange(change, value);
 }

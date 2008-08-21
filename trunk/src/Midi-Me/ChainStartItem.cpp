@@ -29,20 +29,24 @@ ChainStartItem::ChainStartItem(ChainStart *pChainStart, QGraphicsItem *pParent)
 	assert(m_pChainStart);
 
 	// Setup item
-	setFlag(ItemIsSelectable);
+	//setFlag(ItemIsSelectable);
 	setFlag(ItemIsMovable);
-	setFlag(ItemIsFocusable);
+	//setFlag(ItemIsFocusable);
 
-	/*createOutputItem();
-	m_pChainStart->addListener(this);*/
+	QString toolTip = m_pChainStart->getDevice()->getName().c_str();
+	toolTip += QString("\nOutput %1").arg(m_pChainStart->getOutputID());
+	
+	Output *pOutput = m_pChainStart->getOutput();
+	if(pOutput->isAnalog())
+		toolTip += " (analog)";
+	else
+		toolTip += " (digital)";
 
-	//QString toolTip = m_pChainStart->getDevice()->getName().c_str();
+	setToolTip(toolTip);
 }
 
 ChainStartItem::~ChainStartItem()
 {
-	/*m_pChainStart->removeListener(this);
-	delete m_pOutputItem;*/
 }
 
 
@@ -55,83 +59,8 @@ ChainStartItem::~ChainStartItem()
 * Protected functions *
 **********************/
 
-/*void ChainStartItem::selectDevice(QAction *pAction)
-{
-	string name = pAction->text().toStdString();
-	m_pChainStart->setDevice(DeviceManager::getInstance().getInputDevice(name));
-}
-
-void ChainStartItem::selectOutput(QAction *pAction)
-{
-	size_t id = pAction->data().toInt();
-	m_pChainStart->setOutput(m_pChainStart->getDevice()->getOutput(id));
-}*/
-
 void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 {
-	/*DeviceManager &devMgr = DeviceManager::getInstance();
-	InputDevice *pDevice = m_pChainStart->getDevice();
-
-	// Generate the context menu
-	QMenu *pMenu = new QMenu(scene()->views().first());
-
-	
-	// Input devices
-	QMenu *pDeviceMenu = pMenu->addMenu("Input device");
-	connect(pDeviceMenu, SIGNAL(triggered(QAction *)), SLOT(selectDevice(QAction *)));
-
-	const InputDeviceMap &devices = devMgr.getInputDevices();
-	InputDeviceMap::const_iterator devIt;
-	for(devIt = devices.begin(); devIt != devices.end(); ++devIt)
-	{
-		QAction *pAction = pDeviceMenu->addAction(devIt->first.c_str());
-		pAction->setCheckable(true);
-
-		if(pDevice == devIt->second)
-			pAction->setChecked(true);
-	}
-
-	if(devices.empty())
-		pDeviceMenu->setEnabled(false);
-	
-	// Outputs for the selected input device
-	QMenu *pOutputMenu = pMenu->addMenu("Signal");
-	connect(pOutputMenu, SIGNAL(triggered(QAction *)), SLOT(selectOutput(QAction *)));
-
-	if(pDevice)
-	{
-		const OutputMap &outputs = pDevice->getAllOutputs();
-		OutputMap::const_iterator it;
-		
-		for(it = outputs.begin(); it != outputs.end(); ++it)
-		{
-			unsigned int id = it->first;
-			Output *pOutput = it->second;
-
-			QString name = QString("Output %1").arg(id);
-			if(pOutput->isAnalog())
-				name += " (analog)";
-			else
-				name += " (digital)";
-
-			QAction *pAction = pOutputMenu->addAction(name);
-			pAction->setData(id);
-			pAction->setCheckable(true);
-
-			if(m_pChainStart->getOutput() == pOutput)
-				pAction->setChecked(true);
-		}
-
-		if(outputs.empty())
-			pOutputMenu->setEnabled(false);
-	}
-	else
-		pOutputMenu->setEnabled(false);
-
-	
-	pMenu->popup(pEvent->screenPos());
-	pEvent->accept();*/
-
 	return OutputItem::contextMenuEvent(pEvent);
 }
 
@@ -163,32 +92,5 @@ QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &v
 		return pos;
 	}
 
-	return QGraphicsRectItem::itemChange(change, value);
+	return OutputItem::itemChange(change, value);
 }
-
-/*void ChainStartItem::onDeviceChanged(InputDevice *pDevice, InputDevice *pOldDevice)
-{
-	setToolTip(pDevice->getName().c_str());
-}
-
-void ChainStartItem::onOutputChanged(Output *pOutput, Output *pOldOutput)
-{
-	// Recreate the output item
-	createOutputItem();
-}
-
-void ChainStartItem::createOutputItem()
-{
-	// Destroy old output item
-	delete m_pOutputItem;
-	m_pOutputItem = 0;
-
-	Output *pOutput = m_pChainStart->getOutput();
-	if(!pOutput)
-	{
-		setRect(0,0, g_stdWidth, g_stdHeight);
-		return;
-	}
-
-	m_pOutputItem = new OutputItem(pOutput, this);
-}*/

@@ -59,9 +59,9 @@ int main(int argc, char *argv[])
 	app.setApplicationName("MidiMe");
 
 	// create and show main window
-	MainWindow window;
-	DeviceManager::getInstance().setWindowHandle((size_t) window.winId());
-	window.show();
+	MainWindow *pWindow = new MainWindow();
+	DeviceManager::getInstance().setWindowHandle((size_t) pWindow->winId());
+	pWindow->show();
 
 #if 1
 	// TEMP: Start OIS joystick plugin
@@ -103,7 +103,9 @@ int main(int argc, char *argv[])
 	// Start the application's main loop
 	int result = app.exec();
 
-	// Make sure all plugins are stopped before the application ends
+	// Make sure everyting is cleaned up before the application ends
+	delete pWindow;
 	pPluginMgr->stopAll();
+
 	return result;
 }

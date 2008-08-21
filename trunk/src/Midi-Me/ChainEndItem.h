@@ -3,7 +3,7 @@
 
 // Includes
 #include "global.h"
-#include <QtGui/QGraphicsRectItem>
+#include "InputItem.h"
 #include <libMidi-Me/ChainEnd.h>
 
 // Forward declarations
@@ -15,7 +15,7 @@ namespace MidiMe
 	class InputItem;
 
 	/** Class Description */
-	class ChainEndItem: public QObject, public QGraphicsRectItem, protected ChainEnd::Listener
+	class ChainEndItem: public QObject, public InputItem
 	{
 		Q_OBJECT
 
@@ -25,25 +25,14 @@ namespace MidiMe
 		virtual ~ChainEndItem();
 
 		// Other functions
-    
-	public slots:
-		void showSettings();
 
 	protected:
 		// Events
 		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
-		// ChainEnd::Listener functions
-		void onMidiChanged(MidiOutput *pMidi, MidiOutput *pOldMidi);
-		void onInputChanged(Input *pInput, Input *pOldInput);
-
-		// Other functions
-		void createInputItem();
-
 		// Member variables
 		ChainEnd *m_pChainEnd;
-		InputItem *m_pInputItem;
 	};
 }
 
