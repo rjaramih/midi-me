@@ -12,7 +12,9 @@ class RtMidiOut;
 namespace MidiMe
 {
 	// Forward declarations
+	class InputDevice;
 	class Output;
+	class MidiOutput;
 
 	class ChainStart;
 	typedef std::set<ChainStart *> ChainStartSet;
@@ -49,14 +51,14 @@ namespace MidiMe
 		// Chain start
 		const ChainStartSet &getChainStart() const;
 		size_t numChainStartItems() const;
-		ChainStart *addChainStart(Output *pOutput);
+		ChainStart *addChainStart(InputDevice *pDevice, unsigned int outputID);
 		void removeChainStart(ChainStart *pStart);
 		void clearChainStart();
 
 		// Chain end
 		const ChainEndSet &getChainEnd() const;
 		size_t numChainEndItems() const;
-		ChainEnd *addChainEnd();
+		ChainEnd *addChainEnd(MidiOutput *pMidi, Input *pInput);
 		void removeChainEnd(ChainEnd *pEnd);
 		void clearChainEnd();
 

@@ -6,6 +6,9 @@
 #include <QtGui/QGraphicsRectItem>
 #include <libMidi-Me/Output.h>
 
+// Forward declarations
+class QGraphicsSceneMouseEvent;
+
 namespace MidiMe
 {
 	// Forward declarations
@@ -26,6 +29,13 @@ namespace MidiMe
 		// Events
 		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+		
+		// Drag-and-drop
+		void mousePressEvent(QGraphicsSceneMouseEvent *pEvent);
+		void dragEnterEvent(QGraphicsSceneDragDropEvent *pEvent);
+		void dragMoveEvent(QGraphicsSceneDragDropEvent *pEvent);
+		void dragLeaveEvent(QGraphicsSceneDragDropEvent *pEvent);
+		void dropEvent(QGraphicsSceneDragDropEvent *pEvent);
 
 		// Output::Listener functions
 		void onValue(Output *pOutput, int value);
