@@ -73,12 +73,15 @@ QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &val
 		if(pos.y() > maxY)
 			pos.setY(maxY);
 
-		// Make sure the item doesn't collide with another item
-		/*QList<QGraphicsItem *> coll = collidingItems();
-		if(!coll.empty())
-			return this->pos();*/
-
 		return pos;
+	}
+	else if(change == ItemPositionHasChanged)
+	{
+		//! @todo Why is there always one colliding item?
+		if(collidingItems().size() > 1)
+			setBrush(Qt::red);
+		else
+			setBrush(Qt::NoBrush);
 	}
 
 	return InputItem::itemChange(change, value);

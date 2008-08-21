@@ -12,7 +12,9 @@ class RtMidiOut;
 namespace MidiMe
 {
 	// Forward declarations
+	class Input;
 	class InputDevice;
+
 	class Output;
 	class MidiOutput;
 
