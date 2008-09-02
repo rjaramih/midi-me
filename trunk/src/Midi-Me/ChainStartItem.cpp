@@ -23,8 +23,8 @@ static const float g_stdHeight(15.0f);
 * Constructors and destructor *
 ******************************/
 
-ChainStartItem::ChainStartItem(ChainStart *pChainStart, QGraphicsItem *pParent)
-: OutputItem(pChainStart->getOutput(), pParent)/*QGraphicsRectItem(pParent)*/, m_pChainStart(pChainStart)/*, m_pOutputItem(0)*/
+ChainStartItem::ChainStartItem(ChainWidget *pChainWidget, ChainStart *pChainStart)
+: OutputItem(pChainWidget, pChainStart->getOutput()), m_pChainStart(pChainStart)
 {
 	assert(m_pChainStart);
 
@@ -54,6 +54,14 @@ ChainStartItem::~ChainStartItem()
 * Other functions *
 ******************/
 
+/** Adjust the current position so it fits the viewport */
+void ChainStartItem::adjustPosition()
+{
+	QPointF position = pos();
+	adjustPosition(position);
+	setPos(position);
+}
+
 
 /**********************
 * Protected functions *
@@ -68,23 +76,9 @@ QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &v
 {
 	if(change == ItemPositionChange)
 	{
-		assert(scene() && scene()->views().size() == 1);
-		QGraphicsView *pView = scene()->views().first();
-
-		QPointF pos = value.toPointF();
-
-		// Make sure the item stays at the left edge
-		pos.setX(-1.0f);
-
-		// Make sure the item stays in the visible scene
-		float maxY = pView->sceneRect().bottom() - rect().height() - g_margin;
-		float posY = pos.y();
-		if(pos.y() < 0.0f)
-			pos.setY(0.0f);
-		if(pos.y() > maxY)
-			pos.setY(maxY);
-
-		return pos;
+		QPointF position = value.toPointF();
+		adjustPosition(position);
+		return position;
 	}
 	else if(change == ItemPositionHasChanged)
 	{
@@ -96,4 +90,21 @@ QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &v
 	}
 
 	return OutputItem::itemChange(change, value);
+}
+
+void ChainStartItem::adjustPosition(QPointF &position)
+{
+	assert(scene() && scene()->views().size() == 1);
+	QGraphicsView *pView = scene()->views().first();
+
+	// Make sure the item stays at the left edge
+	position.setX(-1.0f);
+
+	// Make sure the item stays in the visible scene
+	float maxY = pView->sceneRect().bottom() - rect().height() - g_margin;
+	float posY = position.y();
+	if(position.y() < g_margin)
+		position.setY(g_margin);
+	if(position.y() > maxY)
+		position.setY(maxY);
 }

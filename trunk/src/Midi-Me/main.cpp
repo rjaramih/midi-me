@@ -71,6 +71,13 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+	// TEMP: Start standard processors plugin
+	if(!pPluginMgr->start("StandardProcessors"))
+	{
+		cerr << "Error starting standard processors plugin!" << endl;
+		return -1;
+	}
+
 	// TEMP: Register dummy device
 	DummyDevice dummyDevice;
 

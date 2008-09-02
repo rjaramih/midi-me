@@ -3,12 +3,15 @@
 #include "ChainStartItem.h"
 #include "ChainEndItem.h"
 #include "ProcessorItem.h"
+#include "EdgeItem.h"
 #include <libMidi-Me/Chain.h>
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/InputDevice.h>
 #include <libMidi-Me/Output.h>
 #include <libMidi-Me/MidiOutput.h>
 #include <libMidi-Me/ControllerSignal.h>
+#include <libMidi-Me/ProcessorFactory.h>
+#include <libMidi-Me/Processor.h>
 using namespace MidiMe;
 
 #include <QtGui/QGraphicsScene>
@@ -29,7 +32,8 @@ static const float g_maxSize(100.0f);
 ******************************/
 
 ChainWidget::ChainWidget(Chain *pChain, QWidget *pParent)
-: QGraphicsView(pParent), m_pChain(pChain)
+: QGraphicsView(pParent), m_pChain(pChain), m_state(State_Normal)
+, m_pConnectingEdge(0)
 {
 	assert(m_pChain);
 
@@ -63,6 +67,88 @@ void ChainWidget::update()
 	distributeProcessorItems();
 }
 
+EdgeItem *ChainWidget::createEdge(OutputItem *pOutput, InputItem *pInput)
+{
+	EdgeItem *pEdge = new EdgeItem(this, pInput, pOutput);
+	m_edgeItems.insert(pEdge);
+
+	return pEdge;
+}
+
+void ChainWidget::destroyEdge(EdgeItem *pEdge)
+{
+	m_edgeItems.erase(pEdge);
+	delete pEdge;
+}
+
+void ChainWidget::startConnecting(const QPointF &mousePos)
+{
+	assert(m_state == State_Normal);
+
+	OutputItem *pOutput = 0;
+	InputItem *pInput = 0;
+	ChainItem *pItem = 0;
+
+	QList<QGraphicsItem *> items = m_pScene->items(mousePos);
+	for(int i = 0; i < items.size() && !(pInput || pOutput); ++i)
+	{
+		if(items.at(i)->type() == InputItem::Type)
+			pItem = pInput = qgraphicsitem_cast<InputItem *>(items.at(i));
+		else if(items.at(i)->type() == OutputItem::Type)
+			pItem = pOutput = qgraphicsitem_cast<OutputItem *>(items.at(i));
+	}
+
+	if(pItem)
+	{
+		// First disconnect if alread connected
+		if(pItem->isConnected())
+			pItem->disconnect();
+
+		// Create the temporary connection
+		m_pConnectingEdge = new EdgeItem(this, pInput, pOutput);
+		m_pConnectingEdge->setTempPosition(mousePos);
+
+		// Set the connecting state
+		m_state = State_Connecting;
+	}
+}
+
+void ChainWidget::stopConnecting(const QPointF &mousePos)
+{
+	assert(m_state == State_Connecting && m_pConnectingEdge);
+
+	OutputItem *pOutputItem = m_pConnectingEdge->getOutputItem();
+	InputItem *pInputItem = m_pConnectingEdge->getInputItem();
+
+	QList<QGraphicsItem *> items = m_pScene->items(mousePos);
+	for(int i = 0; i < items.size() && !(pInputItem && pOutputItem); ++i)
+	{
+		if(items.at(i)->type() == OutputItem::Type && pInputItem)
+		{
+			pOutputItem = qgraphicsitem_cast<OutputItem *>(items.at(i));
+			
+			// Connect if not yet connected
+			if(!pOutputItem->isConnected())
+				pOutputItem->connect(pInputItem);
+		}
+		else if(items.at(i)->type() == InputItem::Type && pOutputItem)
+		{
+			pInputItem = qgraphicsitem_cast<InputItem *>(items.at(i));
+
+			// Connect if not yet connected
+			if(!pInputItem->isConnected())
+				m_pConnectingEdge->getOutputItem()->connect(pInputItem);
+		}
+	}
+
+	// Remove the temporary connection line
+	delete m_pConnectingEdge;
+	m_pConnectingEdge = 0;
+
+	// Reset the current state
+	m_state = State_Normal;
+}
+
 
 /**********************
 * Protected functions *
@@ -80,6 +166,7 @@ void ChainWidget::addChainStart(QAction *pAction)
 
 void ChainWidget::addProcessor(QAction *pAction)
 {
+	m_pChain->addProcessor(pAction->text().toStdString());
 }
 
 void ChainWidget::addChainEnd(QAction *pAction)
@@ -118,32 +205,63 @@ void ChainWidget::resizeEvent(QResizeEvent *pEvent)
 	update();
 }
 
-void ChainWidget::contextMenuEvent(QContextMenuEvent *pEvent)
+void ChainWidget::mousePressEvent(QMouseEvent *pEvent)
 {
-	// Only show chain context menu if not on item
-	QPointF scenePos = mapToScene(pEvent->pos());
-	QGraphicsItem *pItem = m_pScene->itemAt(scenePos);
-	if(pItem)
-		return QGraphicsView::contextMenuEvent(pEvent);
+	if(m_state == State_Normal && pEvent->button() == Qt::RightButton)
+	{
+		QPointF scenePos = mapToScene(pEvent->pos());
+		startConnecting(scenePos);
+		pEvent->accept();
+	}
+	else
+		QGraphicsView::mousePressEvent(pEvent);
+}
 
+void ChainWidget::mouseReleaseEvent(QMouseEvent *pEvent)
+{
+	if(m_state == State_Normal && pEvent->button() == Qt::RightButton)
+	{
+		// Only show if not on item
+		QPointF scenePos = mapToScene(pEvent->pos());
+		QGraphicsItem *pItem = m_pScene->itemAt(scenePos);
+		if(pItem)
+			return QGraphicsView::mouseReleaseEvent(pEvent);
 
-	// Generate the context menu
-	QMenu *pMenu = new QMenu(this);
-	generateChainStartMenu(pMenu);
-	generateProcessorMenu(pMenu);
-	generateChainEndMenu(pMenu);
+		// Generate the context menu
+		QMenu *pMenu = new QMenu(this);
+		generateChainStartMenu(pMenu);
+		generateProcessorMenu(pMenu);
+		generateChainEndMenu(pMenu);
 
-	pMenu->popup(pEvent->globalPos());
-	pEvent->accept();
+		pMenu->popup(pEvent->globalPos());
+	}
+	if(m_state == State_Connecting && pEvent->button() == Qt::RightButton)
+	{
+		QPointF scenePos = mapToScene(pEvent->pos());
+		stopConnecting(scenePos);
+		pEvent->accept();
+	}
+	else
+		QGraphicsView::mouseReleaseEvent(pEvent);
+}
+
+void ChainWidget::mouseMoveEvent(QMouseEvent *pEvent)
+{
+	if(m_state == State_Connecting)
+	{
+		m_pConnectingEdge->setTempPosition(pEvent->posF());
+		pEvent->accept();
+	}
+	else
+		QGraphicsView::mouseMoveEvent(pEvent);
 }
 
 void ChainWidget::onStartAdded(ChainStart *pStart)
 {
 	assert(m_startItems.find(pStart) == m_startItems.end());
 
-	ChainStartItem *pItem = new ChainStartItem(pStart);
+	ChainStartItem *pItem = new ChainStartItem(this, pStart);
 	m_startItems[pStart] = pItem;
-	m_pScene->addItem(pItem);
 	
 	// Position the item on the left side
 	float x = -1.0f;
@@ -174,9 +292,8 @@ void ChainWidget::onEndAdded(ChainEnd *pEnd)
 {
 	assert(m_endItems.find(pEnd) == m_endItems.end());
 
-	ChainEndItem *pItem = new ChainEndItem(pEnd);
+	ChainEndItem *pItem = new ChainEndItem(this, pEnd);
 	m_endItems[pEnd] = pItem;
-	m_pScene->addItem(pItem);
 
 	// Position the item on the right side
 	float x = sceneRect().right() - pItem->rect().width() + 1.0f;
@@ -207,9 +324,8 @@ void ChainWidget::onProcessorAdded(Processor *pProcessor)
 {
 	assert(m_processorItems.find(pProcessor) == m_processorItems.end());
 
-	ProcessorItem *pItem = new ProcessorItem(pProcessor);
+	ProcessorItem *pItem = new ProcessorItem(this, pProcessor);
 	m_processorItems[pProcessor] = pItem;
-	m_pScene->addItem(pItem);
 
 	update();
 }
@@ -225,6 +341,14 @@ void ChainWidget::onProcessorRemoving(Processor *pProcessor)
 
 void ChainWidget::destroyItems()
 {
+	delete m_pConnectingEdge;
+	m_pConnectingEdge = 0;
+
+	EdgeItemSet::iterator edgeIt;
+	for(edgeIt = m_edgeItems.begin(); edgeIt != m_edgeItems.end(); ++edgeIt)
+		delete *edgeIt;
+	m_edgeItems.clear();
+
 	StartItemMap::iterator startIt;
 	for(startIt = m_startItems.begin(); startIt != m_startItems.end(); ++startIt)
 		delete startIt->second;
@@ -289,9 +413,17 @@ void ChainWidget::generateChainStartMenu(QMenu *pParent)
 void ChainWidget::generateProcessorMenu(QMenu *pParent)
 {
 	QMenu *pMenu = pParent->addMenu("Add processor");
+	connect(pMenu, SIGNAL(triggered(QAction *)), SLOT(addProcessor(QAction *)));
 
-	// TEMP
-	pMenu->setEnabled(false);
+	ProcessorFactory &factory = ProcessorFactory::getInstance();
+	const ProcessorCreatorMap &processors = factory.getAllCreators();
+
+	ProcessorCreatorMap::const_iterator it;
+	for(it = processors.begin(); it != processors.end(); ++it)
+	{
+		ProcessorCreator *pCreator = it->second;
+		pMenu->addAction(pCreator->getType().c_str());
+	}
 }
 
 void ChainWidget::generateChainEndMenu(QMenu *pParent)
@@ -337,6 +469,10 @@ void ChainWidget::distributeStartItems()
 		startIt->second->setPos(x,y);
 		y += size + g_margin;
 	}*/
+
+	StartItemMap::iterator startIt;
+	for(startIt = m_startItems.begin(); startIt != m_startItems.end(); ++startIt)
+		startIt->second->adjustPosition();
 }
 
 void ChainWidget::distributeEndItems()
@@ -358,6 +494,10 @@ void ChainWidget::distributeEndItems()
 		endIt->second->setPos(x,y);
 		y += size + g_margin;
 	}*/
+
+	EndItemMap::iterator endIt;
+	for(endIt = m_endItems.begin(); endIt != m_endItems.end(); ++endIt)
+		endIt->second->adjustPosition();
 }
 
 void ChainWidget::distributeProcessorItems()
@@ -379,4 +519,8 @@ void ChainWidget::distributeProcessorItems()
 		processorIt->second->setPos(x,y);
 		y += size + g_margin;
 	}*/
+
+	ProcessorItemMap::iterator processorIt;
+	for(processorIt = m_processorItems.begin(); processorIt != m_processorItems.end(); ++processorIt)
+		processorIt->second->adjustPosition();
 }

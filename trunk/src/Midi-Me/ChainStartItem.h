@@ -21,15 +21,19 @@ namespace MidiMe
 
 	public:
 		// Constructors and destructor
-		ChainStartItem(ChainStart *pChainStart, QGraphicsItem *pParent = 0);
+		ChainStartItem(ChainWidget *pChainWidget, ChainStart *pChainStart);
 		virtual ~ChainStartItem();
 
 		// Other functions
+		void adjustPosition();
     
 	protected:
 		// Events
 		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
+		// Other functions
+		void adjustPosition(QPointF &position);
 
 		// Member variables
 		ChainStart *m_pChainStart;

@@ -1,11 +1,11 @@
-#ifndef NVE_PLUGINNAME_H
-#define NVE_PLUGINNAME_H
+#ifndef MIDIME_PLUGINNAME_H
+#define MIDIME_PLUGINNAME_H
 
 // Includes
 #include "global.h"
 #include <PluginSystem/Plugin.h>
 
-namespace NVE
+namespace MidiMe
 {
 	// Forward declarations
 
@@ -28,6 +28,6 @@ namespace NVE
 	};
 }
 
-CREATEPLUGIN(NVE::PluginName)
+CREATEPLUGIN(MidiMe::PluginName)
 
-#endif // NVE_PLUGINNAME_H
+#endif // MIDIME_PLUGINNAME_H
