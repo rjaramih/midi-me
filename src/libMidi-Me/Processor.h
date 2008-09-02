@@ -22,7 +22,7 @@ namespace MidiMe
 		@note You have to create a ProcessorCreator derivative that comes with this class,
 		so the ProcessorFactory knows how to create and destroy processor instances.
 	*/
-	class LIBMIDIME_API Processor
+	class LIBMIDIME_API Processor: protected Input::Listener
 	{
 	public:
 		// Constructors and destructor

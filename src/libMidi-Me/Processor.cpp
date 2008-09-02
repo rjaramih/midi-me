@@ -65,6 +65,7 @@ Input *Processor::addInput(int minValue, int maxValue, bool inverted)
 {
 	Input *pInput = new Input(minValue, maxValue, inverted);
 	m_inputs.insert(pInput);
+	pInput->addListener(this);
 	return pInput;
 }
 

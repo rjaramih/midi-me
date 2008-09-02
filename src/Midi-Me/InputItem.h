@@ -3,7 +3,7 @@
 
 // Includes
 #include "global.h"
-#include <QtGui/QGraphicsRectItem>
+#include "ChainItem.h"
 #include <libMidi-Me/Input.h>
 
 namespace MidiMe
@@ -12,34 +12,33 @@ namespace MidiMe
 	class Input;
 
 	/** Class Description */
-	class InputItem: public QGraphicsRectItem, protected Input::Listener
+	class InputItem: public ChainItem, protected Input::Listener
 	{
 	public:
 		// Constructors and destructor
-		InputItem(Input *pInput, QGraphicsItem *pParent = 0);
+		InputItem(ChainWidget *pChainWidget, Input *pInput, QGraphicsItem *pParent = 0);
 		virtual ~InputItem();
+
+		// QGraphicsItem functions
+		enum { Type = UserType + 2 };
+		int type() const { return Type; }
 
 		// Information
 		Input *getInput() const { return m_pInput; }
 
+		// The connected edge
+		void disconnect();
+
 	protected:
-		// Events
-		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
-		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-
-		// Drag-and-drop
-		void mousePressEvent(QGraphicsSceneMouseEvent *pEvent);
-		void dragEnterEvent(QGraphicsSceneDragDropEvent *pEvent);
-		void dragMoveEvent(QGraphicsSceneDragDropEvent *pEvent);
-		void dragLeaveEvent(QGraphicsSceneDragDropEvent *pEvent);
-		void dropEvent(QGraphicsSceneDragDropEvent *pEvent);
-
 		// Input::Listener functions
 		void onValue(Input *pInput, int value);
 
+		// Output items can connect themselves
+		void setConnectedEdge(EdgeItem *pEdge) { m_pConnectedEdge = pEdge; }
+		friend class OutputItem;
+
 		// Member variables
 		Input *m_pInput;
-		QGraphicsRectItem *m_pMeterItem;
 	};
 }
 

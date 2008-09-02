@@ -2,8 +2,12 @@
 #include "ProcessorItem.h"
 #include "InputItem.h"
 #include "OutputItem.h"
+#include "ChainWidget.h"
 #include <libMidi-Me/Processor.h>
 using namespace MidiMe;
+
+#include <QtGui/QGraphicsScene>
+#include <QtGui/QGraphicsView>
 
 
 /// The hardcoded margin between items
@@ -20,13 +24,17 @@ static const float g_maxHeight(100.0f);
 * Constructors and destructor *
 ******************************/
 
-ProcessorItem::ProcessorItem(Processor *pProcessor, QGraphicsItem *pParent)
-: QGraphicsRectItem(pParent), m_pProcessor(pProcessor)
+ProcessorItem::ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, QGraphicsItem *pParent)
+: QGraphicsRectItem(pParent), m_pChainWidget(pChainWidget), m_pProcessor(pProcessor)
 {
-	assert(m_pProcessor);
+	assert(m_pChainWidget && m_pProcessor);
+
+	// Make this a top-level item if no parent is provided
+	if(!pParent)
+		m_pChainWidget->getScene()->addItem(this);
 
 	// Setup item
-	setFlag(ItemIsSelectable);
+	//setFlag(ItemIsSelectable);
 	setFlag(ItemIsMovable);
 	//setFlag(ItemIsFocusable);
 
@@ -45,6 +53,15 @@ ProcessorItem::~ProcessorItem()
 * Other functions *
 ******************/
 
+/** Adjust the current position so it fits the viewport */
+void ProcessorItem::adjustPosition()
+{
+	QPointF position = pos();
+	adjustPosition(position);
+	setPos(position);
+}
+
+
 
 /**********************
 * Protected functions *
@@ -57,12 +74,19 @@ void ProcessorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
 
 QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
+	if(change == ItemPositionChange)
+	{
+		QPointF position = value.toPointF();
+		adjustPosition(position);
+		return position;
+	}
+
 	return QGraphicsRectItem::itemChange(change, value);
 }
 
 void ProcessorItem::createInputs()
 {
-	float x = 0.0f;
+	float x = -InputItem::width + g_margin;
 	float y = g_margin;
 
 	// Add inputs
@@ -72,14 +96,15 @@ void ProcessorItem::createInputs()
 	{
 		Input *pInput = *it;
 
-		InputItem *pItem = new InputItem(pInput, this);
+		InputItem *pItem = new InputItem(m_pChainWidget, pInput, this);
 		pItem->setPos(x,y);
 		y += pItem->rect().height() + g_margin;
 	}
 
 	// Expand if necessary
-	if(y > rect().height())
-		setRect(0,0, g_width, y);
+	float totalHeight = y + g_margin;
+	if(totalHeight > rect().height())
+		setRect(0,0, g_width, totalHeight);
 }
 
 void ProcessorItem::destroyInputs()
@@ -92,7 +117,7 @@ void ProcessorItem::destroyInputs()
 
 void ProcessorItem::createOutputs()
 {
-	float x = g_width;
+	float x = g_width - g_margin;
 	float y = g_margin;
 
 	// Add outputs
@@ -102,14 +127,15 @@ void ProcessorItem::createOutputs()
 	{
 		Output *pOutput = *it;
 
-		OutputItem *pItem = new OutputItem(pOutput, this);
+		OutputItem *pItem = new OutputItem(m_pChainWidget, pOutput, this);
 		pItem->setPos(x,y);
 		y += pItem->rect().height() + g_margin;
 	}
 
 	// Expand if necessary
-	if(y > rect().height())
-		setRect(0,0, g_width, y);
+	float height = y + g_margin;
+	if(height > rect().height())
+		setRect(0,0, g_width, height);
 }
 
 void ProcessorItem::destroyOutputs()
@@ -118,4 +144,40 @@ void ProcessorItem::destroyOutputs()
 	for(it = m_outputItems.begin(); it != m_outputItems.end(); ++it)
 		delete it->second;
 	m_outputItems.clear();
+}
+
+void ProcessorItem::adjustPosition(QPointF &position)
+{
+	QGraphicsScene *pScene = getScene();
+	assert(pScene && pScene->views().size() == 1);
+	QGraphicsView *pView = pScene->views().first();
+
+	// Make sure the item stays in the visible scene
+	float minX = InputItem::width + g_margin + InputItem::width;
+	float maxX = pView->sceneRect().width() - boundingRect().width() - 2 * OutputItem::width - g_margin;
+	if(position.x() < minX)
+		position.setX(minX);
+	if(position.x() > maxX)
+		position.setX(maxX);
+
+	float maxY = pView->sceneRect().bottom() - boundingRect().height() - g_margin;
+	float posY = position.y();
+	if(position.y() < g_margin)
+		position.setY(g_margin);
+	if(position.y() > maxY)
+		position.setY(maxY);
+}
+
+QGraphicsScene *ProcessorItem::getScene() const
+{
+	const QGraphicsItem *pItem = this;
+	QGraphicsScene *pScene = scene();
+
+	while(!pScene)
+	{
+		pItem = pItem->parentItem();
+		pScene = pItem->scene();
+	}
+
+	return pScene;
 }

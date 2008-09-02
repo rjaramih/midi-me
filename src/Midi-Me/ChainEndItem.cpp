@@ -23,8 +23,8 @@ static const float g_stdHeight(15.0f);
 * Constructors and destructor *
 ******************************/
 
-ChainEndItem::ChainEndItem(ChainEnd *pChainEnd, QGraphicsItem *pParent)
-: InputItem(pChainEnd->getInput(), pParent), m_pChainEnd(pChainEnd)
+ChainEndItem::ChainEndItem(ChainWidget *pChainWidget, ChainEnd *pChainEnd, QGraphicsItem *pParent)
+: InputItem(pChainWidget, pChainEnd->getInput(), pParent), m_pChainEnd(pChainEnd)
 {
 	assert(m_pChainEnd);
 
@@ -43,6 +43,14 @@ ChainEndItem::~ChainEndItem()
 * Other functions *
 ******************/
 
+/** Adjust the current position so it fits the viewport */
+void ChainEndItem::adjustPosition()
+{
+	QPointF position = pos();
+	adjustPosition(position);
+	setPos(position);
+}
+
 
 /**********************
 * Protected functions *
@@ -57,23 +65,9 @@ QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &val
 {
 	if(change == ItemPositionChange)
 	{
-		assert(scene() && scene()->views().size() == 1);
-		QGraphicsView *pView = scene()->views().first();
-
-		QPointF pos = value.toPointF();
-
-		// Make sure the item stays at the right edge
-		pos.setX(pView->sceneRect().right() - rect().width() + 1.0f);
-
-		// Make sure the item stays in the visible scene
-		float maxY = pView->sceneRect().bottom() - rect().height() - g_margin;
-		float posY = pos.y();
-		if(pos.y() < 0.0f)
-			pos.setY(0.0f);
-		if(pos.y() > maxY)
-			pos.setY(maxY);
-
-		return pos;
+		QPointF position = value.toPointF();
+		adjustPosition(position);
+		return position;
 	}
 	else if(change == ItemPositionHasChanged)
 	{
@@ -85,4 +79,21 @@ QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &val
 	}
 
 	return InputItem::itemChange(change, value);
+}
+
+void ChainEndItem::adjustPosition(QPointF &position)
+{
+	assert(scene() && scene()->views().size() == 1);
+	QGraphicsView *pView = scene()->views().first();
+
+	// Make sure the item stays at the right edge
+	position.setX(pView->sceneRect().right() - rect().width() + 1.0f);
+
+	// Make sure the item stays in the visible scene
+	float maxY = pView->sceneRect().bottom() - rect().height() - g_margin;
+	float posY = position.y();
+	if(position.y() < g_margin)
+		position.setY(g_margin);
+	if(position.y() > maxY)
+		position.setY(maxY);
 }

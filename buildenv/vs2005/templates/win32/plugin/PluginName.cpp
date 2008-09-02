@@ -1,6 +1,6 @@
 // Includes
 #include "PluginName.h"
-using namespace NVE;
+using namespace MidiMe;
 
 
 /******************************

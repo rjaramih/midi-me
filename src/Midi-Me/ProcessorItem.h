@@ -12,9 +12,10 @@ class QGraphicsScene;
 namespace MidiMe
 {
 	// Forward declarations
+	class ChainWidget;
+	class Processor;
 	class Input; class InputItem;
 	class Output; class OutputItem;
-	class Processor;
 
 	/** This widget displays the state of an input device. */
 	class ProcessorItem: public QGraphicsRectItem
@@ -23,8 +24,11 @@ namespace MidiMe
 
 	public:
 		// Constructors and destructor
-		ProcessorItem(Processor *pProcessor, QGraphicsItem *pParent = 0);
+		ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, QGraphicsItem *pParent = 0);
 		virtual ~ProcessorItem();
+
+		// Other functions
+		void adjustPosition();
 
 	protected:
 		// Events
@@ -38,7 +42,11 @@ namespace MidiMe
 		void createOutputs();
 		void destroyOutputs();
 
+		void adjustPosition(QPointF &position);
+		QGraphicsScene *getScene() const;
+
 		// Member variables
+		ChainWidget *m_pChainWidget;
 		Processor *m_pProcessor;
 
 		typedef std::map<Input *, InputItem *> InputItemMap;

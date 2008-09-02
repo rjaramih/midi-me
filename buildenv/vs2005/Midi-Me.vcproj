@@ -195,11 +195,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\Midi-Me\ChainItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Midi-Me\ChainStartItem.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\Midi-Me\ChainWidget.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\EdgeItem.cpp"
 				>
 			</File>
 			<File
@@ -251,6 +259,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\Midi-Me\ChainItem.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Midi-Me\ChainStartItem.h"
 				>
 				<FileConfiguration
@@ -288,6 +300,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\Midi-Me\DragData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\EdgeItem.h"
 				>
 			</File>
 			<File
