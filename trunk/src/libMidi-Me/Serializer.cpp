@@ -3,7 +3,11 @@
 #include "Chain.h"
 #include "Input.h"
 #include "Output.h"
-//#include "Processor.h"
+#include "ChainStart.h"
+#include "ChainEnd.h"
+#include "Processor.h"
+#include "InputDevice.h"
+#include "MidiOutput.h"
 using namespace MidiMe;
 
 #include <XmlParser/SimpleDomParser.h>
@@ -88,8 +92,33 @@ bool Serializer::writeChain(std::ostream &stream, Chain *pChain)
 {
 	stream << "<chain>\n";
 
-	//! @todo Implement this: chains need input items, output items, and inbetween items
-	//pChain->numItems
+	const ChainStartSet &start = pChain->getChainStart();
+	for(ChainStartSet::const_iterator it = start.begin(); it != start.end(); ++it)
+	{
+		ChainStart *pStart = *it;
+
+		stream << "\t<start";
+		stream << " device=\"" << pStart->getDevice()->getName() << "\"";
+		stream << " outputID=\"" << pStart->getOutputID() << "\"";
+		stream << " />\n";
+	}
+
+	stream << "\n";
+
+	//! @todo Serialize processors
+
+	stream << "\n";
+
+	const ChainEndSet &end = pChain->getChainEnd();
+	for(ChainEndSet::const_iterator it = end.begin(); it != end.end(); ++it)
+	{
+		ChainEnd *pEnd = *it;
+
+		stream << "\t<end";
+		stream << " midiPort=\"" << pEnd->getMidi()->getOpenedPort() << "\"";
+		stream << " />\n";
+	}
+
 
 	stream << "</chain>\n";
 
