@@ -33,6 +33,9 @@ namespace MidiMe
 		QPointF getAnchor() const { return mapToScene(m_localAnchor); }
 
 	protected:
+		// Events
+		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
 		// Member variables
 		ChainWidget *m_pChainWidget;
 		QGraphicsRectItem *m_pMeterItem;

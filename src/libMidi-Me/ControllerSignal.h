@@ -40,7 +40,11 @@ namespace MidiMe
 
 	protected:
 		// Input::Listener functions
+#if 0
 		void onValue(Input *pInput, int value);
+#else
+		void onValue(Input *pInput, real value);
+#endif
 
 		// Member variables
 		MidiOutput *m_pMidiOutput;

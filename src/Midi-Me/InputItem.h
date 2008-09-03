@@ -31,7 +31,7 @@ namespace MidiMe
 
 	protected:
 		// Input::Listener functions
-		void onValue(Input *pInput, int value);
+		void onValue(Input *pInput, real value);
 
 		// Output items can connect themselves
 		void setConnectedEdge(EdgeItem *pEdge) { m_pConnectedEdge = pEdge; }

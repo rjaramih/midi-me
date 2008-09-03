@@ -1,6 +1,12 @@
 #ifndef LIBMIDIME_GLOBAL_H
 #define LIBMIDIME_GLOBAL_H
 
+namespace MidiMe
+{
+	// The real number type used for values
+	typedef double real;
+}
+
 // Windows and pocket pc
 #if defined(_WIN32_WCE) || defined(WIN32)
 	// Non dll-interface class used as base for dll-interface class

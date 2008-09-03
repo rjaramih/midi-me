@@ -1,6 +1,7 @@
 // Includes
 #include "ChainItem.h"
 #include "ChainWidget.h"
+#include "EdgeItem.h"
 using namespace MidiMe;
 
 #include <QtGui/QGraphicsScene>
@@ -54,3 +55,11 @@ ChainItem::~ChainItem()
 /**********************
 * Protected functions *
 **********************/
+
+QVariant ChainItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	if(change == ItemPositionHasChanged && m_pConnectedEdge)
+		m_pConnectedEdge->adjust();
+
+	return QGraphicsRectItem::itemChange(change, value);
+}

@@ -3,6 +3,7 @@
 #include "InputItem.h"
 #include "OutputItem.h"
 #include "ChainWidget.h"
+#include "EdgeItem.h"
 #include <libMidi-Me/Processor.h>
 using namespace MidiMe;
 
@@ -81,6 +82,20 @@ QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &va
 		return position;
 	}
 
+	// Propagate to children (this event is only sent when the local position is changed)
+	else if(change == ItemPositionHasChanged)
+	{
+		// Adjust all input edges
+		for(InputItemMap::iterator it = m_inputItems.begin(); it != m_inputItems.end(); ++it)
+			if(it->second->isConnected())
+				it->second->getConnectedEdge()->adjust();
+
+		// Adjust all output edges
+		for(OutputItemMap::iterator it = m_outputItems.begin(); it != m_outputItems.end(); ++it)
+			if(it->second->isConnected())
+				it->second->getConnectedEdge()->adjust();
+	}
+
 	return QGraphicsRectItem::itemChange(change, value);
 }
 
@@ -98,6 +113,8 @@ void ProcessorItem::createInputs()
 
 		InputItem *pItem = new InputItem(m_pChainWidget, pInput, this);
 		pItem->setPos(x,y);
+		m_inputItems[pInput] = pItem;
+
 		y += pItem->rect().height() + g_margin;
 	}
 
@@ -129,6 +146,8 @@ void ProcessorItem::createOutputs()
 
 		OutputItem *pItem = new OutputItem(m_pChainWidget, pOutput, this);
 		pItem->setPos(x,y);
+		m_outputItems[pOutput] = pItem;
+
 		y += pItem->rect().height() + g_margin;
 	}
 

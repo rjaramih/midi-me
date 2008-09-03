@@ -59,6 +59,7 @@ namespace MidiMe
 		Chain *m_pChain;
 		ChainWidget *m_pChainEditor;
 		int m_timerId;
+		unsigned int m_prevTime;
 	};
 }
 

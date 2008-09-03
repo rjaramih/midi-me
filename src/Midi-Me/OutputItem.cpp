@@ -57,9 +57,10 @@ void OutputItem::disconnect()
 	m_pConnectedEdge = 0;
 }
 
-void OutputItem::onValue(Output *pOutput, int value)
+void OutputItem::onValue(Output *pOutput, real value)
 {
-	float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
+	//float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
+	real u = value;
 	float meterWidth = u * width;
 
 	m_pMeterItem->setRect(0, 0, meterWidth, height);

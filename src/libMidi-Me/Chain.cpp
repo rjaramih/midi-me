@@ -5,6 +5,7 @@
 #include "Processor.h"
 #include "ProcessorFactory.h"
 #include "Serializer.h"
+#include "InputDevice.h"
 using namespace MidiMe;
 
 #include <RtMidi/RtMidi.h>
@@ -278,6 +279,23 @@ bool Chain::save(const string &filename)
 	m_dirty = false;
 
 	return true;
+}
+
+
+/******************
+* Other functions *
+******************/
+
+/** Step this chain (capture input devices and step processors). */
+void Chain::step(float seconds)
+{
+	// Capture input devices
+	for(ChainStartSet::iterator it = m_startItems.begin(); it != m_startItems.end(); ++it)
+		(*it)->getDevice()->capture();
+
+	// Step all processors
+	for(ProcessorSet::iterator it = m_processors.begin(); it != m_processors.end(); ++it)
+		(*it)->step(seconds);
 }
 
 

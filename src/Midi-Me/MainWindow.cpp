@@ -4,6 +4,7 @@
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/Chain.h>
 #include <libMidi-Me/MidiOutput.h>
+#include <libMidi-Me/Timer.h>
 using namespace MidiMe;
 
 #include <QtCore/QSettings>
@@ -147,6 +148,7 @@ void MainWindow::setStarted(bool started)
 
 	//! @todo Make settings
 	static const int interval = 20;
+	m_prevTime = Timer::getTickCount();
 
 	if(started)
 		m_timerId = startTimer(interval);
@@ -160,8 +162,15 @@ void MainWindow::setStarted(bool started)
 
 void MainWindow::timerEvent(QTimerEvent *pEvent)
 {
+	unsigned int curTime = Timer::getTickCount();
+	float elapsedSeconds = (curTime - m_prevTime) * 0.001f;
+	m_prevTime = curTime;
+
+	// Step the chain
+	m_pChain->step(elapsedSeconds);
+
 	// Capture the input devices and generate events
-	DeviceManager::getInstance().capture();
+	//DeviceManager::getInstance().capture();
 }
 
 /* Intercept the close event for the window, to save the current file if needed */

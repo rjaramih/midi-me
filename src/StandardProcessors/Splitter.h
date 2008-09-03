@@ -26,10 +26,10 @@ namespace MidiMe
     
 	protected:
 		// Input::Listener functions
-		void onValue(Input *pInput, int value);
+		void onValue(Input *pInput, real value);
 
 		// Member variables
-		int m_splitValue;
+		real m_splitValue;
 		Output *m_pOutput1, *m_pOutput2;
 	};
 

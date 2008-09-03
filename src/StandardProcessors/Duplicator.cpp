@@ -35,7 +35,7 @@ Duplicator::~Duplicator()
 * Protected functions *
 **********************/
 
-void Duplicator::onValue(Input *pInput, int value)
+void Duplicator::onValue(Input *pInput, real value)
 {
 	// Send to all outputs
 	OutputSet::iterator it;

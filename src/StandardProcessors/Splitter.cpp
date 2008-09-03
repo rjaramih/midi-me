@@ -11,7 +11,7 @@ string Splitter::type = "Splitter";
 ******************************/
 
 Splitter::Splitter()
-: Processor(type), m_splitValue(50)
+: Processor(type), m_splitValue(0.5)
 {
 	// Add the input
 	Input *pInput = addInput();
@@ -35,12 +35,18 @@ Splitter::~Splitter()
 * Protected functions *
 **********************/
 
-void Splitter::onValue(Input *pInput, int value)
+void Splitter::onValue(Input *pInput, real value)
 {
 	if(value < m_splitValue)
-		m_pOutput1->sendValue(value);
+	{
+		real mappedValue = value / m_splitValue;
+		m_pOutput1->sendValue(mappedValue);
+	}
 	else
-		m_pOutput2->sendValue(value);
+	{
+		real mappedValue = (value - m_splitValue) / (1.0 - m_splitValue);
+		m_pOutput2->sendValue(mappedValue);
+	}
 }
 
 

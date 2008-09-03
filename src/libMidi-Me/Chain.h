@@ -81,6 +81,9 @@ namespace MidiMe
 		bool load(const string &filename);
 		bool save();
 		bool save(const string &filename);
+
+		// Other functions
+		void step(float seconds);
     
 	protected:
 		// Protected functions

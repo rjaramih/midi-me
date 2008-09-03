@@ -39,14 +39,22 @@ namespace MidiMe
 		// Outputs
 		const OutputSet &getOutputs() const;
 		size_t numOutputs();
+
+		// Step function
+		virtual void step(float seconds) {}
     
 	protected:
 		// Protected functions
 		void clear();
 
 		// Used by derived classes
+#if 0
 		Input *addInput(int minValue = 0, int maxValue = 100, bool inverted = false);
 		Output *addOutput(int minValue = 0, int maxValue = 100, bool analog = true);
+#else
+		Input *addInput(bool inverted = false);
+		Output *addOutput(bool analog = true);
+#endif
 
 		// Member variables
 		string m_type;
