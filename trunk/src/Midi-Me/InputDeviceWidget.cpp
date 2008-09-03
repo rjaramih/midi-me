@@ -106,14 +106,15 @@ void InputDeviceWidget::resizeEvent(QResizeEvent *pEvent)
 	QGraphicsView::resizeEvent(pEvent);
 }
 
-void InputDeviceWidget::onValue(Output *pOutput, int value)
+void InputDeviceWidget::onValue(Output *pOutput, real value)
 {
 	if(pOutput->isAnalog())
 	{
 		QGraphicsRectItem *pItem = (QGraphicsRectItem *) m_items[pOutput];
 		QGraphicsRectItem *pMeterItem = (QGraphicsRectItem *) pItem->childItems().first();
 
-		float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
+		//float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
+		real u = value;
 		
 		QRectF rect = pItem->rect();
 		rect.setTop(rect.bottom() - rect.height() * u);
@@ -122,7 +123,8 @@ void InputDeviceWidget::onValue(Output *pOutput, int value)
 	else
 	{
 		QGraphicsEllipseItem *pItem = (QGraphicsEllipseItem *) m_items[pOutput];
-		pItem->setBrush(value == pOutput->getMinValue() ? Qt::red : Qt::green);
+		//pItem->setBrush(value == pOutput->getMinValue() ? Qt::red : Qt::green);
+		pItem->setBrush(value == 1 ? Qt::red : Qt::green);
 	}
 
 }

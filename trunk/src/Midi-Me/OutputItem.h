@@ -33,7 +33,7 @@ namespace MidiMe
 
 	protected:
 		// Output::Listener functions
-		void onValue(Output *pOutput, int value);
+		void onValue(Output *pOutput, real value);
 
 		// Member variables
 		Output *m_pOutput;

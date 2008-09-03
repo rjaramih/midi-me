@@ -10,6 +10,7 @@ namespace MidiMe
 	// Forward declarations
 	class SplitterCreator;
 	class DuplicatorCreator;
+	class DelayCreator;
 
 	/** Plugin Description */
 	class StandardProcessorsPlugin: public plugin::Plugin
@@ -27,6 +28,7 @@ namespace MidiMe
 		// Member variables
 		SplitterCreator *m_pSplitterCreator;
 		DuplicatorCreator *m_pDuplicatorCreator;
+		DelayCreator *m_pDelayCreator;
 	};
 }
 

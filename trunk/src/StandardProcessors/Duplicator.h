@@ -24,10 +24,7 @@ namespace MidiMe
     
 	protected:
 		// Input::Listener functions
-		void onValue(Input *pInput, int value);
-
-		// Member variables
-		//Output *m_pOutput1, *m_pOutput2;
+		void onValue(Input *pInput, real value);
 	};
 
 	/** This class knows how to create/destroy duplicator processors. */

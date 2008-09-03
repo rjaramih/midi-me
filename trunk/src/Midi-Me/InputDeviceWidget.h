@@ -34,7 +34,7 @@ namespace MidiMe
 		void resizeEvent(QResizeEvent *pEvent);
 
 		// InputDevice::Listener functions
-		void onValue(Output *pOutput, int value);
+		void onValue(Output *pOutput, real value);
 
 		// TEMP: DeviceManager::Listener functions
 		void onDeviceAdded(InputDevice *pDevice);

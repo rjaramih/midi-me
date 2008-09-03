@@ -17,8 +17,8 @@ class DummyDevice: public InputDevice
 public:
 	DummyDevice(): InputDevice("Dummy")
 	{
-		addOutput(0, 0, 100, false);
-		addOutput(1, 0, 100, true);
+		addOutput(0, false);
+		addOutput(1, true);
 	}
 
 	~DummyDevice() {}
@@ -35,9 +35,15 @@ protected:
 			sendMaxValue(0);
 
 		if(counter % 200 < 100)
-			sendValue(1, counter % 200);
+		{
+			real value = (counter % 200) * 0.01;
+			sendValue(1, value);
+		}
 		else
-			sendValue(1, 200 - (counter % 200));
+		{
+			real value = (200 - (counter % 200)) * 0.01;
+			sendValue(1, value);
+		}
 
 		++counter;
 		return true;

@@ -32,20 +32,21 @@ namespace MidiMe
 		QRectF boundingRect() const;
 
 		/// When the edge is not fully connected yet, provide it with the mouse position
-		void setTempPosition(const QPointF &pos) { m_tempPos = pos; }
+		void setTempPosition(const QPointF &pos) { m_tempPos = pos; adjust(); }
     
+		/// Adjust the geometry of the edge (call when one of the end-points move)
+		void adjust();
+
 	protected:
 		// QGraphicsItem functions
 		void paint(QPainter *pPainter, const QStyleOptionGraphicsItem *pOption, QWidget *pWidget = 0);
-
-		// Other functions
-		void adjust();
 
 		// Member variables
 		ChainWidget *m_pChainWidget;
 		InputItem *m_pInputItem;
 		OutputItem *m_pOutputItem;
 		QPointF m_tempPos;
+		QPainterPath *m_pPath;
 	};
 }
 

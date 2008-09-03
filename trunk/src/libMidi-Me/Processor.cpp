@@ -61,17 +61,29 @@ void Processor::clear()
 	m_outputs.clear();
 }
 
+#if 0
 Input *Processor::addInput(int minValue, int maxValue, bool inverted)
 {
 	Input *pInput = new Input(minValue, maxValue, inverted);
+#else
+Input *Processor::addInput(bool inverted)
+{
+	Input *pInput = new Input(inverted);
+#endif
 	m_inputs.insert(pInput);
 	pInput->addListener(this);
 	return pInput;
 }
 
+#if 0
 Output *Processor::addOutput(int minValue, int maxValue, bool analog)
 {
 	Output *pOutput = new Output(minValue, maxValue, analog);
+#else
+Output *Processor::addOutput(bool analog)
+{
+	Output *pOutput = new Output(analog);
+#endif
 	m_outputs.insert(pOutput);
 	return pOutput;
 }

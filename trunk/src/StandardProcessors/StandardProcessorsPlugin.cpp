@@ -2,6 +2,7 @@
 #include "StandardProcessorsPlugin.h"
 #include "Splitter.h"
 #include "Duplicator.h"
+#include "Delay.h"
 using namespace MidiMe;
 
 
@@ -11,7 +12,7 @@ using namespace MidiMe;
 
 StandardProcessorsPlugin::StandardProcessorsPlugin()
 : plugin::Plugin("StandardProcessors")
-, m_pSplitterCreator(0), m_pDuplicatorCreator(0)
+, m_pSplitterCreator(0), m_pDuplicatorCreator(0), m_pDelayCreator(0)
 {
 }
 
@@ -28,6 +29,7 @@ bool StandardProcessorsPlugin::start(const plugin::KeyValueMap &settings)
 {
 	m_pSplitterCreator = new SplitterCreator();
 	m_pDuplicatorCreator = new DuplicatorCreator();
+	m_pDelayCreator = new DelayCreator();
 
 	m_settings = settings;
 	m_started = true;
@@ -36,6 +38,7 @@ bool StandardProcessorsPlugin::start(const plugin::KeyValueMap &settings)
 
 bool StandardProcessorsPlugin::stop()
 {
+	delete m_pDelayCreator; m_pDelayCreator = 0;
 	delete m_pDuplicatorCreator; m_pDuplicatorCreator = 0;
 	delete m_pSplitterCreator; m_pSplitterCreator = 0;
 

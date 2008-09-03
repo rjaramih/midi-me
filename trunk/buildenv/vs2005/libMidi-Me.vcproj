@@ -230,6 +230,10 @@
 				RelativePath="..\..\src\libMidi-Me\Serializer.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\Timer.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -290,6 +294,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libMidi-Me\Serializer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\Timer.h"
 				>
 			</File>
 		</Filter>
