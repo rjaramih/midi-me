@@ -15,7 +15,7 @@ namespace MidiMe
 	class InputItem;
 
 	/** Class Description */
-	class ChainEndItem: public QObject, public InputItem
+	class ChainEndItem: public InputItem
 	{
 		Q_OBJECT
 

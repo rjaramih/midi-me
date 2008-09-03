@@ -12,6 +12,7 @@ static double g_degToRad = 0.0174532925;
 
 static const qreal g_penWidth = 1;
 static const qreal g_arrowSize = 10;
+static const qreal g_margin = 5;
 
 
 /******************************
@@ -41,7 +42,8 @@ EdgeItem::~EdgeItem()
 
 QRectF EdgeItem::boundingRect() const
 {
-	return m_pPath->boundingRect();
+	qreal extra = g_arrowSize;
+	return m_pPath->boundingRect().adjusted(-extra, -extra, extra, extra);
 
 	/*QPointF from = m_pOutputItem ? mapFromScene(m_pOutputItem->getAnchor()) : m_tempPos;
 	QPointF to = m_pInputItem ? mapFromScene(m_pInputItem->getAnchor()) : m_tempPos;

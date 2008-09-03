@@ -38,6 +38,7 @@ namespace MidiMe
 		// Information
 		QGraphicsScene *getScene() const { return m_pScene; }
 		Chain *getChain() const { return m_pChain; }
+		State getState() const { return m_state; }
 
 	public slots:
 		void update();
