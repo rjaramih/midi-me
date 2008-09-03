@@ -128,6 +128,7 @@ void ChainWidget::stopConnecting(const QPointF &mousePos)
 			pOutputItem = qgraphicsitem_cast<OutputItem *>(items.at(i));
 			
 			// Connect if not yet connected
+			//! @todo Don't connect to the same processor
 			if(!pOutputItem->isConnected())
 				pOutputItem->connect(pInputItem);
 		}
@@ -207,14 +208,7 @@ void ChainWidget::resizeEvent(QResizeEvent *pEvent)
 
 void ChainWidget::mousePressEvent(QMouseEvent *pEvent)
 {
-	if(m_state == State_Normal && pEvent->button() == Qt::RightButton)
-	{
-		QPointF scenePos = mapToScene(pEvent->pos());
-		startConnecting(scenePos);
-		pEvent->accept();
-	}
-	else
-		QGraphicsView::mousePressEvent(pEvent);
+	QGraphicsView::mousePressEvent(pEvent);
 }
 
 void ChainWidget::mouseReleaseEvent(QMouseEvent *pEvent)
@@ -234,11 +228,16 @@ void ChainWidget::mouseReleaseEvent(QMouseEvent *pEvent)
 		generateChainEndMenu(pMenu);
 
 		pMenu->popup(pEvent->globalPos());
+		pEvent->accept();
 	}
-	if(m_state == State_Connecting && pEvent->button() == Qt::RightButton)
+	else if(m_state == State_Connecting)
 	{
-		QPointF scenePos = mapToScene(pEvent->pos());
-		stopConnecting(scenePos);
+		if(pEvent->button() == Qt::RightButton)
+		{
+			QPointF scenePos = mapToScene(pEvent->pos());
+			stopConnecting(scenePos);
+		}
+
 		pEvent->accept();
 	}
 	else
@@ -247,6 +246,12 @@ void ChainWidget::mouseReleaseEvent(QMouseEvent *pEvent)
 
 void ChainWidget::mouseMoveEvent(QMouseEvent *pEvent)
 {
+	if(m_state == State_Normal && (pEvent->buttons() & Qt::RightButton))
+	{
+		QPointF scenePos = mapToScene(pEvent->pos());
+		startConnecting(scenePos);
+		pEvent->accept();
+	}
 	if(m_state == State_Connecting)
 	{
 		m_pConnectingEdge->setTempPosition(pEvent->posF());

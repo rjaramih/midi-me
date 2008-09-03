@@ -101,11 +101,28 @@ QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &va
 
 void ProcessorItem::createInputs()
 {
+	const InputSet &inputs = m_pProcessor->getInputs();
+	const OutputSet &outputs = m_pProcessor->getOutputs();
+
+	// Calculate where to put the items
+	float heightOutputs = outputs.size() * (OutputItem::height + g_margin) + g_margin;
+	float heightInputs = inputs.size() * (InputItem::height + g_margin) + g_margin;
+
+	float margin;
+	if(heightInputs == 0.0f)
+		margin = 0;
+	else if(heightInputs >= heightOutputs)
+		margin = g_margin;
+	else
+	{
+		heightInputs = inputs.size() * InputItem::height;
+		margin = (heightOutputs - heightInputs) / (inputs.size() + 1);
+	}
+
 	float x = -InputItem::width + g_margin;
-	float y = g_margin;
+	float y = margin;
 
 	// Add inputs
-	const InputSet &inputs = m_pProcessor->getInputs();
 	InputSet::const_iterator it;
 	for(it = inputs.begin(); it != inputs.end(); ++it)
 	{
@@ -115,13 +132,12 @@ void ProcessorItem::createInputs()
 		pItem->setPos(x,y);
 		m_inputItems[pInput] = pItem;
 
-		y += pItem->rect().height() + g_margin;
+		y += InputItem::height + margin;
 	}
 
 	// Expand if necessary
-	float totalHeight = y + g_margin;
-	if(totalHeight > rect().height())
-		setRect(0,0, g_width, totalHeight);
+	if(y > rect().height())
+		setRect(0,0, g_width, y);
 }
 
 void ProcessorItem::destroyInputs()
@@ -134,11 +150,28 @@ void ProcessorItem::destroyInputs()
 
 void ProcessorItem::createOutputs()
 {
+	const InputSet &inputs = m_pProcessor->getInputs();
+	const OutputSet &outputs = m_pProcessor->getOutputs();
+
+	// Calculate where to put the items
+	float heightOutputs = outputs.size() * (OutputItem::height + g_margin) + g_margin;
+	float heightInputs = inputs.size() * (InputItem::height + g_margin) + g_margin;
+
+	float margin;
+	if(heightOutputs == 0.0f)
+		margin = 0;
+	else if(heightOutputs >= heightInputs)
+		margin = g_margin;
+	else
+	{
+		heightOutputs = outputs.size() * OutputItem::height;
+		margin = (heightInputs - heightOutputs) / outputs.size();
+	}
+
 	float x = g_width - g_margin;
-	float y = g_margin;
+	float y = margin;
 
 	// Add outputs
-	const OutputSet &outputs = m_pProcessor->getOutputs();
 	OutputSet::const_iterator it;
 	for(it = outputs.begin(); it != outputs.end(); ++it)
 	{
@@ -148,13 +181,12 @@ void ProcessorItem::createOutputs()
 		pItem->setPos(x,y);
 		m_outputItems[pOutput] = pItem;
 
-		y += pItem->rect().height() + g_margin;
+		y += OutputItem::height + margin;
 	}
 
 	// Expand if necessary
-	float height = y + g_margin;
-	if(height > rect().height())
-		setRect(0,0, g_width, height);
+	if(y > rect().height())
+		setRect(0,0, g_width, y);
 }
 
 void ProcessorItem::destroyOutputs()

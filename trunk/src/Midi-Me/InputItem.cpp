@@ -2,7 +2,11 @@
 #include "InputItem.h"
 #include "OutputItem.h"
 #include "EdgeItem.h"
+#include "ChainWidget.h"
 using namespace MidiMe;
+
+#include <QtGui/QGraphicsSceneMouseEvent>
+#include <QtGui/QMenu>
 
 
 /************
@@ -40,9 +44,38 @@ void InputItem::disconnect()
 
 void InputItem::onValue(Input *pInput, real value)
 {
-	//float u = (value - pInput->getMinValue()) / (float) (pInput->getMaxValue() - pInput->getMinValue());
 	real u = value;
-	float meterWidth = u * width;
+	float meterWidth = value * width;
 
 	m_pMeterItem->setRect(0, 0, meterWidth, height);
+}
+
+void InputItem::showSettings(QPoint &position)
+{
+	// Generate the context menu
+	QMenu *pMenu = new QMenu(m_pChainWidget);
+
+	QAction *pInverted = pMenu->addAction("Inverted");
+	pInverted->setCheckable(true);
+	pInverted->setChecked(m_pInput->isInverted());
+	connect(pInverted, SIGNAL(triggered(bool)), SLOT(setInverted(bool)));
+
+	pMenu->popup(position);
+}
+
+void InputItem::setInverted(bool inverted)
+{
+	m_pInput->setInverted(inverted);
+}
+
+
+/**********************
+* Protected functions *
+**********************/
+
+void InputItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
+{
+	//! @todo This triggers after the state is back to normal, so this check doesn't work
+	if(m_pChainWidget->getState() == ChainWidget::State_Normal)
+		showSettings(pEvent->screenPos());
 }
