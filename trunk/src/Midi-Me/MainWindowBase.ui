@@ -82,9 +82,17 @@
      <string>&amp;Midi-out</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu_Plugins" >
+    <property name="title" >
+     <string>&amp;Plugins</string>
+    </property>
+    <addaction name="action_PluginManager" />
+    <addaction name="separator" />
+   </widget>
    <addaction name="menu_File" />
    <addaction name="menuView" />
    <addaction name="menuMidiOut" />
+   <addaction name="menu_Plugins" />
    <addaction name="menuHelp" />
   </widget>
   <widget class="QToolBar" name="toolBar" >
@@ -168,6 +176,11 @@
   <action name="actionLkjsd" >
    <property name="text" >
     <string>lkjsd</string>
+   </property>
+  </action>
+  <action name="action_PluginManager" >
+   <property name="text" >
+    <string>Plugin &amp;Manager...</string>
    </property>
   </action>
  </widget>

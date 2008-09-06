@@ -231,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\Midi-Me\PluginWidget.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Midi-Me\ProcessorItem.cpp"
 				>
 			</File>
@@ -355,6 +359,24 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\Midi-Me\PluginWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\src\Midi-Me\ProcessorItem.h"
 				>
 			</File>
@@ -393,6 +415,14 @@
 				RelativePath=".\tmp\Midi-Me\Win32\qt_generated\MainWindowBase.h"
 				>
 			</File>
+			<File
+				RelativePath=".\tmp\Midi-Me\Win32\qt_generated\PluginWidget_moc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tmp\Midi-Me\Win32\qt_generated\PluginWidgetBase.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Widgets"
@@ -400,6 +430,10 @@
 			>
 			<File
 				RelativePath="..\..\src\Midi-Me\MainWindowBase.ui"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Midi-Me\PluginWidgetBase.ui"
 				>
 			</File>
 		</Filter>

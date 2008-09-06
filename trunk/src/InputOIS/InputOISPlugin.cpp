@@ -15,6 +15,7 @@ using namespace MidiMe;
 InputOISPlugin::InputOISPlugin()
 : plugin::Plugin("InputOIS"), m_pInputMgr(0)
 {
+	setDescription("This plugin uses Open Input System (OIS) to provide joystick input devices");
 }
 
 InputOISPlugin::~InputOISPlugin()

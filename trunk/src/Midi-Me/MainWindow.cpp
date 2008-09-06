@@ -1,6 +1,7 @@
 // Includes
 #include "MainWindow.h"
 #include "ChainWidget.h"
+#include "PluginWidget.h"
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/Chain.h>
 #include <libMidi-Me/MidiOutput.h>
@@ -142,6 +143,15 @@ void MainWindow::openRecentFile(QAction *pAction)
 	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
 }
 
+void MainWindow::showPluginManager()
+{
+	// Create the plugin widget, and make sure it is deleted when closed
+	PluginWidget *pWidget = new PluginWidget(this);
+	pWidget->setAttribute(Qt::WA_DeleteOnClose);
+
+	pWidget->show();
+}
+
 void MainWindow::setStarted(bool started)
 {
 	assert(m_pChain);
@@ -193,6 +203,8 @@ void MainWindow::createWidgets()
 	connect(menuRecent_Files, SIGNAL(triggered(QAction *)), SLOT(openRecentFile(QAction *)));
 	connect(action_Save, SIGNAL(triggered()), SLOT(saveFile()));
 	connect(action_Save_As, SIGNAL(triggered()), SLOT(saveFileAs()));
+
+	connect(action_PluginManager, SIGNAL(triggered()), SLOT(showPluginManager()));
 
 	connect(action_About, SIGNAL(triggered()), SLOT(aboutDialog()));
 	connect(actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
