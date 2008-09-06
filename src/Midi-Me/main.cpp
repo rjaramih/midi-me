@@ -70,13 +70,6 @@ int main(int argc, char *argv[])
 	pWindow->show();
 
 #if 1
-	// TEMP: Start OIS joystick plugin
-	if(!pPluginMgr->start("InputOIS"))
-	{
-		cerr << "Error starting InputOIS plugin!" << endl;
-		return -1;
-	}
-
 	// TEMP: Start standard processors plugin
 	if(!pPluginMgr->start("StandardProcessors"))
 	{

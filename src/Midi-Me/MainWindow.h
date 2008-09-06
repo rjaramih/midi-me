@@ -29,6 +29,7 @@ namespace MidiMe
 		void openFile();
 		void saveFile();
 		void saveFileAs();
+		void showPluginManager();
 		void aboutDialog();
 		
 		void setStarted(bool started);
