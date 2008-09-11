@@ -14,6 +14,7 @@ StandardProcessorsPlugin::StandardProcessorsPlugin()
 : plugin::Plugin("StandardProcessors")
 , m_pSplitterCreator(0), m_pDuplicatorCreator(0), m_pDelayCreator(0)
 {
+	setDescription("This plugin provides some standard processor items, like a splitter, delay, ...");
 }
 
 StandardProcessorsPlugin::~StandardProcessorsPlugin()

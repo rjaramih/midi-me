@@ -19,7 +19,7 @@ namespace MidiMe
 
 		@todo Make all functions work with both normal and Unicode strings
 	 */
-	class StringUtil
+	class PROPERTIES_API StringUtil
 	{
 	protected:
 		// Member variables
