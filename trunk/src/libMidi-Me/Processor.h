@@ -5,6 +5,7 @@
 #include "global.h"
 #include "Input.h"
 #include "Output.h"
+#include <Properties/PropertyCollection.h>
 #include <set>
 
 namespace MidiMe
@@ -22,7 +23,7 @@ namespace MidiMe
 		@note You have to create a ProcessorCreator derivative that comes with this class,
 		so the ProcessorFactory knows how to create and destroy processor instances.
 	*/
-	class LIBMIDIME_API Processor: protected Input::Listener
+	class LIBMIDIME_API Processor: protected Input::Listener, public PropertyCollection
 	{
 	public:
 		// Constructors and destructor

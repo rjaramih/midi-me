@@ -3,6 +3,7 @@
 
 // Includes
 #include "global.h"
+#include <Properties/PropertyCollection.h>
 #include <set>
 
 namespace MidiMe
@@ -12,7 +13,7 @@ namespace MidiMe
 	class Output;
 
 	/** Class Description */
-	class LIBMIDIME_API ChainStart
+	class LIBMIDIME_API ChainStart: public PropertyCollection
 	{
 	public:
 		// Constructors and destructor

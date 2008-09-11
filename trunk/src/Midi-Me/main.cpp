@@ -1,15 +1,17 @@
 // Includes
 #include "global.h"
 #include "MainWindow.h"
+#include <PluginSystem/PluginSystem.h>
 using namespace MidiMe;
 
+#include <QtCore/QSettings>
 #include <QtGui/QApplication>
+#include <QtGui/QMessageBox>
 
 // TEMP
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/InputDevice.h>
 #include <libMidi-Me/MidiOutput.h>
-#include <PluginSystem/PluginSystem.h>
 
 // TEMP Test input device
 class DummyDevice: public InputDevice
@@ -50,14 +52,56 @@ protected:
 	}
 };
 
+void initPluginSystem(QWidget *pParentWindow)
+{
+	plugin::PluginManager *pPluginMgr = plugin::PluginSystem::getInstance().getPluginManager();
+	assert(pPluginMgr);
+
+	// Set the plugin path
+	pPluginMgr->setSearchPath("Plugins/");
+
+	// Get the previously loaded plugins
+	QSettings settings;
+	if(settings.contains("plugins"))
+	{
+		QStringList plugins = settings.value("plugins").toStringList();
+
+		for(int i = 0; i < plugins.size(); ++i)
+		{
+			if(!pPluginMgr->start(plugins.at(i).toStdString()))
+			{
+				QString message("The '%1' plugin failed to start");
+				message.arg(plugins.at(i));
+				QMessageBox::warning(pParentWindow, "Midi-Me :: Error", message);
+			}
+		}
+	}
+}
+
+void deinitPluginSystem()
+{
+	plugin::PluginManager *pPluginMgr = plugin::PluginSystem::getInstance().getPluginManager();
+	assert(pPluginMgr);
+
+	// Save the loaded plugins
+	QSettings settings;
+	QStringList plugins;
+
+	std::set<string> names =  pPluginMgr->getStartedPlugins();
+	std::set<string>::iterator it;
+	for(it = names.begin(); it != names.end(); ++it)
+		plugins << (*it).c_str();
+
+	settings.setValue("plugins", plugins);
+
+	// Stop all plugins that are still running
+	pPluginMgr->stopAll();
+}
+
 
 /*! The application's main function */
 int main(int argc, char *argv[])
 {
-	// Setup the plugin system
-	plugin::PluginManager *pPluginMgr = plugin::PluginSystem::getInstance().getPluginManager();
-	pPluginMgr->setSearchPath("Plugins/");
-
 	// Setup the application
 	QApplication app(argc, argv);
 	app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
@@ -69,14 +113,10 @@ int main(int argc, char *argv[])
 	DeviceManager::getInstance().setWindowHandle((size_t) pWindow->winId());
 	pWindow->show();
 
-#if 1
-	// TEMP: Start standard processors plugin
-	if(!pPluginMgr->start("StandardProcessors"))
-	{
-		cerr << "Error starting standard processors plugin!" << endl;
-		return -1;
-	}
+	// Setup the plugin system
+	initPluginSystem(pWindow);
 
+#if 1
 	// TEMP: Register dummy device
 	DummyDevice dummyDevice;
 
@@ -110,8 +150,8 @@ int main(int argc, char *argv[])
 	int result = app.exec();
 
 	// Make sure everyting is cleaned up before the application ends
+	deinitPluginSystem();
 	delete pWindow;
-	pPluginMgr->stopAll();
 
 	return result;
 }

@@ -5,7 +5,7 @@
 #include "DynamicLibrary.h"
 #include "StringUtil.h"
 using namespace plugin;
-using namespace NVE;
+using namespace MidiMe;
 
 
 // Typedefs

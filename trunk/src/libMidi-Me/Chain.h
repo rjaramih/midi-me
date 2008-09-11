@@ -4,6 +4,7 @@
 // Includes
 #include "global.h"
 #include "LastError.h"
+#include <Properties/PropertyCollection.h>
 #include <set>
 
 // Forward declarations
@@ -31,7 +32,7 @@ namespace MidiMe
 	/** A Midi-Me chain contains all items to convert device input signals to midi-out signals.
 		You can load and save a chain from/to file, and check if there are non-saved changes.
 	*/
-	class LIBMIDIME_API Chain: public LastError
+	class LIBMIDIME_API Chain: public LastError, public PropertyCollection
 	{
 	public:
 		class LIBMIDIME_API Listener
