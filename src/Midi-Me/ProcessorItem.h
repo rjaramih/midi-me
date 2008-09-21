@@ -13,6 +13,7 @@ namespace MidiMe
 {
 	// Forward declarations
 	class ChainWidget;
+	class PropertiesEditor;
 	class Processor;
 	class Input; class InputItem;
 	class Output; class OutputItem;
@@ -27,12 +28,15 @@ namespace MidiMe
 		ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, QGraphicsItem *pParent = 0);
 		virtual ~ProcessorItem();
 
+		// Properties
+		PropertiesEditor *getPropertyEditor() const { return m_pPropertyEditor; }
+		void setPropertyEditor(PropertiesEditor *pEditor) { m_pPropertyEditor = pEditor; }
+
 		// Other functions
 		void adjustPosition();
 
 	protected:
 		// Events
-		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 		// Other functions
@@ -47,6 +51,7 @@ namespace MidiMe
 
 		// Member variables
 		ChainWidget *m_pChainWidget;
+		PropertiesEditor *m_pPropertyEditor;
 		Processor *m_pProcessor;
 
 		typedef std::map<Input *, InputItem *> InputItemMap;

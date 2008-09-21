@@ -75,6 +75,20 @@ namespace MidiMe
 		void fromString(const string &value);
 	};
 
+	/** A positive integer number */
+	class PROPERTIES_API UIntProperty: public GenericProperty<unsigned int>
+	{
+	public:
+		UIntProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: GenericProperty<unsigned int>(name, getter, setter) {}
+
+		static string type;
+		const string &getType() const { return type; }
+
+		string toString() const;
+		void fromString(const string &value);
+	};
+
 	/** A floating point property */
 	class PROPERTIES_API RealProperty: public GenericProperty<float>
 	{

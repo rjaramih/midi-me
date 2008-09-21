@@ -83,12 +83,6 @@ bool MidiOutput::close()
 
 ControllerSignal *MidiOutput::createControllerSignal()
 {
-	if(!m_opened)
-	{
-		setLastError("Not opened");
-		return 0;
-	}
-
 	ControllerSignal *pCC = new ControllerSignal(this);
 	m_controllerSignals.insert(pCC);
 	return pCC;

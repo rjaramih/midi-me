@@ -73,9 +73,8 @@ void InputItem::setInverted(bool inverted)
 * Protected functions *
 **********************/
 
-void InputItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
+void InputItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *pEvent)
 {
-	//! @todo This triggers after the state is back to normal, so this check doesn't work
-	if(m_pChainWidget->getState() == ChainWidget::State_Normal)
+	if(pEvent->button() == Qt::RightButton && m_pChainWidget->getState() == ChainWidget::State_Normal)
 		showSettings(pEvent->screenPos());
 }

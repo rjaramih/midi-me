@@ -40,7 +40,7 @@ namespace MidiMe
 		void onValue(Input *pInput, real value);
 
 		// Events
-		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
+		void mouseReleaseEvent(QGraphicsSceneMouseEvent *pEvent);
 
 		// Output items can connect themselves
 		void setConnectedEdge(EdgeItem *pEdge) { m_pConnectedEdge = pEdge; }

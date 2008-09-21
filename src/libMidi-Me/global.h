@@ -4,7 +4,7 @@
 namespace MidiMe
 {
 	// The real number type used for values
-	typedef double real;
+	typedef float real;
 }
 
 // Windows and pocket pc

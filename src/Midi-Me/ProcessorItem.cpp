@@ -5,6 +5,7 @@
 #include "ChainWidget.h"
 #include "EdgeItem.h"
 #include <libMidi-Me/Processor.h>
+#include <PropertiesEditor/PropertiesEditor.h>
 using namespace MidiMe;
 
 #include <QtGui/QGraphicsScene>
@@ -26,7 +27,7 @@ static const float g_maxHeight(100.0f);
 ******************************/
 
 ProcessorItem::ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, QGraphicsItem *pParent)
-: QGraphicsRectItem(pParent), m_pChainWidget(pChainWidget), m_pProcessor(pProcessor)
+: QGraphicsRectItem(pParent), m_pChainWidget(pChainWidget), m_pPropertyEditor(0), m_pProcessor(pProcessor)
 {
 	assert(m_pChainWidget && m_pProcessor);
 
@@ -35,7 +36,7 @@ ProcessorItem::ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, Q
 		m_pChainWidget->getScene()->addItem(this);
 
 	// Setup item
-	//setFlag(ItemIsSelectable);
+	setFlag(ItemIsSelectable);
 	setFlag(ItemIsMovable);
 	//setFlag(ItemIsFocusable);
 
@@ -68,11 +69,6 @@ void ProcessorItem::adjustPosition()
 * Protected functions *
 **********************/
 
-void ProcessorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
-{
-	return QGraphicsRectItem::contextMenuEvent(pEvent);
-}
-
 QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	if(change == ItemPositionChange)
@@ -94,6 +90,13 @@ QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &va
 		for(OutputItemMap::iterator it = m_outputItems.begin(); it != m_outputItems.end(); ++it)
 			if(it->second->isConnected())
 				it->second->getConnectedEdge()->adjust();
+	}
+
+	// Show properties on selection
+	else if(change == ItemSelectedHasChanged && m_pPropertyEditor)
+	{
+		m_pPropertyEditor->clear();
+		m_pPropertyEditor->addCollection(m_pProcessor->getType(), "Processor", m_pProcessor);
 	}
 
 	return QGraphicsRectItem::itemChange(change, value);

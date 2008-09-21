@@ -10,7 +10,7 @@ namespace MidiMe
 	// Forward declarations
 	class Chain;
 	class Processor;
-	class ValueOutput; class RangeOutput;
+	class Output;
 
 	/** This class is used to serialize Midi-Me converter settings. */
 	class LIBMIDIME_API Serializer: public LastError
@@ -32,8 +32,7 @@ namespace MidiMe
 		bool writeHeader(std::ostream &stream);
 		bool writeChain(std::ostream &stream, Chain *pChain);
 		bool writeProcessor(std::ostream &stream, Processor *pProcessor);
-		bool writeConnection(std::ostream &stream, ValueOutput *pOutput);
-		bool writeConnection(std::ostream &stream, RangeOutput *pOutput);
+		bool writeConnection(std::ostream &stream, Output *pOutput);
 
 		// Member variables
 		Chain *m_pChain;

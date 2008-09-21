@@ -1,5 +1,6 @@
 // Includes
 #include "ChainWidget.h"
+#include "MainWindow.h"
 #include "ChainStartItem.h"
 #include "ChainEndItem.h"
 #include "ProcessorItem.h"
@@ -31,8 +32,8 @@ static const float g_maxSize(100.0f);
 * Constructors and destructor *
 ******************************/
 
-ChainWidget::ChainWidget(Chain *pChain, QWidget *pParent)
-: QGraphicsView(pParent), m_pChain(pChain), m_state(State_Normal)
+ChainWidget::ChainWidget(Chain *pChain, MainWindow *pWindow)
+: QGraphicsView(pWindow), m_pWindow(pWindow), m_pChain(pChain), m_state(State_Normal)
 , m_pConnectingEdge(0)
 {
 	assert(m_pChain);
@@ -127,14 +128,21 @@ void ChainWidget::stopConnecting(const QPointF &mousePos)
 		{
 			pOutputItem = qgraphicsitem_cast<OutputItem *>(items.at(i));
 			
+			// Don't connect to the same processor
+			if(pOutputItem->parentItem() && pOutputItem->parentItem() == pInputItem->parentItem())
+				continue;
+			
 			// Connect if not yet connected
-			//! @todo Don't connect to the same processor
 			if(!pOutputItem->isConnected())
 				pOutputItem->connect(pInputItem);
 		}
 		else if(items.at(i)->type() == InputItem::Type && pOutputItem)
 		{
 			pInputItem = qgraphicsitem_cast<InputItem *>(items.at(i));
+
+			// Don't connect to the same processor
+			if(pInputItem->parentItem() && pOutputItem->parentItem() == pInputItem->parentItem())
+				continue;
 
 			// Connect if not yet connected
 			if(!pInputItem->isConnected())
@@ -148,6 +156,15 @@ void ChainWidget::stopConnecting(const QPointF &mousePos)
 
 	// Reset the current state
 	m_state = State_Normal;
+}
+
+void ChainWidget::addControlSignal()
+{
+	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
+
+	ControllerSignal *pCC = pMidi->createControllerSignal();
+
+	ChainEnd *pEnd = m_pChain->addChainEnd(pMidi, pCC);
 }
 
 
@@ -173,7 +190,7 @@ void ChainWidget::addProcessor(QAction *pAction)
 void ChainWidget::addChainEnd(QAction *pAction)
 {
 	QList<QVariant> data = pAction->data().toList();
-	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
+	/*MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
 
 	unsigned int port = data.at(0).toUInt();
 	if(!pMidi->isOpened() || pMidi->getOpenedPort() != port)
@@ -194,7 +211,7 @@ void ChainWidget::addChainEnd(QAction *pAction)
 	// TEMP
 	pCC->setController(16);
 
-	ChainEnd *pEnd = m_pChain->addChainEnd(pMidi, pCC);
+	ChainEnd *pEnd = m_pChain->addChainEnd(pMidi, pCC);*/
 }
 
 void ChainWidget::resizeEvent(QResizeEvent *pEvent)
@@ -332,12 +349,17 @@ void ChainWidget::onProcessorAdded(Processor *pProcessor)
 	ProcessorItem *pItem = new ProcessorItem(this, pProcessor);
 	m_processorItems[pProcessor] = pItem;
 
+	if(pItem)
+		pItem->setPropertyEditor(m_pWindow->getPropertyEditor());
+
 	update();
 }
 
 void ChainWidget::onProcessorRemoving(Processor *pProcessor)
 {
 	assert(m_processorItems.find(pProcessor) != m_processorItems.end());
+
+	//! @todo Clear property editor if this was the selected processor
 
 	delete m_processorItems[pProcessor];
 	m_processorItems.erase(pProcessor);
@@ -435,7 +457,11 @@ void ChainWidget::generateChainEndMenu(QMenu *pParent)
 {
 	QMenu *pMenu = pParent->addMenu("Add chain end");
 
-	DeviceManager &devMgr = DeviceManager::getInstance();
+	//! @todo Support multiple
+	QAction *pCCAction = pMenu->addAction("Controller Signal");
+	connect(pCCAction, SIGNAL(triggered()), SLOT(addControlSignal()));
+
+	/*DeviceManager &devMgr = DeviceManager::getInstance();
 	MidiOutput *pMidi = devMgr.getMidiOutput();
 
 	for(unsigned int i = 0; i < pMidi->numPorts(); ++i)
@@ -452,7 +478,7 @@ void ChainWidget::generateChainEndMenu(QMenu *pParent)
 	}
 
 	if(pMidi->numPorts() == 0)
-		pMenu->setEnabled(false);
+		pMenu->setEnabled(false);*/
 }
 
 void ChainWidget::distributeStartItems()

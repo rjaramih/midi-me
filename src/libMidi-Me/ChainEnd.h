@@ -24,7 +24,17 @@ namespace MidiMe
 		MidiOutput *getMidi() const { return m_pMidi; }
 		Input *getInput() const { return m_pInput; }
     
+		// Settings
+		unsigned int getMidiPort() const;
+		void setMidiPort(unsigned int port);
+		int getCC() const;
+		void setCC(int channel);
+
 	protected:
+		// Protected functions
+		void createProperties();
+		void destroyProperties();
+
 		// Member variables
 		MidiOutput *m_pMidi;
 		Input *m_pInput;

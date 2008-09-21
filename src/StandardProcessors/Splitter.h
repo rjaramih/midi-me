@@ -23,10 +23,16 @@ namespace MidiMe
 		virtual ~Splitter();
 
 		// Other functions
+		real getSplitValue() const { return m_splitValue; }
+		void setSplitValue(real value);
     
 	protected:
 		// Input::Listener functions
 		void onValue(Input *pInput, real value);
+
+		// Protected functions
+		void createProperties();
+		void destroyProperties();
 
 		// Member variables
 		real m_splitValue;

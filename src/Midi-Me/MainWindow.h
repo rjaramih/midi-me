@@ -24,6 +24,9 @@ namespace MidiMe
 		MainWindow();
 		virtual ~MainWindow();
 
+		// Information
+		PropertiesEditor *getPropertyEditor() const { return properties; }
+
 	public slots:
 		void newFile();
 		void openFile();
