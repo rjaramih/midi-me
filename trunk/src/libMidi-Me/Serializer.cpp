@@ -131,14 +131,7 @@ bool Serializer::writeProcessor(std::ostream &stream, Processor *pProcessor)
 	return true;
 }
 
-bool Serializer::writeConnection(std::ostream &stream, ValueOutput *pOutput)
-{
-	//! @todo Implement this: in- and outputs need IDs
-	//cerr << "\t<connection from=\"" << pOutput->getID() << "\" to=\"" << << "\" />\n";
-	return true;
-}
-
-bool Serializer::writeConnection(std::ostream &stream, RangeOutput *pOutput)
+bool Serializer::writeConnection(std::ostream &stream, Output *pOutput)
 {
 	//! @todo Implement this: in- and outputs need IDs
 	//cerr << "\t<connection from=\"" << pOutput->getID() << "\" to=\"" << << "\" />\n";

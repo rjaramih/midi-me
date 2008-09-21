@@ -29,7 +29,6 @@ namespace MidiMe
 
 	protected:
 		// Events
-		void contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 		// Other functions

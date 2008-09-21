@@ -67,11 +67,6 @@ void ChainStartItem::adjustPosition()
 * Protected functions *
 **********************/
 
-void ChainStartItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *pEvent)
-{
-	return OutputItem::contextMenuEvent(pEvent);
-}
-
 QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	if(change == ItemPositionChange)

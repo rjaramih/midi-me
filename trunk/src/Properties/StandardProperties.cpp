@@ -7,6 +7,7 @@ using namespace MidiMe;
 string CompoundProperty::type("compound");
 string BoolProperty::type("bool");
 string IntProperty::type("int");
+string UIntProperty::type("uint");
 string RealProperty::type("real");
 string StringProperty::type("string");
 
@@ -129,6 +130,21 @@ string IntProperty::toString() const
 void IntProperty::fromString(const string &value)
 {
 	setValue(StringUtil::toInt(value));
+}
+
+
+/***************
+* UIntProperty *
+***************/
+
+string UIntProperty::toString() const
+{
+	return StringUtil::toString(getValue());
+}
+
+void UIntProperty::fromString(const string &value)
+{
+	setValue(StringUtil::toUInt(value));
 }
 
 

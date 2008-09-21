@@ -27,20 +27,6 @@ ControllerSignal::~ControllerSignal()
 /**********************
 * Protected functions *
 **********************/
-#if 0
-void ControllerSignal::onValue(Input *pInput, int value)
-{
-	assert(pInput == this);
-	if(!m_pOutput) return;
-
-	// Map the value
-	int diffInput = m_pOutput->getMaxValue() - m_pOutput->getMinValue();
-	int diffOutput = m_endValue - m_startValue;
-	int outValue = m_startValue + diffOutput * (value - m_pOutput->getMinValue()) / diffInput;
-
-	m_pMidiOutput->sendControllerMessage(m_channel, m_controller, outValue);
-}
-#else
 void ControllerSignal::onValue(Input *pInput, real value)
 {
 	assert(pInput == this);
@@ -52,4 +38,3 @@ void ControllerSignal::onValue(Input *pInput, real value)
 
 	m_pMidiOutput->sendControllerMessage(m_channel, m_controller, outValue);
 }
-#endif

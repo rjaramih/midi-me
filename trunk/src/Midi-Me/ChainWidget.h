@@ -14,6 +14,7 @@ class QMenu;
 namespace MidiMe
 {
 	// Forward declarations
+	class MainWindow;
 	class Chain;
 	class ChainStartItem;
 	class ChainEndItem;
@@ -32,7 +33,7 @@ namespace MidiMe
 		enum State { State_Normal, State_Connecting, State_Moving };
 
 		// Constructors and destructor
-		ChainWidget(Chain *pChain, QWidget *pParent = 0);
+		ChainWidget(Chain *pChain, MainWindow *pWindow);
 		virtual ~ChainWidget();
 
 		// Information
@@ -44,6 +45,8 @@ namespace MidiMe
 		void update();
 		void startConnecting(const QPointF &mousePos);
 		void stopConnecting(const QPointF &mousePos);
+
+		void addControlSignal();
     
 	protected slots:
 		void addChainStart(QAction *pAction);
@@ -81,6 +84,7 @@ namespace MidiMe
 		friend class OutputItem;
 
 		// Member variables
+		MainWindow *m_pWindow;
 		QGraphicsScene *m_pScene;
 		Chain *m_pChain;
 		State m_state;
