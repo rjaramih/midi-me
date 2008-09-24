@@ -34,6 +34,7 @@ namespace MidiMe
 
 		// Information
 		bool isAnalog() const { return m_analog; }
+		real getCurrentValue() const { return m_value; }
 
 		// Other functions
 		void sendValue(real value);
@@ -45,6 +46,9 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
+		/// The current value
+		real m_value;
+
 		/// The connected input
 		Input *m_pInput;
 

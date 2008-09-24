@@ -59,6 +59,9 @@ void OutputItem::disconnect()
 
 void OutputItem::onValue(Output *pOutput, real value)
 {
+	if(!m_pChainWidget->isEnabled())
+		return;
+
 	//float u = (value - pOutput->getMinValue()) / (float) (pOutput->getMaxValue() - pOutput->getMinValue());
 	real u = value;
 	float meterWidth = u * width;

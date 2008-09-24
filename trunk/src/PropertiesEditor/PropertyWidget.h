@@ -7,7 +7,7 @@
 #include <QtGui/QWidget>
 
 // Forward declarations
-class QGridLayout;
+class QHBoxLayout;
 
 namespace MidiMe
 {
@@ -33,7 +33,7 @@ namespace MidiMe
 
 	protected:
 		// Member variables
-		QGridLayout *m_pLayout;
+		QHBoxLayout *m_pLayout;
 		Property *m_pProperty;
 		bool m_modified;
 	};

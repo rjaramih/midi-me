@@ -1,6 +1,7 @@
 // Includes
 #include "MainWindow.h"
 #include "ChainWidget.h"
+#include "PropertyWidgetInputValue.h"
 #include "PluginWidget.h"
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/Chain.h>
@@ -29,14 +30,20 @@ static const unsigned int s_numRecentFiles = 5;
 ******************************/
 
 MainWindow::MainWindow()
-: m_pChain(0), m_pChainEditor(0), m_timerId(0)
+: m_pChain(0), m_pChainEditor(0), m_pInputValueWidgetCreator(0), m_timerId(0)
 {
 	createWidgets();
+
+	// To be able to edit input value properties
+	m_pInputValueWidgetCreator = new PropertyWidgetCreatorInputValue();
 
 	// Create the converter
 	m_pChain = new Chain();
 	m_pChainEditor = new ChainWidget(m_pChain, this);
 	setCentralWidget(m_pChainEditor);
+
+	// Connect the live view button
+	connect(actionEnableLiveView, SIGNAL(toggled(bool)), m_pChainEditor, SLOT(setVisible(bool)));
 
 	// Add ourself as a device listener (to update the device menu)
 	populateInputDeviceMenu();
@@ -60,6 +67,9 @@ MainWindow::~MainWindow()
 	// Destroy the converter
 	delete m_pChainEditor;
 	delete m_pChain;
+
+	// To be able to edit input value properties
+	delete m_pInputValueWidgetCreator;
 }
 
 

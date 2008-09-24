@@ -56,6 +56,18 @@ void ChainEndItem::adjustPosition()
 * Protected functions *
 **********************/
 
+void ChainEndItem::mousePressEvent(QGraphicsSceneMouseEvent *pEvent)
+{
+	// Show properties on selection
+	/*if(m_pPropertyEditor)
+	{
+		m_pPropertyEditor->clear();
+		m_pPropertyEditor->addCollection(m_p->getType(), "Processor", m_pProcessor);
+	}*/
+	
+	return InputItem::mousePressEvent(pEvent);
+}
+
 QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	if(change == ItemPositionChange)

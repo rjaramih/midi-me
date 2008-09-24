@@ -24,7 +24,7 @@ namespace MidiMe
 
 		// Other functions
 		real getSplitValue() const { return m_splitValue; }
-		void setSplitValue(real value);
+		void setSplitValue(real value) { m_splitValue = value; }
     
 	protected:
 		// Input::Listener functions
@@ -36,6 +36,7 @@ namespace MidiMe
 
 		// Member variables
 		real m_splitValue;
+		Input *m_pInput;
 		Output *m_pOutput1, *m_pOutput2;
 	};
 

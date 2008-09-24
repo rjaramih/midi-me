@@ -7,7 +7,7 @@ using namespace MidiMe;
 ******************************/
 
 Output::Output(bool analog)
-: m_pInput(0), m_analog(analog)
+: m_value(0), m_pInput(0), m_analog(analog)
 {
 }
 
@@ -22,6 +22,9 @@ Output::~Output()
 
 void Output::sendValue(real value)
 {
+	// Store the current value
+	m_value = value;
+
 	if(isConnected())
 		m_pInput->processValue(value);
 

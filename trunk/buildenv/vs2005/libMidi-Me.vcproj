@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libMidi-Me\Midi-MeProperties.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libMidi-Me\MidiOutput.cpp"
 				>
 			</File>
@@ -274,6 +278,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libMidi-Me\LastError.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libMidi-Me\Midi-MeProperties.h"
 				>
 			</File>
 			<File

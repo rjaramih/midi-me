@@ -9,7 +9,8 @@ namespace MidiMe
 {
 	// Forward declarations
 
-	/** A splitter is a processor that duplicates its input signal into two signals.
+	/** A duplicator is a processor that duplicates its input signal into two signals.
+		@todo Support a variable amount of duplicate channels
 	*/
 	class Duplicator: public Processor
 	{

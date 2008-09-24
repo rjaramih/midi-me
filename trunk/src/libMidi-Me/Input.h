@@ -33,6 +33,9 @@ namespace MidiMe
 		Input(bool inverted = false);
 		virtual ~Input();
 
+		// Information
+		real getCurrentValue() const { return m_value; }
+
 		// Incoming connection (handled by Output)
 		Output *getConnectedOutput() const { return m_pOutput; }
 		bool isConnected() const { return (m_pOutput != 0); }
@@ -46,6 +49,9 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
+		/// The current value
+		real m_value;
+
 		/// The connected output
 		Output *m_pOutput;
 

@@ -11,6 +11,7 @@ namespace MidiMe
 	// Forward declarations
 	class Chain;
 	class ChainWidget;
+	class PropertyWidgetCreatorInputValue;
 
 	/** The main window of our OIS 2 midi application
 		@todo Check if file dirty, add asteriks to title bar and ask to save when opening or quitting
@@ -62,6 +63,8 @@ namespace MidiMe
 		// Member variables
 		Chain *m_pChain;
 		ChainWidget *m_pChainEditor;
+		PropertyWidgetCreatorInputValue *m_pInputValueWidgetCreator;
+
 		int m_timerId;
 		unsigned int m_prevTime;
 	};

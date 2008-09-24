@@ -37,6 +37,7 @@ namespace MidiMe
 
 	protected:
 		// Events
+		void mousePressEvent(QGraphicsSceneMouseEvent *pEvent);
 		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 		// Other functions

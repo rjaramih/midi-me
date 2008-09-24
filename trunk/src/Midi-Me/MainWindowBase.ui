@@ -113,6 +113,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionRun" />
+   <addaction name="actionEnableLiveView" />
   </widget>
   <widget class="QDockWidget" name="propertiesDock" >
    <property name="geometry" >
@@ -214,6 +215,17 @@
   <action name="action_PluginManager" >
    <property name="text" >
     <string>Plugin &amp;Manager...</string>
+   </property>
+  </action>
+  <action name="actionEnableLiveView" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Enable Live View</string>
    </property>
   </action>
  </widget>
