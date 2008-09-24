@@ -149,7 +149,10 @@ void PropertiesEditor::layoutGui()
 void PropertiesEditor::addProperty(QTreeWidgetItem *pParent, const std::string &name, Property *pProperty)
 {
 	if(!PropertyWidgetFactory::getInstance().canCreate(pProperty->getType()))
+	{
+		cerr << "[PropertiesEditor] Warning: No widget for " << pProperty->getType() << " properties!" << endl;
 		return;
+	}
 
 	// Create the correct property widget
 	PropertyWidget *pWidget = PropertyWidgetFactory::getInstance().createWidget(pProperty);

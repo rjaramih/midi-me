@@ -10,7 +10,10 @@ namespace MidiMe
 {
 	// Forward declarations
 
-	/** A delay processor delays the incoming signal. */
+	/** A delay processor delays the incoming signal.
+		@warning Because the values have to be recorded for the duration of the delay,
+			this class' memory use will increase with the delay value.
+	*/
 	class Delay: public Processor
 	{
 	public:
@@ -30,6 +33,10 @@ namespace MidiMe
 	protected:
 		// Input::Listener functions
 		void onValue(Input *pInput, real value);
+
+		// Protected functions
+		void createProperties();
+		void destroyProperties();
 
 		//! The delay, in seconds
 		float m_delay;

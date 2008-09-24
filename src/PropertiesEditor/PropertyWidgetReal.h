@@ -10,13 +10,16 @@ class QDoubleSpinBox;
 
 namespace MidiMe
 {
+	// Forward declarations
+	class RealProperty;
+
 	class PROPERTIESEDITOR_API PropertyWidgetReal : public PropertyWidget
 	{
 		Q_OBJECT
 
 	public:
 		// Constructors and destructor
-		PropertyWidgetReal(Property *pProperty, QWidget *parent = NULL);
+		PropertyWidgetReal(RealProperty *pProperty, QWidget *parent = NULL);
 		virtual ~PropertyWidgetReal();
 
 		// PropertyWidget functions
@@ -36,7 +39,7 @@ namespace MidiMe
 		PropertyWidgetCreatorReal() : PropertyWidgetCreator("real") {}
 
 		// PropertyWidgetCreator functions
-		PropertyWidget * createWidget(Property *pProperty) { return new PropertyWidgetReal(pProperty); }
+		PropertyWidget * createWidget(Property *pProperty) { return new PropertyWidgetReal((RealProperty *) pProperty); }
 		void destroyWidget(PropertyWidget *pWidget) { delete pWidget; }
 	};
 }

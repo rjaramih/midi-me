@@ -2,6 +2,9 @@
 #include "Delay.h"
 using namespace MidiMe;
 
+#include <Properties/StandardProperties.h>
+
+
 // Statics
 string Delay::type = "Delay";
 
@@ -19,12 +22,14 @@ Delay::Delay()
 	// Add the output
 	addOutput();
 
-	// TEMP: Delay for 2 seconds
-	setDelay(2.0f);
+	// Create the properties
+	createProperties();
 }
 
 Delay::~Delay()
 {
+	// Destroy the properties
+	destroyProperties();
 }
 
 
@@ -69,6 +74,25 @@ void Delay::onValue(Input *pInput, real value)
 {
 	// Note: only one value can be recorded each time step
 	m_values[m_currentTime] = value;
+}
+
+void Delay::createProperties()
+{
+	// Add the properties
+	RealProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &Delay::getDelay);
+	RealProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &Delay::setDelay);
+	RealProperty *pDelay = new RealProperty("Delay (s)", valueGetter, valueSetter);
+	pDelay->setMax(10.0f);
+	addProperty(pDelay);
+}
+
+void Delay::destroyProperties()
+{
+	// Destroy all properties
+	const PropertyList &props = getPropertiesList();
+	for(PropertyList::const_iterator it = props.begin(); it != props.end(); ++it)
+		delete *it;
+	clearProperties();
 }
 
 

@@ -94,13 +94,23 @@ namespace MidiMe
 	{
 	public:
 		RealProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: GenericProperty<float>(name, getter, setter) {}
+			: GenericProperty<float>(name, getter, setter), m_min(0), m_max(1) {}
 
 		static string type;
 		const string &getType() const { return type; }
 
 		string toString() const;
 		void fromString(const string &value);
+
+		float getMin() const { return m_min; }
+		void setMin(float value) { m_min = value; }
+
+		float getMax() const { return m_max; }
+		void setMax(float value) { m_max = value; }
+
+	protected:
+		// Member variables
+		float m_min, m_max;
 	};
 
 	/** A string property */

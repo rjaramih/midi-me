@@ -67,6 +67,18 @@ void ChainStartItem::adjustPosition()
 * Protected functions *
 **********************/
 
+void ChainStartItem::mousePressEvent(QGraphicsSceneMouseEvent *pEvent)
+{
+	// Show properties on selection
+	/*if(m_pPropertyEditor)
+	{
+		m_pPropertyEditor->clear();
+		m_pPropertyEditor->addCollection(m_p->getType(), "Processor", m_pProcessor);
+	}*/
+	
+	return OutputItem::mousePressEvent(pEvent);
+}
+
 QVariant ChainStartItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	if(change == ItemPositionChange)

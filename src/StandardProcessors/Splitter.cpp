@@ -2,7 +2,7 @@
 #include "Splitter.h"
 using namespace MidiMe;
 
-#include <Properties/StandardProperties.h>
+#include <libMidi-Me/Midi-MeProperties.h>
 
 
 // Statics
@@ -17,7 +17,7 @@ Splitter::Splitter()
 : Processor(type), m_splitValue(0.5)
 {
 	// Add the input
-	Input *pInput = addInput();
+	m_pInput = addInput();
 
 	// Add the outputs
 	m_pOutput1 = addOutput();
@@ -38,15 +38,9 @@ Splitter::~Splitter()
 * Other functions *
 ******************/
 
-void Splitter::setSplitValue(real value)
-{
-	m_splitValue = value;
-	//getProperty("Splitter value")->fireChanged();
-}
-
 
 /**********************
-* Protected functions *
+* Protected functions 
 **********************/
 
 void Splitter::onValue(Input *pInput, real value)
@@ -66,9 +60,9 @@ void Splitter::onValue(Input *pInput, real value)
 void Splitter::createProperties()
 {
 	// Add the properties
-	RealProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &Splitter::getSplitValue);
-	RealProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &Splitter::setSplitValue);
-	RealProperty *pSplitValue = new RealProperty("Split value", valueGetter, valueSetter);
+	InputValueProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &Splitter::getSplitValue);
+	InputValueProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &Splitter::setSplitValue);
+	InputValueProperty *pSplitValue = new InputValueProperty("Split value", valueGetter, valueSetter, m_pInput);
 	addProperty(pSplitValue);
 }
 

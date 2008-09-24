@@ -36,7 +36,7 @@ ProcessorItem::ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, Q
 		m_pChainWidget->getScene()->addItem(this);
 
 	// Setup item
-	setFlag(ItemIsSelectable);
+	//setFlag(ItemIsSelectable);
 	setFlag(ItemIsMovable);
 	//setFlag(ItemIsFocusable);
 
@@ -69,6 +69,18 @@ void ProcessorItem::adjustPosition()
 * Protected functions *
 **********************/
 
+void ProcessorItem::mousePressEvent(QGraphicsSceneMouseEvent *pEvent)
+{
+	// Show properties on selection
+	if(m_pPropertyEditor)
+	{
+		m_pPropertyEditor->clear();
+		m_pPropertyEditor->addCollection(m_pProcessor->getType(), "Processor", m_pProcessor);
+	}
+	
+	return QGraphicsRectItem::mousePressEvent(pEvent);
+}
+
 QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
 	if(change == ItemPositionChange)
@@ -90,13 +102,6 @@ QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &va
 		for(OutputItemMap::iterator it = m_outputItems.begin(); it != m_outputItems.end(); ++it)
 			if(it->second->isConnected())
 				it->second->getConnectedEdge()->adjust();
-	}
-
-	// Show properties on selection
-	else if(change == ItemSelectedHasChanged && m_pPropertyEditor)
-	{
-		m_pPropertyEditor->clear();
-		m_pPropertyEditor->addCollection(m_pProcessor->getType(), "Processor", m_pProcessor);
 	}
 
 	return QGraphicsRectItem::itemChange(change, value);

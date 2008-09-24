@@ -44,6 +44,9 @@ void InputItem::disconnect()
 
 void InputItem::onValue(Input *pInput, real value)
 {
+	if(!m_pChainWidget->isEnabled())
+		return;
+
 	real u = value;
 	float meterWidth = value * width;
 
