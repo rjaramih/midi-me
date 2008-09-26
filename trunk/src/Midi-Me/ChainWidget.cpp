@@ -10,7 +10,6 @@
 #include <libMidi-Me/InputDevice.h>
 #include <libMidi-Me/Output.h>
 #include <libMidi-Me/MidiOutput.h>
-#include <libMidi-Me/ControllerSignal.h>
 #include <libMidi-Me/ProcessorFactory.h>
 #include <libMidi-Me/Processor.h>
 using namespace MidiMe;
@@ -160,11 +159,7 @@ void ChainWidget::stopConnecting(const QPointF &mousePos)
 
 void ChainWidget::addControlSignal()
 {
-	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
-
-	ControllerSignal *pCC = pMidi->createControllerSignal();
-
-	ChainEnd *pEnd = m_pChain->addChainEnd(pMidi, pCC);
+	ChainEnd *pEnd = m_pChain->addChainEnd();
 }
 
 
@@ -316,6 +311,9 @@ void ChainWidget::onEndAdded(ChainEnd *pEnd)
 
 	ChainEndItem *pItem = new ChainEndItem(this, pEnd);
 	m_endItems[pEnd] = pItem;
+
+	if(pItem)
+		pItem->setPropertyEditor(m_pWindow->getPropertyEditor());
 
 	// Position the item on the right side
 	float x = sceneRect().right() - pItem->rect().width() + 1.0f;

@@ -13,6 +13,7 @@ namespace MidiMe
 {
 	// Forward declarations
 	class InputItem;
+	class PropertiesEditor;
 
 	/** Class Description */
 	class ChainEndItem: public InputItem
@@ -23,6 +24,10 @@ namespace MidiMe
 		// Constructors and destructor
 		ChainEndItem(ChainWidget *pChainWidget, ChainEnd *pChainEnd, QGraphicsItem *pParent = 0);
 		virtual ~ChainEndItem();
+
+		// Properties
+		PropertiesEditor *getPropertyEditor() const { return m_pPropertyEditor; }
+		void setPropertyEditor(PropertiesEditor *pEditor) { m_pPropertyEditor = pEditor; }
 
 		// Other functions
 		void adjustPosition();
@@ -37,6 +42,7 @@ namespace MidiMe
 
 		// Member variables
 		ChainEnd *m_pChainEnd;
+		PropertiesEditor *m_pPropertyEditor;
 	};
 }
 

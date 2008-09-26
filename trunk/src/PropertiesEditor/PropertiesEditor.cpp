@@ -117,7 +117,8 @@ void PropertiesEditor::onPropertyAdded(Property *pProperty)
 
 void PropertiesEditor::onPropertyRemoving(Property *pProperty)
 {
-	//! @todo Implement support for dynamic properties
+	// Remove the property's widget
+	destroyPropertyWidget(pProperty);
 }
 
 void PropertiesEditor::onPropertyChanged(Property *pProperty)

@@ -6,6 +6,7 @@
 #include "ProcessorFactory.h"
 #include "Serializer.h"
 #include "InputDevice.h"
+#include "DeviceManager.h"
 using namespace MidiMe;
 
 #include <RtMidi/RtMidi.h>
@@ -91,9 +92,10 @@ size_t Chain::numChainEndItems() const
 	return m_endItems.size();
 }
 
-ChainEnd *Chain::addChainEnd(MidiOutput *pMidi, Input *pInput)
+ChainEnd *Chain::addChainEnd()
 {
-	ChainEnd *pEnd = new ChainEnd(pMidi, pInput);
+	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
+	ChainEnd *pEnd = new ChainEnd(pMidi);
 	m_endItems.insert(pEnd);
 
 	fireEndAdded(pEnd);

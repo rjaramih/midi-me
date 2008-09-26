@@ -195,10 +195,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libMidi-Me\ControllerSignal.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libMidi-Me\DeviceManager.cpp"
 				>
 			</File>
@@ -254,10 +250,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libMidi-Me\ChainStart.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libMidi-Me\ControllerSignal.h"
 				>
 			</File>
 			<File

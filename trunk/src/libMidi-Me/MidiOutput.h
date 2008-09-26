@@ -12,8 +12,6 @@ class RtMidiOut;
 namespace MidiMe
 {
 	// Forward declarations
-	class ControllerSignal;
-	typedef std::set<ControllerSignal *> ControllerSignalSet;
 
 	/** Class Description */
 	class LIBMIDIME_API MidiOutput: public LastError
@@ -34,9 +32,6 @@ namespace MidiMe
 		bool close();
 
 		// CCs
-		ControllerSignal *createControllerSignal();
-		void destroyControllerSignal(ControllerSignal *pController);
-
 		bool sendControllerMessage(unsigned int channel, unsigned int controller, unsigned int value);
 
 	protected:
@@ -48,8 +43,6 @@ namespace MidiMe
 		RtMidiOut *m_pMidiOut;
 		bool m_opened;
 		unsigned int m_midiPort;
-
-		ControllerSignalSet m_controllerSignals;
 	};
 }
 

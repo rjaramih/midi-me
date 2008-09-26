@@ -1,6 +1,5 @@
 // Includes
 #include "MidiOutput.h"
-#include "ControllerSignal.h"
 using namespace MidiMe;
 
 #include <RtMidi/RtMidi.h>
@@ -81,23 +80,16 @@ bool MidiOutput::close()
 	return true;
 }
 
-ControllerSignal *MidiOutput::createControllerSignal()
-{
-	ControllerSignal *pCC = new ControllerSignal(this);
-	m_controllerSignals.insert(pCC);
-	return pCC;
-}
-
 bool MidiOutput::sendControllerMessage(unsigned int channel, unsigned int controller, unsigned int value)
 {
 	std::vector<unsigned char> message;
-	message.push_back(176 + channel); // Controller + channel
+	message.push_back(176 + channel); // "Controller" + channel
 	message.push_back(controller); // Controller ID
 	message.push_back(value); // Value
 
 	try
 	{
-		cerr << "[MidiOutput::DEBUG] Sending controller " << controller << " value " << value << endl;
+		//cerr << "[MidiOutput::DEBUG] Sending controller " << controller << " value " << value << endl;
 		m_pMidiOut->sendMessage(&message);
 	}
 	catch(RtError &error)
@@ -131,12 +123,6 @@ bool MidiOutput::initMidi()
 
 bool MidiOutput::destroyMidi()
 {
-	// Destroy all created control signals that are not destroyed yet
-	ControllerSignalSet::iterator ccIt;
-	for(ccIt = m_controllerSignals.begin(); ccIt != m_controllerSignals.end(); ++ccIt)
-		delete *ccIt;
-	m_controllerSignals.clear();
-
 	try
 	{
 		if(m_opened)

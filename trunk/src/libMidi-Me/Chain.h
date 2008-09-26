@@ -61,7 +61,7 @@ namespace MidiMe
 		// Chain end
 		const ChainEndSet &getChainEnd() const;
 		size_t numChainEndItems() const;
-		ChainEnd *addChainEnd(MidiOutput *pMidi, Input *pInput);
+		ChainEnd *addChainEnd();
 		void removeChainEnd(ChainEnd *pEnd);
 		void clearChainEnd();
 

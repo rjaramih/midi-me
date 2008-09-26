@@ -5,6 +5,7 @@
 #include "PropertyWidgetBool.h"
 #include "PropertyWidgetCompound.h"
 #include "PropertyWidgetInt.h"
+#include "PropertyWidgetUInt.h"
 #include "PropertyWidgetReal.h"
 #include "PropertyWidgetString.h"
 #include <Properties/Property.h>
@@ -105,6 +106,7 @@ void PropertyWidgetFactory::createStandardWidgetCreators()
 	static PropertyWidgetCreatorBool boolCreator;
 	static PropertyWidgetCreatorCompound compoundCreator;
 	static PropertyWidgetCreatorInt intCreator;
+	static PropertyWidgetCreatorUInt uintCreator;
 	static PropertyWidgetCreatorReal realCreator;
 	static PropertyWidgetCreatorString stringCreator;
 }
