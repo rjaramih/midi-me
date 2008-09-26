@@ -15,6 +15,7 @@ using namespace MidiMe;
 #include <QtCore/QTimer>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QFileDialog>
+#include <QtGui/QActionGroup>
 
 // TEMP
 #include "InputDeviceWidget.h"
@@ -30,7 +31,7 @@ static const unsigned int s_numRecentFiles = 5;
 ******************************/
 
 MainWindow::MainWindow()
-: m_pChain(0), m_pChainEditor(0), m_pInputValueWidgetCreator(0), m_timerId(0)
+: m_pChain(0), m_pChainEditor(0), m_pInputValueWidgetCreator(0), m_pMidiGroup(0), m_timerId(0)
 {
 	createWidgets();
 
@@ -82,7 +83,7 @@ void MainWindow::newFile()
 	// Ask to save the current file if necessary
 	if(!checkDirty()) return;
 
-	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
+	m_pChain->clear();
 }
 
 void MainWindow::openFile()
@@ -176,6 +177,7 @@ void MainWindow::setStarted(bool started)
 		killTimer(m_timerId);
 }
 
+
 /**********************
 * Protected functions *
 **********************/
@@ -188,9 +190,6 @@ void MainWindow::timerEvent(QTimerEvent *pEvent)
 
 	// Step the chain
 	m_pChain->step(elapsedSeconds);
-
-	// Capture the input devices and generate events
-	//DeviceManager::getInstance().capture();
 }
 
 /* Intercept the close event for the window, to save the current file if needed */
@@ -324,7 +323,7 @@ void MainWindow::onDeviceRemoving(InputDevice *pDevice)
 	}
 
 	if(pAction)
-		removeAction(pAction);
+		menuInputDevice->removeAction(pAction);
 }
 
 void MainWindow::populateInputDeviceMenu()
@@ -354,18 +353,23 @@ void MainWindow::populateMidiOutMenu()
 {
 	menuMidiOut->clear();
 
+	delete m_pMidiGroup;
+	m_pMidiGroup = new QActionGroup(menuMidiOut);
+
 	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
 	
 	unsigned int numPorts = pMidi->numPorts();
 	for(unsigned int i = 0; i < numPorts; ++i)
 	{
-		QAction *pAction = menuMidiOut->addAction(pMidi->getPortName(i).c_str());
+		QAction *pAction = m_pMidiGroup->addAction(pMidi->getPortName(i).c_str());
 		pAction->setData(i);
 		
 		pAction->setCheckable(true);
-		if(i == pMidi->getOpenedPort())
+		if(pMidi->isOpened() && i == pMidi->getOpenedPort())
 			pAction->setChecked(true);
 	}
+
+	menuMidiOut->addActions(m_pMidiGroup->actions());
 }
 
 void MainWindow::selectMidiOut(QAction *pAction)

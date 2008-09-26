@@ -14,7 +14,7 @@ namespace MidiMe
 	class PropertyWidgetCreatorInputValue;
 
 	/** The main window of our OIS 2 midi application
-		@todo Check if file dirty, add asteriks to title bar and ask to save when opening or quitting
+		@todo Add asteriks to title bar when the chain is dirty
 	*/
 	class MainWindow : public QMainWindow, private Ui::MainWindowBase, protected DeviceManager::Listener
 	{
@@ -64,6 +64,7 @@ namespace MidiMe
 		Chain *m_pChain;
 		ChainWidget *m_pChainEditor;
 		PropertyWidgetCreatorInputValue *m_pInputValueWidgetCreator;
+		QActionGroup *m_pMidiGroup;
 
 		int m_timerId;
 		unsigned int m_prevTime;

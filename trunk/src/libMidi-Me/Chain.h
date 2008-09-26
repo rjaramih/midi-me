@@ -84,6 +84,7 @@ namespace MidiMe
 		bool save(const string &filename);
 
 		// Other functions
+		void clear();
 		void step(float seconds);
     
 	protected:

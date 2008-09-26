@@ -50,7 +50,6 @@ namespace MidiMe
     
 	protected slots:
 		void addChainStart(QAction *pAction);
-		void addChainEnd(QAction *pAction);
 		void addProcessor(QAction *pAction);
 
 	protected:
