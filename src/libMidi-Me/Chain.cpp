@@ -23,9 +23,7 @@ Chain::Chain()
 
 Chain::~Chain()
 {
-	clearChainStart();
-	clearChainEnd();
-	clearProcessors();
+	clear();
 }
 
 
@@ -298,6 +296,19 @@ void Chain::step(float seconds)
 	// Step all processors
 	for(ProcessorSet::iterator it = m_processors.begin(); it != m_processors.end(); ++it)
 		(*it)->step(seconds);
+}
+
+/** Clear the whole chain
+	@note The current file name will also be cleared
+*/
+void Chain::clear()
+{
+	clearChainStart();
+	clearChainEnd();
+	clearProcessors();
+
+	m_currentFile.clear();
+	m_dirty = false;
 }
 
 

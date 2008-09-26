@@ -182,33 +182,6 @@ void ChainWidget::addProcessor(QAction *pAction)
 	m_pChain->addProcessor(pAction->text().toStdString());
 }
 
-void ChainWidget::addChainEnd(QAction *pAction)
-{
-	QList<QVariant> data = pAction->data().toList();
-	/*MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
-
-	unsigned int port = data.at(0).toUInt();
-	if(!pMidi->isOpened() || pMidi->getOpenedPort() != port)
-	{
-		if(!pMidi->open(port))
-		{
-			QString message = "Error opening midi port '";
-			message += pMidi->getPortName(port).c_str();
-			message += "': ";
-			message += pMidi->getLastError().c_str();
-
-			QMessageBox::warning(this, "Midi error", message);
-			return;
-		}
-	}
-
-	ControllerSignal *pCC = pMidi->createControllerSignal();
-	// TEMP
-	pCC->setController(16);
-
-	ChainEnd *pEnd = m_pChain->addChainEnd(pMidi, pCC);*/
-}
-
 void ChainWidget::resizeEvent(QResizeEvent *pEvent)
 {
 	// Resize to size of the widget
@@ -461,28 +434,10 @@ void ChainWidget::generateChainEndMenu(QMenu *pParent)
 {
 	QMenu *pMenu = pParent->addMenu("Add chain end");
 
-	//! @todo Support multiple
+	//! @todo Use a factory for the chain end items
+
 	QAction *pCCAction = pMenu->addAction("Controller Signal");
 	connect(pCCAction, SIGNAL(triggered()), SLOT(addControlSignal()));
-
-	/*DeviceManager &devMgr = DeviceManager::getInstance();
-	MidiOutput *pMidi = devMgr.getMidiOutput();
-
-	for(unsigned int i = 0; i < pMidi->numPorts(); ++i)
-	{
-		QMenu *pPortMenu = pMenu->addMenu(pMidi->getPortName(i).c_str());
-		connect(pPortMenu, SIGNAL(triggered(QAction *)), SLOT(addChainEnd(QAction *)));
-
-		// Available items
-		QAction *pAction = pPortMenu->addAction("Controller Signal");
-
-		QList<QVariant> data;
-		data.append(i);
-		pAction->setData(data);
-	}
-
-	if(pMidi->numPorts() == 0)
-		pMenu->setEnabled(false);*/
 }
 
 void ChainWidget::distributeStartItems()
