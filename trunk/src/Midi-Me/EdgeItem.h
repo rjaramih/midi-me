@@ -29,7 +29,8 @@ namespace MidiMe
 
 		// QGraphicsItem functions
 		int type() const { return Type; }
-		QRectF boundingRect() const;
+		QRectF boundingRect() const { return m_boundingRect; }
+		QPainterPath shape() const { return m_boundingShape; }
 
 		/// When the edge is not fully connected yet, provide it with the mouse position
 		void setTempPosition(const QPointF &pos) { m_tempPos = pos; adjust(); }
@@ -46,7 +47,11 @@ namespace MidiMe
 		InputItem *m_pInputItem;
 		OutputItem *m_pOutputItem;
 		QPointF m_tempPos;
-		QPainterPath *m_pPath;
+
+		QPainterPath m_path;
+		QPolygonF m_arrow;
+		QRectF m_boundingRect;
+		QPainterPath m_boundingShape;
 	};
 }
 
