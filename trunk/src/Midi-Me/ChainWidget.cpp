@@ -220,6 +220,12 @@ void ChainWidget::resizeEvent(QResizeEvent *pEvent)
 
 void ChainWidget::mousePressEvent(QMouseEvent *pEvent)
 {
+	// Clear the properties if not clicked on item
+	QPointF scenePos = mapToScene(pEvent->pos());
+	QGraphicsItem *pItem = m_pScene->itemAt(scenePos);
+	if(!pItem)
+		m_pWindow->getPropertyEditor()->clear();
+
 	QGraphicsView::mousePressEvent(pEvent);
 }
 

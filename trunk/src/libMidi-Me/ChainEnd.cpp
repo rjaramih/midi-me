@@ -54,27 +54,35 @@ void ChainEnd::createProperties()
 	// Channel
 	UIntProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getChannel);
 	UIntProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setChannel);
-	UIntProperty *pProperty = new UIntProperty(this, "Channel", valueGetter, valueSetter);
+	UIntProperty *pProperty = new UIntProperty("Channel", valueGetter, valueSetter);
+	addProperty(pProperty);
 
 	// Controller
 	valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getController);
 	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setController);
-	pProperty = new UIntProperty(this, "Controller", valueGetter, valueSetter);
+	pProperty = new UIntProperty("Controller", valueGetter, valueSetter);
+	addProperty(pProperty);
 
 	// Starting value
 	valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getStartValue);
 	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setStartValue);
-	pProperty = new UIntProperty(this, "Starting value", valueGetter, valueSetter);
+	pProperty = new UIntProperty("Starting value", valueGetter, valueSetter);
+	addProperty(pProperty);
 
 	// Ending value
 	valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getEndValue);
 	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setEndValue);
-	pProperty = new UIntProperty(this, "Ending value", valueGetter, valueSetter);
+	pProperty = new UIntProperty("Ending value", valueGetter, valueSetter);
+	addProperty(pProperty);
 }
 
 void ChainEnd::destroyProperties()
 {
+	// Note: We copy this list so we can call clearProperties and inform the listeners
+	const PropertyList props = m_propertiesList;
+	clearProperties();
+
 	// Destroy all properties
-	while(!m_propertiesList.empty())
-		delete m_propertiesList.front();
+	for(PropertyList::const_iterator it = props.begin(); it != props.end(); ++it)
+		delete *it;
 }
