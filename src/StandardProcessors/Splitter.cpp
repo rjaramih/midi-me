@@ -68,11 +68,13 @@ void Splitter::createProperties()
 
 void Splitter::destroyProperties()
 {
+	// Note: We copy this list so we can call clearProperties and inform the listeners
+	const PropertyList props = getPropertiesList();
+	clearProperties();
+
 	// Destroy all properties
-	const PropertyList &props = getPropertiesList();
 	for(PropertyList::const_iterator it = props.begin(); it != props.end(); ++it)
 		delete *it;
-	clearProperties();
 }
 
 
