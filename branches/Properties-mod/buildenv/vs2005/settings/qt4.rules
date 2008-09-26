@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="QT custom build rules"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="uic"
+			DisplayName="QT UI generator"
+			CommandLine="..\qt4\uic.exe -o &quot;tmp\$(ProjectName)\$(PlatformName)\qt_generated\$(InputName).h&quot; &quot;$(InputPath)&quot;"
+			Outputs="tmp\$(ProjectName)\$(PlatformName)\qt_generated\$(InputName).h"
+			AdditionalDependencies="..\qt4\uic.exe"
+			FileExtensions="*.ui"
+			ExecutionDescription="Uic&apos;ing $(InputFileName)"
+			>
+			<Properties>
+			</Properties>
+		</CustomBuildRule>
+		<CustomBuildRule
+			Name="moc"
+			DisplayName="QT MOC generator"
+			CommandLine="..\qt4\moc.exe -I&quot;tmp\$(ProjectName)\$(PlatformName)\qt_generated&quot; -I..\..\include -I..\..\deps\include &quot;$(InputPath)&quot; -o &quot;tmp\$(ProjectName)\$(PlatformName)\qt_generated\$(InputName)_moc.cpp&quot;"
+			Outputs="tmp\$(ProjectName)\$(PlatformName)\qt_generated\$(InputName)_moc.cpp"
+			AdditionalDependencies="..\qt4\moc.exe"
+			FileExtensions="*.moc"
+			ExecutionDescription="Moc&apos;ing $(InputFileName)"
+			>
+			<Properties>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>

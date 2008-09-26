@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="common"
+	OutputDirectory="tmp\$(ProjectName)\$(PlatformName)\$(ConfigurationName)\"
+	IntermediateDirectory="tmp\$(ProjectName)\$(PlatformName)\$(ConfigurationName)\"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="../../include;../../deps/include"
+		AssemblerListingLocation="tmp\$(ProjectName)\$(PlatformName)\$(ConfigurationName)\"
+		ObjectFile="tmp\$(ProjectName)\$(PlatformName)\$(ConfigurationName)\"
+		ProgramDataBaseFileName="tmp\$(ProjectName)\$(PlatformName)\$(ConfigurationName)\"
+		XMLDocumentationFileName="tmp\$(ProjectName)\$(PlatformName)\$(ConfigurationName)\"
+	/>
+</VisualStudioPropertySheet>
