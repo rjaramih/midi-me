@@ -47,6 +47,9 @@ namespace MidiMe
 		void createOutputs();
 		void destroyOutputs();
 
+		void createInfo();
+		void destroyInfo();
+
 		void adjustPosition(QPointF &position);
 		QGraphicsScene *getScene() const;
 

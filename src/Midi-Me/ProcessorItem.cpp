@@ -42,10 +42,12 @@ ProcessorItem::ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, Q
 
 	createInputs();
 	createOutputs();
+	createInfo();
 }
 
 ProcessorItem::~ProcessorItem()
 {
+	destroyInfo();
 	destroyInputs();
 	destroyOutputs();
 }
@@ -62,7 +64,6 @@ void ProcessorItem::adjustPosition()
 	adjustPosition(position);
 	setPos(position);
 }
-
 
 
 /**********************
@@ -203,6 +204,18 @@ void ProcessorItem::destroyOutputs()
 	for(it = m_outputItems.begin(); it != m_outputItems.end(); ++it)
 		delete it->second;
 	m_outputItems.clear();
+}
+
+void ProcessorItem::createInfo()
+{
+	QGraphicsTextItem *pInfo = new QGraphicsTextItem(this);
+	QString html = QString("<center><u>") + m_pProcessor->getType().c_str() + "</u></center>";
+	pInfo->setHtml(html);
+	pInfo->setTextWidth(g_width);
+}
+
+void ProcessorItem::destroyInfo()
+{
 }
 
 void ProcessorItem::adjustPosition(QPointF &position)

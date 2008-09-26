@@ -227,6 +227,10 @@
 				RelativePath="..\..\src\PropertiesEditor\PropertyWidgetString.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\PropertiesEditor\PropertyWidgetUInt.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -371,6 +375,24 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="..\..\src\PropertiesEditor\PropertyWidgetUInt.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="moc"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -408,6 +430,10 @@
 			</File>
 			<File
 				RelativePath=".\tmp\PropertiesEditor\Win32\qt_generated\PropertyWidgetString_moc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tmp\PropertiesEditor\Win32\qt_generated\PropertyWidgetUInt_moc.cpp"
 				>
 			</File>
 		</Filter>

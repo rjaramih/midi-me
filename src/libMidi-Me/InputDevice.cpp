@@ -67,11 +67,7 @@ void InputDevice::removeListener(Listener *pListener)
 * Protected functions *
 **********************/
 
-#if 0
-bool InputDevice::sendValue(unsigned int id, int value)
-#else
 bool InputDevice::sendValue(unsigned int id, real value)
-#endif
 {
 	Output *pOutput = getOutput(id);
 	if(!pOutput)
@@ -107,19 +103,11 @@ bool InputDevice::sendMaxValue(unsigned int id)
 	return true;
 }
 
-#if 0
-Output *InputDevice::addOutput(unsigned int id, int minValue, int maxValue, bool analog)
-#else
 Output *InputDevice::addOutput(unsigned int id, bool analog)
-#endif
 {
 	if(outputExists(id))
 		return 0;
-#if 0
-	Output *pOutput = new Output(minValue, maxValue, analog);
-#else
 	Output *pOutput = new Output(analog);
-#endif
 	m_outputs[id] = pOutput;
 	return pOutput;
 }
@@ -132,11 +120,7 @@ void InputDevice::destroyOutputs()
 	m_outputs.clear();
 }
 
-#if 0
-void InputDevice::fireValue(Output *pOutput, int value)
-#else
 void InputDevice::fireValue(Output *pOutput, real value)
-#endif
 {
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
@@ -145,11 +129,7 @@ void InputDevice::fireValue(Output *pOutput, real value)
 
 void InputDevice::fireMinValue(Output *pOutput)
 {
-#if 0
-	int value = pOutput->getMinValue();
-#else
 	real value = 0;
-#endif
 
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
@@ -158,11 +138,7 @@ void InputDevice::fireMinValue(Output *pOutput)
 
 void InputDevice::fireMaxValue(Output *pOutput)
 {
-#if 0
-	int value = pOutput->getMaxValue();
-#else
 	real value = 1;
-#endif
 
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)

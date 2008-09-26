@@ -5,6 +5,7 @@
 #include <libMidi-Me/Input.h>
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/InputDevice.h>
+#include <PropertiesEditor/PropertiesEditor.h>
 using namespace MidiMe;
 
 #include <QtGui/QGraphicsScene>
@@ -24,7 +25,7 @@ static const float g_stdHeight(15.0f);
 ******************************/
 
 ChainEndItem::ChainEndItem(ChainWidget *pChainWidget, ChainEnd *pChainEnd, QGraphicsItem *pParent)
-: InputItem(pChainWidget, pChainEnd->getInput(), pParent), m_pChainEnd(pChainEnd)
+: InputItem(pChainWidget, pChainEnd->getInput(), pParent), m_pChainEnd(pChainEnd), m_pPropertyEditor(0)
 {
 	assert(m_pChainEnd);
 
@@ -59,11 +60,11 @@ void ChainEndItem::adjustPosition()
 void ChainEndItem::mousePressEvent(QGraphicsSceneMouseEvent *pEvent)
 {
 	// Show properties on selection
-	/*if(m_pPropertyEditor)
+	if(m_pPropertyEditor)
 	{
 		m_pPropertyEditor->clear();
-		m_pPropertyEditor->addCollection(m_p->getType(), "Processor", m_pProcessor);
-	}*/
+		m_pPropertyEditor->addCollection("CC", "Processor", m_pChainEnd);
+	}
 	
 	return InputItem::mousePressEvent(pEvent);
 }

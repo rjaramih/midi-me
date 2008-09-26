@@ -15,7 +15,7 @@ namespace MidiMe
 		You can also set the start and end values (defaulting to resp. 0 and 128).
 		The incoming value range is mapped on the start-end range, linearly interpolating inbetween.
 	*/
-	class LIBMIDIME_API ControllerSignal: public Input, Input::Listener
+	class LIBMIDIME_API ControllerSignal: public Input, Input::Listener, 
 	{
 	public:
 		// Constructors and destructor

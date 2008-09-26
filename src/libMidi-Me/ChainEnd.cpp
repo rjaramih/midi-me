@@ -10,16 +10,21 @@ using namespace MidiMe;
 * Constructors and destructor *
 ******************************/
 
-ChainEnd::ChainEnd(MidiOutput *pMidi, Input *pInput)
-: m_pMidi(pMidi), m_pInput(pInput)
+ChainEnd::ChainEnd(MidiOutput *pMidi)
+: m_pMidi(pMidi), m_pInput(0)
+, m_channel(0), m_controller(0), m_startValue(0), m_endValue(128)
 {
-	assert(m_pMidi && m_pInput);
+	assert(m_pMidi);
+	m_pInput = new Input();
+	m_pInput->addListener(this);
+
 	createProperties();
 }
 
 ChainEnd::~ChainEnd()
 {
 	destroyProperties();
+	delete m_pInput;
 }
 
 
@@ -32,53 +37,44 @@ ChainEnd::~ChainEnd()
 * Protected functions *
 **********************/
 
-unsigned int ChainEnd::getMidiPort() const
+void ChainEnd::onValue(Input *pInput, real value)
 {
-	return m_pMidi->getOpenedPort();
-}
+	assert(pInput == m_pInput);
 
-//! @todo Support multiple opened midi ports
-void ChainEnd::setMidiPort(unsigned int port)
-{
-	if(m_pMidi->isOpened())
-	{
-		if(m_pMidi->getOpenedPort() != port)
-		{
-			cerr << "[ChainEnd] Warning: opening new midi port " << port << ". Closing old one!" << endl;
-			if(!(m_pMidi->close() && m_pMidi->open(port)))
-				cerr << "[ChainEnd] Error opening midi port " << port << "!" << endl;
-		}
-	}
-	else
-	{
-		if(!m_pMidi->open(port))
-			cerr << "[ChainEnd] Error opening midi port " << port << "!" << endl;
-	}
-}
+	// Map the value
+	int diffOutput = m_endValue - m_startValue;
+	int outValue = (int) (m_startValue + diffOutput * value);
 
-int ChainEnd::getCC() const
-{
-	//return m_pMidi->
-	return 0;
-}
-
-void ChainEnd::setCC(int channel)
-{
+	// Send the CC message
+	m_pMidi->sendControllerMessage(m_channel, m_controller, outValue);
 }
 
 void ChainEnd::createProperties()
 {
-	// Add the properties
-	UIntProperty::GetFunctor portGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getMidiPort);
-	UIntProperty::SetFunctor portSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setMidiPort);
-	UIntProperty *pPort = new UIntProperty("Midi port", portGetter, portSetter);
+	// Channel
+	UIntProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getChannel);
+	UIntProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setChannel);
+	UIntProperty *pProperty = new UIntProperty(this, "Channel", valueGetter, valueSetter);
+
+	// Controller
+	valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getController);
+	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setController);
+	pProperty = new UIntProperty(this, "Controller", valueGetter, valueSetter);
+
+	// Starting value
+	valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getStartValue);
+	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setStartValue);
+	pProperty = new UIntProperty(this, "Starting value", valueGetter, valueSetter);
+
+	// Ending value
+	valueGetter = fastdelegate::MakeDelegate(this, &ChainEnd::getEndValue);
+	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setEndValue);
+	pProperty = new UIntProperty(this, "Ending value", valueGetter, valueSetter);
 }
 
 void ChainEnd::destroyProperties()
 {
 	// Destroy all properties
-	const PropertyList &props = getPropertiesList();
-	for(PropertyList::const_iterator it = props.begin(); it != props.end(); ++it)
-		delete *it;
-	clearProperties();
+	while(!m_propertiesList.empty())
+		delete m_propertiesList.front();
 }
