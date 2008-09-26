@@ -13,8 +13,8 @@ string InputValueProperty::type("InputValue");
 * InputValueProperty *
 *********************/
 
-InputValueProperty::InputValueProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter, Input *pInput)
-: GenericProperty<real>(name, getter, setter), m_pInput(pInput)
+InputValueProperty::InputValueProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter, Input *pInput)
+: GenericProperty<real>(pCollection, name, getter, setter), m_pInput(pInput)
 {
 	assert(m_pInput);
 }

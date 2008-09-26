@@ -28,8 +28,8 @@ namespace MidiMe
 
 	public:
 		// Constructors and destructor
-		GenericProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: Property(name), m_getFunctor(getter), m_setFunctor(setter) {}
+		GenericProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: Property(pCollection, name), m_getFunctor(getter), m_setFunctor(setter) {}
 		virtual ~GenericProperty() {}
 
 		// Get/set

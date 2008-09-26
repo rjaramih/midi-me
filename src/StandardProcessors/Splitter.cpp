@@ -62,17 +62,16 @@ void Splitter::createProperties()
 	// Add the properties
 	InputValueProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &Splitter::getSplitValue);
 	InputValueProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &Splitter::setSplitValue);
-	InputValueProperty *pSplitValue = new InputValueProperty("Split value", valueGetter, valueSetter, m_pInput);
-	addProperty(pSplitValue);
+	InputValueProperty *pSplitValue = new InputValueProperty(this, "Split value", valueGetter, valueSetter, m_pInput);
 }
 
 void Splitter::destroyProperties()
 {
 	// Destroy all properties
-	const PropertyList &props = getPropertiesList();
+	// Note; We make a copy of the list because it will be altered at destruction of the property
+	const PropertyList props = getPropertiesList();
 	for(PropertyList::const_iterator it = props.begin(); it != props.end(); ++it)
 		delete *it;
-	clearProperties();
 }
 
 

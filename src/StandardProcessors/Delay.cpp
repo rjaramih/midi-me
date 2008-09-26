@@ -81,18 +81,17 @@ void Delay::createProperties()
 	// Add the properties
 	RealProperty::GetFunctor valueGetter = fastdelegate::MakeDelegate(this, &Delay::getDelay);
 	RealProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &Delay::setDelay);
-	RealProperty *pDelay = new RealProperty("Delay (s)", valueGetter, valueSetter);
+	RealProperty *pDelay = new RealProperty(this, "Delay (s)", valueGetter, valueSetter);
 	pDelay->setMax(10.0f);
-	addProperty(pDelay);
 }
 
 void Delay::destroyProperties()
 {
 	// Destroy all properties
-	const PropertyList &props = getPropertiesList();
+	// Note; We make a copy of the list because it will be altered at destruction of the property
+	const PropertyList props = getPropertiesList();
 	for(PropertyList::const_iterator it = props.begin(); it != props.end(); ++it)
 		delete *it;
-	clearProperties();
 }
 
 

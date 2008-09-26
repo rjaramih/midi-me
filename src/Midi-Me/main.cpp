@@ -150,8 +150,8 @@ int main(int argc, char *argv[])
 	int result = app.exec();
 
 	// Make sure everyting is cleaned up before the application ends
-	deinitPluginSystem();
 	delete pWindow;
+	deinitPluginSystem();
 
 	return result;
 }

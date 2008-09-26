@@ -31,16 +31,13 @@ namespace MidiMe
 		};
 
 		// Constructors and destructor
-		Property(const string &name);
+		Property(PropertyCollection *pCollection, const string &name);
 		virtual ~Property();
 
 		// Info
 		virtual const string &getType() const = 0;
-		const string &getName() const { return m_name; }
-
-		// Collection
 		PropertyCollection *getCollection() const { return m_pCollection; }
-		void setCollection(PropertyCollection *pCollection) { m_pCollection = pCollection; }
+		const string &getName() const { return m_name; }
 
 		// Listener
 		Listener *getListener() const { return m_pListener; }

@@ -15,7 +15,6 @@ PropertyCollection::PropertyCollection()
 
 PropertyCollection::~PropertyCollection()
 {
-	clearProperties();
 }
 
 
@@ -41,8 +40,10 @@ void PropertyCollection::setProperty(const string &name, const string &value)
 * Other functions *
 ******************/
 
+#if 0
 void PropertyCollection::clearProperties()
 {
+	// Destroy the 
 	// Notify the listeners of the removing properties
 	PropertyList::iterator it;
 	for(it = m_propertiesList.begin(); it != m_propertiesList.end(); ++it)
@@ -50,7 +51,9 @@ void PropertyCollection::clearProperties()
 
 	m_propertiesList.clear();
 	m_propertiesMap.clear();
+	m_clearing = false;
 }
+#endif
 
 
 /**********************
@@ -59,21 +62,19 @@ void PropertyCollection::clearProperties()
 
 void PropertyCollection::addProperty(Property *pProperty)
 {
-	if(!pProperty) return;
+	assert(pProperty);
 
 	m_propertiesList.push_back(pProperty);
 	m_propertiesMap[pProperty->getName()] = pProperty;
 
-	pProperty->setCollection(this);
 	fireAdded(pProperty);
 }
 
 void PropertyCollection::removeProperty(Property *pProperty)
 {
-	if(!pProperty) return;
+	assert(pProperty);
 
 	fireRemoving(pProperty);
-	pProperty->setCollection(0);
 
 	m_propertiesMap.erase(pProperty->getName());
 	m_propertiesList.remove(pProperty);

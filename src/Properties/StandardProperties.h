@@ -20,7 +20,7 @@ namespace MidiMe
 
 	public:
 		// Constructors and destructor
-		CompoundProperty(const string &name);
+		CompoundProperty(PropertyCollection *pCollection, const string &name);
 		virtual ~CompoundProperty();
 
 		// Type
@@ -51,8 +51,8 @@ namespace MidiMe
 	class PROPERTIES_API BoolProperty: public GenericProperty<bool>
 	{
 	public:
-		BoolProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: GenericProperty<bool>(name, getter, setter) {}
+		BoolProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: GenericProperty<bool>(pCollection, name, getter, setter) {}
 
 		static string type;
 		const string &getType() const { return type; }
@@ -65,8 +65,8 @@ namespace MidiMe
 	class PROPERTIES_API IntProperty: public GenericProperty<int>
 	{
 	public:
-		IntProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: GenericProperty<int>(name, getter, setter) {}
+		IntProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: GenericProperty<int>(pCollection, name, getter, setter) {}
 
 		static string type;
 		const string &getType() const { return type; }
@@ -79,8 +79,8 @@ namespace MidiMe
 	class PROPERTIES_API UIntProperty: public GenericProperty<unsigned int>
 	{
 	public:
-		UIntProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: GenericProperty<unsigned int>(name, getter, setter) {}
+		UIntProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: GenericProperty<unsigned int>(pCollection, name, getter, setter) {}
 
 		static string type;
 		const string &getType() const { return type; }
@@ -93,8 +93,8 @@ namespace MidiMe
 	class PROPERTIES_API RealProperty: public GenericProperty<float>
 	{
 	public:
-		RealProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: GenericProperty<float>(name, getter, setter), m_min(0), m_max(1) {}
+		RealProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: GenericProperty<float>(pCollection, name, getter, setter), m_min(0), m_max(1) {}
 
 		static string type;
 		const string &getType() const { return type; }
@@ -117,8 +117,8 @@ namespace MidiMe
 	class PROPERTIES_API StringProperty: public GenericProperty<const string &>
 	{
 	public:
-		StringProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter)
-			: GenericProperty<const string &>(name, getter, setter) {}
+		StringProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter)
+			: GenericProperty<const string &>(pCollection, name, getter, setter) {}
 
 		static string type;
 		const string &getType() const { return type; }

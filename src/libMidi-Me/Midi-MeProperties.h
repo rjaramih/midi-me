@@ -18,7 +18,7 @@ namespace MidiMe
 	{
 	public:
 		// Constructors and destructor
-		InputValueProperty(const string &name, const GetFunctor &getter, const SetFunctor &setter, Input *pInput);
+		InputValueProperty(PropertyCollection *pCollection, const string &name, const GetFunctor &getter, const SetFunctor &setter, Input *pInput);
 		virtual ~InputValueProperty();
 
 		// GenericProperty<real> functions

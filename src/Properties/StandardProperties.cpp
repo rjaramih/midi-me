@@ -16,8 +16,8 @@ string StringProperty::type("string");
 * CompoundProperty *
 *******************/
 
-CompoundProperty::CompoundProperty(const string &name)
-: Property(name)
+CompoundProperty::CompoundProperty(PropertyCollection *pCollection, const string &name)
+: Property(pCollection, name)
 {
 }
 

@@ -60,22 +60,22 @@ namespace MidiMe
 		void removeListener(Listener *pListener) { m_listeners.erase(pListener); }
 
 		// Other functions
-		void clearProperties();
+		//void clearProperties();
 
-	protected:
-		// Protected functions
+	private:
+		// Properties add and remove themselves from their collection
 		void addProperty(Property *pProperty);
 		void removeProperty(Property *pProperty);
-
-		// Listeners
-		typedef std::set<Listener *> ListenerSet;
-		ListenerSet m_listeners;
 
 		// Properties notify their collection on change
 		void fireAdded(Property *pProperty);
 		void fireRemoving(Property *pProperty);
 		void fireChanged(Property *pProperty);
 		friend class Property;
+
+		// Listeners
+		typedef std::set<Listener *> ListenerSet;
+		ListenerSet m_listeners;
 	};
 }
 
