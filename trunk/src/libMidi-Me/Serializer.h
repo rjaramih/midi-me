@@ -4,6 +4,7 @@
 // Includes
 #include "global.h"
 #include "LastError.h"
+#include <map>
 
 namespace MidiMe
 {
@@ -37,13 +38,22 @@ namespace MidiMe
 		bool writeChainStart(std::ostream &stream, ChainStart *pStart);
 		bool writeChainEnd(std::ostream &stream, ChainEnd *pEnd);
 		bool writeProcessor(std::ostream &stream, Processor *pProcessor);
-		bool writeConnection(std::ostream &stream, Output *pOutput);
+		bool writeConnections(std::ostream &stream, Chain *pChain);
 		bool writeProperties(std::ostream &stream, PropertyCollection *pProperties, unsigned int indentLevel);
 		bool writeProperty(std::ostream &stream, Property *pProperty, unsigned int indentLevel);
 		void writeTabs(std::ostream &stream, unsigned int num);
 
 		// Member variables
 		Chain *m_pChain;
+
+		typedef std::map<ChainStart *, unsigned int> StartIDMap;
+		StartIDMap m_startIDs;
+
+		typedef std::map<ChainEnd *, unsigned int> EndIDMap;
+		EndIDMap m_endIDs;
+
+		typedef std::map<Processor *, unsigned int> ProcessorIDMap;
+		ProcessorIDMap m_processorIDs;
 	};
 }
 

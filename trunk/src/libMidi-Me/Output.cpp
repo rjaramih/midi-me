@@ -9,6 +9,9 @@ using namespace MidiMe;
 Output::Output(bool analog)
 : m_value(0), m_pInput(0), m_analog(analog)
 {
+	//! @todo There has to be a better solution for indexing the in- and outputs
+	static unsigned int currentID = 0;
+	m_id = currentID++;
 }
 
 Output::~Output()

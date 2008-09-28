@@ -33,6 +33,7 @@ namespace MidiMe
 		void disconnect() { if(m_pInput) m_pInput->setOutput(0); m_pInput = 0; }
 
 		// Information
+		unsigned int getID() const { return m_id; }
 		bool isAnalog() const { return m_analog; }
 		real getCurrentValue() const { return m_value; }
 
@@ -46,6 +47,9 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
+		/// The unique ID for this output
+		unsigned int m_id;
+
 		/// The current value
 		real m_value;
 

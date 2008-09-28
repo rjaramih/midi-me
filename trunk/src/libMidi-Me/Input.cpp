@@ -11,6 +11,9 @@ using namespace MidiMe;
 Input::Input(bool inverted)
 : m_value(0), m_pOutput(0), m_inverted(inverted)
 {
+	//! @todo There has to be a better solution for indexing the in- and outputs
+	static unsigned int currentID = 0;
+	m_id = currentID++;
 }
 
 Input::~Input()

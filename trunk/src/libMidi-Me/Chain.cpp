@@ -9,6 +9,10 @@
 #include "DeviceManager.h"
 using namespace MidiMe;
 
+#if 0
+#include "Connection.h"
+#endif
+
 #include <RtMidi/RtMidi.h>
 
 
@@ -45,6 +49,9 @@ ChainStart *Chain::addChainStart(InputDevice *pDevice, unsigned int outputID)
 {
 	ChainStart *pStart = new ChainStart(pDevice, outputID);
 	m_startItems.insert(pStart);
+
+	// Index the output
+	m_outputs[pStart->getOutput()->getID()] = pStart->getOutput();
 	
 	fireStartAdded(pStart);
 
@@ -55,6 +62,9 @@ ChainStart *Chain::addChainStart(InputDevice *pDevice, unsigned int outputID)
 void Chain::removeChainStart(ChainStart *pStart)
 {
 	fireStartRemoving(pStart);
+
+	// Remove the output
+	m_outputs.erase(pStart->getOutput()->getID());
 
 	m_startItems.erase(pStart);
 	delete pStart;
@@ -67,8 +77,11 @@ void Chain::clearChainStart()
 	ChainStartSet::iterator it;
 	for(it = m_startItems.begin(); it != m_startItems.end(); ++it)
 	{
-		fireStartRemoving(*it);
-		delete *it;
+		ChainStart *pStart = *it;
+
+		fireStartRemoving(pStart);
+		m_outputs.erase(pStart->getOutput()->getID());
+		delete pStart;
 	}
 
 	m_startItems.clear();
@@ -96,6 +109,9 @@ ChainEnd *Chain::addChainEnd()
 	ChainEnd *pEnd = new ChainEnd(pMidi);
 	m_endItems.insert(pEnd);
 
+	// Add the input
+	m_inputs[pEnd->getInput()->getID()] = pEnd->getInput();
+
 	fireEndAdded(pEnd);
 
 	m_dirty = true;
@@ -105,6 +121,9 @@ ChainEnd *Chain::addChainEnd()
 void Chain::removeChainEnd(ChainEnd *pEnd)
 {
 	fireEndRemoving(pEnd);
+
+	// Remove the input
+	m_inputs.erase(pEnd->getInput()->getID());
 
 	m_endItems.erase(pEnd);
 	delete pEnd;
@@ -117,8 +136,11 @@ void Chain::clearChainEnd()
 	ChainEndSet::iterator it;
 	for(it = m_endItems.begin(); it != m_endItems.end(); ++it)
 	{
-		fireEndRemoving(*it);
-		delete *it;
+		ChainEnd *pEnd = *it;
+
+		fireEndRemoving(pEnd);
+		m_inputs.erase(pEnd->getInput()->getID());
+		delete pEnd;
 	}
 
 	m_endItems.clear();
@@ -147,6 +169,23 @@ Processor *Chain::addProcessor(const string &type)
 		return 0;
 
 	m_processors.insert(pProcessor);
+
+	// Add the inputs
+	const InputSet &inputs = pProcessor->getInputs();
+	for(InputSet::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
+	{
+		Input *pInput = *it;
+		m_inputs[pInput->getID()] = pInput;
+	}
+
+	// Add the outputs
+	const OutputSet &outputs = pProcessor->getOutputs();
+	for(OutputSet::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+	{
+		Output *pOutput = *it;
+		m_outputs[pOutput->getID()] = pOutput;
+	}
+
 	fireProcessorAdded(pProcessor);
 
 	m_dirty = true;
@@ -156,6 +195,22 @@ Processor *Chain::addProcessor(const string &type)
 void Chain::removeProcessor(Processor *pProcessor)
 {
 	fireProcessorRemoving(pProcessor);
+
+	// Remove the inputs
+	const InputSet &inputs = pProcessor->getInputs();
+	for(InputSet::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
+	{
+		Input *pInput = *it;
+		m_inputs.erase(pInput->getID());
+	}
+
+	// Remove the outputs
+	const OutputSet &outputs = pProcessor->getOutputs();
+	for(OutputSet::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+	{
+		Output *pOutput = *it;
+		m_outputs.erase(pOutput->getID());
+	}
 
 	m_processors.erase(pProcessor);
 	ProcessorFactory::getInstance().destroyProcessor(pProcessor);
@@ -168,12 +223,111 @@ void Chain::clearProcessors()
 	ProcessorSet::iterator it;
 	for(it = m_processors.begin(); it != m_processors.end(); ++it)
 	{
-		fireProcessorRemoving(*it);
-		ProcessorFactory::getInstance().destroyProcessor(*it);
+		Processor *pProcessor = *it;
+
+		fireProcessorRemoving(pProcessor);
+
+		// Remove the inputs
+		const InputSet &inputs = pProcessor->getInputs();
+		for(InputSet::const_iterator it2 = inputs.begin(); it2 != inputs.end(); ++it2)
+		{
+			Input *pInput = *it2;
+			m_inputs.erase(pInput->getID());
+		}
+
+		// Remove the outputs
+		const OutputSet &outputs = pProcessor->getOutputs();
+		for(OutputSet::const_iterator it2 = outputs.begin(); it2 != outputs.end(); ++it2)
+		{
+			Output *pOutput = *it2;
+			m_outputs.erase(pOutput->getID());
+		}
+
+		ProcessorFactory::getInstance().destroyProcessor(pProcessor);
 	}
 
 	m_processors.clear();
 	m_dirty = true;
+}
+
+
+#if 0
+/**************
+* Connections *
+**************/
+
+const ConnectionMap &Chain::getConnections() const
+{
+	return m_connections;
+}
+
+size_t Chain::numConnections() const
+{
+	return m_connections.size();
+}
+
+Connection *Chain::addConnection(Input *pInput, Output *pOutput)
+{
+	Connection *pConnection = new Connection(pInput, pOutput);
+	m_connections[pOutput] = pConnection;
+
+	fireConnectionAdded(pConnection);
+
+	m_dirty = true;
+	return pConnection;
+}
+
+void Chain::removeConnection(Connection *pConnection)
+{
+	fireConnectionRemoving(pConnection);
+
+	m_connections.erase(pConnection->getOutput());
+	delete pConnection;
+
+	m_dirty = true;
+}
+
+void Chain::clearConnections()
+{
+	ConnectionMap::iterator it;
+	for(it = m_connections.begin(); it != m_connections.end(); ++it)
+	{
+		Connection *pConnection = it->second;
+
+		fireConnectionRemoving(pConnection);
+		delete pConnection;
+	}
+
+	m_connections.clear();
+	m_dirty = true;
+}
+#endif
+
+
+/*********************
+* Inputs and outputs *
+*********************/
+
+const InputMap &Chain::getAllInputs() const
+{
+	return m_inputs;
+}
+
+Input *Chain::getInput(unsigned int id) const
+{
+	InputMap::const_iterator it = m_inputs.find(id);
+	return (it == m_inputs.end()) ? 0 : it->second;
+}
+
+const OutputMap &Chain::getAllOutputs() const
+{
+	return m_outputs;
+}
+
+Output *Chain::getOutput(unsigned int id) const
+{
+	OutputMap::const_iterator it = m_outputs.find(id);
+	return (it == m_outputs.end()) ? 0 : it->second;
 }
 
 
@@ -233,6 +387,21 @@ void Chain::fireProcessorRemoving(Processor *pProcessor)
 		(*it)->onProcessorRemoving(pProcessor);
 }
 
+#if 0
+void Chain::fireConnectionAdded(Connection *pConnection)
+{
+	ListenerSet::iterator it;
+	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
+		(*it)->onConnectionAdded(pConnection);
+}
+
+void Chain::fireConnectionRemoving(Connection *pConnection)
+{
+	ListenerSet::iterator it;
+	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)
+		(*it)->onConnectionRemoving(pConnection);
+}
+#endif
 
 
 /****************
@@ -303,6 +472,9 @@ void Chain::step(float seconds)
 */
 void Chain::clear()
 {
+#if 0
+	clearConnections();
+#endif
 	clearChainStart();
 	clearChainEnd();
 	clearProcessors();

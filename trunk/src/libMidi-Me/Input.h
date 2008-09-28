@@ -34,6 +34,7 @@ namespace MidiMe
 		virtual ~Input();
 
 		// Information
+		unsigned int getID() const { return m_id; }
 		real getCurrentValue() const { return m_value; }
 
 		// Incoming connection (handled by Output)
@@ -49,6 +50,9 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
+		/// The unique ID for this input
+		unsigned int m_id;
+
 		/// The current value
 		real m_value;
 
