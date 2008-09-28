@@ -112,6 +112,11 @@ bool Serializer::writeChain(std::ostream &stream, Chain *pChain)
 	for(ChainEndSet::const_iterator it = end.begin(); it != end.end(); ++it)
 		writeChainEnd(stream, *it);
 
+	stream << "\n";
+
+	// Serialize the connections
+	writeConnections(stream, pChain);
+
 	stream << "</chain>\n";
 
 	return true;
@@ -134,6 +139,7 @@ bool Serializer::writeChainEnd(std::ostream &stream, ChainEnd *pEnd)
 	stream << " controller=\"" << pEnd->getController() << "\"";
 	stream << " startValue=\"" << pEnd->getStartValue() << "\"";
 	stream << " endValue=\"" << pEnd->getEndValue() << "\"";
+	stream << " inverted=\"" << pEnd->getInput()->isInverted() << "\"";
 	stream << " />\n";
 
 	return true;
@@ -147,10 +153,20 @@ bool Serializer::writeProcessor(std::ostream &stream, Processor *pProcessor)
 	return true;
 }
 
-bool Serializer::writeConnection(std::ostream &stream, Output *pOutput)
+bool Serializer::writeConnections(std::ostream &stream, Chain *pChain)
 {
-	//! @todo Implement this: in- and outputs need IDs
-	//cerr << "\t<connection from=\"" << pOutput->getID() << "\" to=\"" << << "\" />\n";
+	// Check for connected outputs
+	const OutputMap &outputs = pChain->getAllOutputs();
+	for(OutputMap::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+	{
+		Output *pOutput = it->second;
+		if(pOutput->isConnected())
+		{
+			stream << "\t<connection outputID=\"" << pOutput->getID() << "\"";
+			stream << " inputID=\"" << pOutput->getConnectedInput()->getID() << "\" />\n";
+		}
+	}
+
 	return true;
 }
 
