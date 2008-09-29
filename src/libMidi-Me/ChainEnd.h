@@ -45,6 +45,10 @@ namespace MidiMe
 		unsigned int getEndValue() const { return m_endValue; }
 		void setEndValue(unsigned int value) { m_endValue = value; }
 
+		// TEMP: Inverted (should be property of input or connection)
+		bool isInverted() const;
+		void setInverted(bool inverted);
+
 	protected:
 		// Input::Listener functions
 		void onValue(Input *pInput, real value);

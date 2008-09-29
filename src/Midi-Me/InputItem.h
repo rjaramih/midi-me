@@ -10,6 +10,7 @@ namespace MidiMe
 {
 	// Forward declarations
 	class Input;
+	class ConnectionItem;
 
 	/** Class Description */
 	class InputItem: public QObject, public ChainItem, protected Input::Listener
@@ -27,24 +28,15 @@ namespace MidiMe
 
 		// Information
 		Input *getInput() const { return m_pInput; }
-
-		// The connected edge
-		void disconnect();
-
-	public slots:
-		void showSettings(QPoint &position);
-		void setInverted(bool inverted);
+		bool isConnected() const;
+		ConnectionItem *getConnectionItem() const;
 
 	protected:
 		// Input::Listener functions
 		void onValue(Input *pInput, real value);
 
 		// Events
-		void mouseReleaseEvent(QGraphicsSceneMouseEvent *pEvent);
-
-		// Output items can connect themselves
-		void setConnectedEdge(EdgeItem *pEdge) { m_pConnectedEdge = pEdge; }
-		friend class OutputItem;
+		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 		// Member variables
 		Input *m_pInput;

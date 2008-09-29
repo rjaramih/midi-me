@@ -1,8 +1,9 @@
 // Includes
-#include "EdgeItem.h"
+#include "ConnectionItem.h"
 #include "ChainWidget.h"
 #include "InputItem.h"
 #include "OutputItem.h"
+#include <libMidi-Me/Connection.h>
 using namespace MidiMe;
 
 #include <math.h>
@@ -19,8 +20,8 @@ static const qreal g_margin = 5;
 * Constructors and destructor *
 ******************************/
 
-EdgeItem::EdgeItem(ChainWidget *pChain, InputItem *pInput, OutputItem *pOutput)
-: QGraphicsItem(), m_pChainWidget(pChain), m_pInputItem(pInput), m_pOutputItem(pOutput)
+ConnectionItem::ConnectionItem(ChainWidget *pChain, Connection *pConnection)
+: QGraphicsItem(), m_pChainWidget(pChain), m_pConnection(pConnection)
 {
 	assert(m_pChainWidget);
 
@@ -31,7 +32,7 @@ EdgeItem::EdgeItem(ChainWidget *pChain, InputItem *pInput, OutputItem *pOutput)
 	adjust();
 }
 
-EdgeItem::~EdgeItem()
+ConnectionItem::~ConnectionItem()
 {
 }
 
@@ -40,7 +41,7 @@ EdgeItem::~EdgeItem()
 * QGraphicsItem functions *
 **************************/
 
-void EdgeItem::paint(QPainter *pPainter, const QStyleOptionGraphicsItem *pOption, QWidget *pWidget)
+void ConnectionItem::paint(QPainter *pPainter, const QStyleOptionGraphicsItem *pOption, QWidget *pWidget)
 {
 	// Draw the path
 	pPainter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -56,14 +57,39 @@ void EdgeItem::paint(QPainter *pPainter, const QStyleOptionGraphicsItem *pOption
 * Other functions *
 ******************/
 
+InputItem *ConnectionItem::getInputItem() const
+{
+	if(!m_pConnection)
+		return 0;
+
+	return m_pChainWidget->getInputItem(m_pConnection->getInput());
+}
+
+OutputItem *ConnectionItem::getOutputItem() const
+{
+	if(!m_pConnection)
+		return 0;
+
+	return m_pChainWidget->getOutputItem(m_pConnection->getOutput());
+}
+
 /** Generate the new geometry for this edge */
-void EdgeItem::adjust()
+void ConnectionItem::adjust()
 {
 	// Destroy the old path
 	m_path = QPainterPath();
 
-	QPointF from = m_pOutputItem ? m_pOutputItem->getAnchor() : m_tempPos;
-	QPointF to = m_pInputItem ? m_pInputItem->getAnchor() : m_tempPos;
+	// Get the items belonging to this connection
+	OutputItem *pOutputItem = 0;
+	if(m_pConnection)
+		pOutputItem = m_pChainWidget->getOutputItem(m_pConnection->getOutput());
+
+	InputItem *pInputItem = 0;
+	if(m_pConnection)
+		pInputItem = m_pChainWidget->getInputItem(m_pConnection->getInput());
+
+	QPointF from = pOutputItem ? pOutputItem->getAnchor() : m_tempStartPos;
+	QPointF to = pInputItem ? pInputItem->getAnchor() : m_tempEndPos;
 
 	// Generate the path between the two anchors
 	m_path.moveTo(from);

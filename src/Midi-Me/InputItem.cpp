@@ -1,8 +1,8 @@
 // Includes
 #include "InputItem.h"
 #include "OutputItem.h"
-#include "EdgeItem.h"
 #include "ChainWidget.h"
+#include "ConnectionItem.h"
 using namespace MidiMe;
 
 #include <QtGui/QGraphicsSceneMouseEvent>
@@ -33,13 +33,17 @@ InputItem::~InputItem()
 * Other functions *
 ******************/
 
-void InputItem::disconnect()
+bool InputItem::isConnected() const
 {
-	if(!m_pConnectedEdge)
-		return;
+	return m_pInput->isConnected();
+}
 
-	// The output is in charge of connections
-	m_pConnectedEdge->getOutputItem()->disconnect();
+ConnectionItem *InputItem::getConnectionItem() const
+{
+	if(!m_pInput->isConnected())
+		return 0;
+
+	return m_pChainWidget->getConnectionItem(m_pInput->getConnection());
 }
 
 void InputItem::onValue(Input *pInput, real value)
@@ -53,31 +57,15 @@ void InputItem::onValue(Input *pInput, real value)
 	m_pMeterItem->setRect(0, 0, meterWidth, height);
 }
 
-void InputItem::showSettings(QPoint &position)
-{
-	// Generate the context menu
-	QMenu *pMenu = new QMenu(m_pChainWidget);
-
-	QAction *pInverted = pMenu->addAction("Inverted");
-	pInverted->setCheckable(true);
-	pInverted->setChecked(m_pInput->isInverted());
-	connect(pInverted, SIGNAL(triggered(bool)), SLOT(setInverted(bool)));
-
-	pMenu->popup(position);
-}
-
-void InputItem::setInverted(bool inverted)
-{
-	m_pInput->setInverted(inverted);
-}
-
 
 /**********************
 * Protected functions *
 **********************/
 
-void InputItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *pEvent)
+QVariant InputItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-	if(pEvent->button() == Qt::RightButton && m_pChainWidget->getState() == ChainWidget::State_Normal)
-		showSettings(pEvent->screenPos());
+	if(change == ItemPositionHasChanged && m_pInput->isConnected())
+		m_pChainWidget->getConnectionItem(m_pInput->getConnection())->adjust();
+
+	return ChainItem::itemChange(change, value);
 }

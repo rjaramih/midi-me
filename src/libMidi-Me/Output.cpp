@@ -1,5 +1,6 @@
 // Includes
 #include "Output.h"
+#include "Connection.h"
 using namespace MidiMe;
 
 /******************************
@@ -7,11 +8,8 @@ using namespace MidiMe;
 ******************************/
 
 Output::Output(bool analog)
-: m_value(0), m_pInput(0), m_analog(analog)
+: m_value(0), m_pConnection(0), m_analog(analog)
 {
-	//! @todo There has to be a better solution for indexing the in- and outputs
-	static unsigned int currentID = 0;
-	m_id = currentID++;
 }
 
 Output::~Output()
@@ -29,7 +27,7 @@ void Output::sendValue(real value)
 	m_value = value;
 
 	if(isConnected())
-		m_pInput->processValue(value);
+		m_pConnection->processValue(value);
 
 	ListenerSet::iterator it;
 	for(it = m_listeners.begin(); it != m_listeners.end(); ++it)

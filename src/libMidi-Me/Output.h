@@ -3,12 +3,14 @@
 
 // Includes
 #include "global.h"
-#include "Input.h"
 #include <set>
 
 namespace MidiMe
 {
-	/** This class represents an output that you can connect to an input.
+	// Forward declarations
+	class Connection;
+
+	/** This class represents an output, that can be connected to an input.
 		An analog output sends values between 0 and 1.
 		A digital output sends 0 or 1.
 	*/
@@ -27,13 +29,10 @@ namespace MidiMe
 		virtual ~Output();
 
 		// Connection
-		Input *getConnectedInput() const { return m_pInput; }
-		bool isConnected() const { return (m_pInput != 0); }
-		void connect(Input *pInput) { m_pInput = pInput; if(m_pInput) m_pInput->setOutput(this); }
-		void disconnect() { if(m_pInput) m_pInput->setOutput(0); m_pInput = 0; }
+		Connection *getConnection() const { return m_pConnection; }
+		bool isConnected() const { return (m_pConnection != 0); }
 
 		// Information
-		unsigned int getID() const { return m_id; }
 		bool isAnalog() const { return m_analog; }
 		real getCurrentValue() const { return m_value; }
 
@@ -47,14 +46,14 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
-		/// The unique ID for this output
-		unsigned int m_id;
-
 		/// The current value
 		real m_value;
 
 		/// The connected input
-		Input *m_pInput;
+		Connection *m_pConnection;
+		
+		friend class Connection;
+		void setConnection(Connection *pConnection) { m_pConnection = pConnection; }
 
 		/** If this is true, a value will be send between 0 and 1.
 			Otherwise, there will be toggled between 0 and 1.

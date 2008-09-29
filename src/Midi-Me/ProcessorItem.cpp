@@ -3,7 +3,7 @@
 #include "InputItem.h"
 #include "OutputItem.h"
 #include "ChainWidget.h"
-#include "EdgeItem.h"
+#include "ConnectionItem.h"
 #include <libMidi-Me/Processor.h>
 #include <PropertiesEditor/PropertiesEditor.h>
 using namespace MidiMe;
@@ -97,12 +97,12 @@ QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &va
 		// Adjust all input edges
 		for(InputItemMap::iterator it = m_inputItems.begin(); it != m_inputItems.end(); ++it)
 			if(it->second->isConnected())
-				it->second->getConnectedEdge()->adjust();
+				it->second->getConnectionItem()->adjust();
 
 		// Adjust all output edges
 		for(OutputItemMap::iterator it = m_outputItems.begin(); it != m_outputItems.end(); ++it)
 			if(it->second->isConnected())
-				it->second->getConnectedEdge()->adjust();
+				it->second->getConnectionItem()->adjust();
 	}
 
 	return QGraphicsRectItem::itemChange(change, value);

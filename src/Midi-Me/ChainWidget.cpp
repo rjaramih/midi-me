@@ -4,7 +4,7 @@
 #include "ChainStartItem.h"
 #include "ChainEndItem.h"
 #include "ProcessorItem.h"
-#include "EdgeItem.h"
+#include "ConnectionItem.h"
 #include <libMidi-Me/Chain.h>
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/InputDevice.h>
@@ -33,7 +33,7 @@ static const float g_maxSize(100.0f);
 
 ChainWidget::ChainWidget(Chain *pChain, MainWindow *pWindow)
 : QGraphicsView(pWindow), m_pWindow(pWindow), m_pChain(pChain), m_state(State_Normal)
-, m_pConnectingEdge(0)
+, m_pTempConnection(0), m_pConnectingOutput(0), m_pConnectingInput(0)
 {
 	assert(m_pChain);
 
@@ -60,25 +60,29 @@ ChainWidget::~ChainWidget()
 * Other functions *
 ******************/
 
+InputItem *ChainWidget::getInputItem(Input *pInput) const
+{
+	InputItemMap::const_iterator it = m_inputItems.find(pInput);
+	return (it == m_inputItems.end()) ? 0 : it->second;
+}
+
+OutputItem *ChainWidget::getOutputItem(Output *pOutput) const
+{
+	OutputItemMap::const_iterator it = m_outputItems.find(pOutput);
+	return (it == m_outputItems.end()) ? 0 : it->second;
+}
+
+ConnectionItem *ChainWidget::getConnectionItem(Connection *pConnection) const
+{
+	ConnectionItemMap::const_iterator it = m_connectionItems.find(pConnection);
+	return (it == m_connectionItems.end()) ? 0 : it->second;
+}
+
 void ChainWidget::update()
 {
 	distributeStartItems();
 	distributeEndItems();
 	distributeProcessorItems();
-}
-
-EdgeItem *ChainWidget::createEdge(OutputItem *pOutput, InputItem *pInput)
-{
-	EdgeItem *pEdge = new EdgeItem(this, pInput, pOutput);
-	m_edgeItems.insert(pEdge);
-
-	return pEdge;
-}
-
-void ChainWidget::destroyEdge(EdgeItem *pEdge)
-{
-	m_edgeItems.erase(pEdge);
-	delete pEdge;
 }
 
 void ChainWidget::startConnecting(const QPointF &mousePos)
@@ -102,11 +106,17 @@ void ChainWidget::startConnecting(const QPointF &mousePos)
 	{
 		// First disconnect if alread connected
 		if(pItem->isConnected())
-			pItem->disconnect();
+			m_pChain->removeConnection(pItem->getConnectionItem()->getConnection());
 
 		// Create the temporary connection
-		m_pConnectingEdge = new EdgeItem(this, pInput, pOutput);
-		m_pConnectingEdge->setTempPosition(mousePos);
+		m_pTempConnection = new ConnectionItem(this, 0);
+		m_pConnectingOutput = pOutput;
+		m_pConnectingInput = pInput;
+
+		if(pOutput)
+			m_pTempConnection->setTempStartPosition(mousePos);
+		else
+			m_pTempConnection->setTempEndPosition(mousePos);
 
 		// Set the connecting state
 		m_state = State_Connecting;
@@ -115,10 +125,10 @@ void ChainWidget::startConnecting(const QPointF &mousePos)
 
 void ChainWidget::stopConnecting(const QPointF &mousePos)
 {
-	assert(m_state == State_Connecting && m_pConnectingEdge);
+	assert(m_state == State_Connecting && m_pTempConnection);
 
-	OutputItem *pOutputItem = m_pConnectingEdge->getOutputItem();
-	InputItem *pInputItem = m_pConnectingEdge->getInputItem();
+	OutputItem *pOutputItem = m_pConnectingOutput;
+	InputItem *pInputItem = m_pConnectingInput;
 
 	QList<QGraphicsItem *> items = m_pScene->items(mousePos);
 	for(int i = 0; i < items.size() && !(pInputItem && pOutputItem); ++i)
@@ -133,7 +143,7 @@ void ChainWidget::stopConnecting(const QPointF &mousePos)
 			
 			// Connect if not yet connected
 			if(!pOutputItem->isConnected())
-				pOutputItem->connect(pInputItem);
+				m_pChain->addConnection(pInputItem->getInput(), pOutputItem->getOutput());
 		}
 		else if(items.at(i)->type() == InputItem::Type && pOutputItem)
 		{
@@ -145,13 +155,13 @@ void ChainWidget::stopConnecting(const QPointF &mousePos)
 
 			// Connect if not yet connected
 			if(!pInputItem->isConnected())
-				m_pConnectingEdge->getOutputItem()->connect(pInputItem);
+				m_pChain->addConnection(pInputItem->getInput(), pOutputItem->getOutput());
 		}
 	}
 
 	// Remove the temporary connection line
-	delete m_pConnectingEdge;
-	m_pConnectingEdge = 0;
+	delete m_pTempConnection;
+	m_pTempConnection = 0;
 
 	// Reset the current state
 	m_state = State_Normal;
@@ -245,7 +255,11 @@ void ChainWidget::mouseMoveEvent(QMouseEvent *pEvent)
 	}
 	if(m_state == State_Connecting)
 	{
-		m_pConnectingEdge->setTempPosition(pEvent->posF());
+		if(m_pConnectingInput)
+			m_pTempConnection->setTempStartPosition(pEvent->posF());
+		else
+			m_pTempConnection->setTempEndPosition(pEvent->posF());
+
 		pEvent->accept();
 	}
 	else
@@ -256,6 +270,7 @@ void ChainWidget::onStartAdded(ChainStart *pStart)
 {
 	assert(m_startItems.find(pStart) == m_startItems.end());
 
+	// Create the associated item
 	ChainStartItem *pItem = new ChainStartItem(this, pStart);
 	m_startItems[pStart] = pItem;
 	
@@ -272,6 +287,9 @@ void ChainWidget::onStartAdded(ChainStart *pStart)
 		pItem->setPos(x,y);
 	}
 
+	// Store the output item
+	m_outputItems[pStart->getOutput()] = pItem;
+
 	update();
 }
 
@@ -279,8 +297,13 @@ void ChainWidget::onStartRemoving(ChainStart *pStart)
 {
 	assert(m_startItems.find(pStart) != m_startItems.end());
 
+	// Remove the output item
+	m_outputItems.erase(m_startItems[pStart]->getOutput());
+
+	// Destroy the associated item
 	delete m_startItems[pStart];
 	m_startItems.erase(pStart);
+
 	update();
 }
 
@@ -288,6 +311,7 @@ void ChainWidget::onEndAdded(ChainEnd *pEnd)
 {
 	assert(m_endItems.find(pEnd) == m_endItems.end());
 
+	// Create the associated item
 	ChainEndItem *pItem = new ChainEndItem(this, pEnd);
 	m_endItems[pEnd] = pItem;
 
@@ -307,6 +331,9 @@ void ChainWidget::onEndAdded(ChainEnd *pEnd)
 		pItem->setPos(x,y);
 	}
 
+	// Store the input item
+	m_inputItems[pEnd->getInput()] = pItem;
+
 	update();
 }
 
@@ -314,8 +341,13 @@ void ChainWidget::onEndRemoving(ChainEnd *pEnd)
 {
 	assert(m_endItems.find(pEnd) != m_endItems.end());
 
+	// Remove the input item
+	m_inputItems.erase(m_endItems[pEnd]->getInput());
+
+	// Destroy the associated item
 	delete m_endItems[pEnd];
 	m_endItems.erase(pEnd);
+
 	update();
 }
 
@@ -323,11 +355,21 @@ void ChainWidget::onProcessorAdded(Processor *pProcessor)
 {
 	assert(m_processorItems.find(pProcessor) == m_processorItems.end());
 
+	// Create the associated item
 	ProcessorItem *pItem = new ProcessorItem(this, pProcessor);
 	m_processorItems[pProcessor] = pItem;
 
-	if(pItem)
-		pItem->setPropertyEditor(m_pWindow->getPropertyEditor());
+	pItem->setPropertyEditor(m_pWindow->getPropertyEditor());
+
+	// Add the input items
+	const InputItemMap &inputs = pItem->getAllInputs();
+	for(InputItemMap::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
+		m_inputItems[it->first] = it->second;
+
+	// Add the output items
+	const OutputItemMap &outputs = pItem->getAllOutputs();
+	for(OutputItemMap::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+		m_outputItems[it->first] = it->second;
 
 	update();
 }
@@ -335,23 +377,56 @@ void ChainWidget::onProcessorAdded(Processor *pProcessor)
 void ChainWidget::onProcessorRemoving(Processor *pProcessor)
 {
 	assert(m_processorItems.find(pProcessor) != m_processorItems.end());
+	ProcessorItem *pItem = m_processorItems[pProcessor];
 
 	//! @todo Clear property editor if this was the selected processor
 
+	// Remove the input items
+	const InputItemMap &inputs = pItem->getAllInputs();
+	for(InputItemMap::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
+		m_inputItems.erase(it->first);
+
+	// Remove the output items
+	const OutputItemMap &outputs = pItem->getAllOutputs();
+	for(OutputItemMap::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+		m_outputItems.erase(it->first);
+
+	// Destroy the associated item
 	delete m_processorItems[pProcessor];
 	m_processorItems.erase(pProcessor);
+
+	update();
+}
+
+void ChainWidget::onConnectionAdded(Connection *pConnection)
+{
+	assert(m_connectionItems.find(pConnection) == m_connectionItems.end());
+
+	ConnectionItem *pItem = new ConnectionItem(this, pConnection);
+	m_connectionItems[pConnection] = pItem;
+
+	update();
+}
+
+void ChainWidget::onConnectionRemoving(Connection *pConnection)
+{
+	assert(m_connectionItems.find(pConnection) != m_connectionItems.end());
+
+	delete m_connectionItems[pConnection];
+	m_connectionItems.erase(pConnection);
+	
 	update();
 }
 
 void ChainWidget::destroyItems()
 {
-	delete m_pConnectingEdge;
-	m_pConnectingEdge = 0;
+	delete m_pTempConnection;
+	m_pTempConnection = 0;
 
-	EdgeItemSet::iterator edgeIt;
-	for(edgeIt = m_edgeItems.begin(); edgeIt != m_edgeItems.end(); ++edgeIt)
-		delete *edgeIt;
-	m_edgeItems.clear();
+	ConnectionItemMap::iterator connIt;
+	for(connIt = m_connectionItems.begin(); connIt != m_connectionItems.end(); ++connIt)
+		delete connIt->second;
+	m_connectionItems.clear();
 
 	StartItemMap::iterator startIt;
 	for(startIt = m_startItems.begin(); startIt != m_startItems.end(); ++startIt)

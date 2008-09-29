@@ -4,7 +4,11 @@
 // Includes
 #include "global.h"
 #include "LastError.h"
+#include <vector>
 #include <map>
+
+// Forward declarations
+class XmlElement;
 
 namespace MidiMe
 {
@@ -13,7 +17,8 @@ namespace MidiMe
 	class ChainStart;
 	class ChainEnd;
 	class Processor;
-	class Output;
+	class Input; class Output;
+	class Connection;
 	class PropertyCollection; class Property;
 
 	/** This class is used to serialize Midi-Me converter settings. */
@@ -30,7 +35,11 @@ namespace MidiMe
 
 	protected:
 		// Read functions
-		bool readChain(std::istream &stream, Chain *pChain);
+		bool readChain(XmlElement *pChainEl);
+		bool readChainStart(XmlElement *pElement);
+		bool readChainEnd(XmlElement *pElement);
+		bool readProcessor(XmlElement *pElement);
+		bool readConnection(XmlElement *pElement);
 
 		// Write functions
 		bool writeHeader(std::ostream &stream);
@@ -38,7 +47,7 @@ namespace MidiMe
 		bool writeChainStart(std::ostream &stream, ChainStart *pStart);
 		bool writeChainEnd(std::ostream &stream, ChainEnd *pEnd);
 		bool writeProcessor(std::ostream &stream, Processor *pProcessor);
-		bool writeConnections(std::ostream &stream, Chain *pChain);
+		bool writeConnection(std::ostream &stream, Connection *pConnection);
 		bool writeProperties(std::ostream &stream, PropertyCollection *pProperties, unsigned int indentLevel);
 		bool writeProperty(std::ostream &stream, Property *pProperty, unsigned int indentLevel);
 		void writeTabs(std::ostream &stream, unsigned int num);
@@ -46,14 +55,19 @@ namespace MidiMe
 		// Member variables
 		Chain *m_pChain;
 
-		typedef std::map<ChainStart *, unsigned int> StartIDMap;
-		StartIDMap m_startIDs;
+		typedef std::vector<Output *> OutputVector;
+		OutputVector m_outputs;
 
-		typedef std::map<ChainEnd *, unsigned int> EndIDMap;
-		EndIDMap m_endIDs;
+		typedef std::vector<Input *> InputVector;
+		InputVector m_inputs;
 
-		typedef std::map<Processor *, unsigned int> ProcessorIDMap;
-		ProcessorIDMap m_processorIDs;
+		typedef std::map<Output *, unsigned int> OutputIDMap;
+		OutputIDMap m_outputIDs;
+		unsigned int m_currentOutputID;
+
+		typedef std::map<Input *, unsigned int> InputIDMap;
+		InputIDMap m_inputIDs;
+		unsigned int m_currentInputID;
 	};
 }
 

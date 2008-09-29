@@ -22,7 +22,7 @@ namespace MidiMe
 	class ChainItem;
 	class OutputItem;
 	class InputItem;
-	class EdgeItem;
+	class ConnectionItem;
 
 	/** This widget displays the state of an input device. */
 	class ChainWidget: public QGraphicsView, protected Chain::Listener
@@ -40,6 +40,10 @@ namespace MidiMe
 		QGraphicsScene *getScene() const { return m_pScene; }
 		Chain *getChain() const { return m_pChain; }
 		State getState() const { return m_state; }
+
+		InputItem *getInputItem(Input *pInput) const;
+		OutputItem *getOutputItem(Output *pOutput) const;
+		ConnectionItem *getConnectionItem(Connection *pConnection) const;
 
 	public slots:
 		void update();
@@ -66,6 +70,12 @@ namespace MidiMe
 		void onEndRemoving(ChainEnd *pEnd);
 		void onProcessorAdded(Processor *pProcessor);
 		void onProcessorRemoving(Processor *pProcessor);
+		void onConnectionAdded(Connection *pConnection);
+		void onConnectionRemoving(Connection *pConnection);
+		void onInputAdded(Input *pInput) {}
+		void onInputRemoving(Input *pInput) {}
+		void onOutputAdded(Output *pOutput) {}
+		void onOutputRemoving(Output *pOutput) {}
 
 		// Other functions
 		void destroyItems();
@@ -76,11 +86,6 @@ namespace MidiMe
 		void distributeStartItems();
 		void distributeEndItems();
 		void distributeProcessorItems();
-
-		// Output items can create and destroy edges
-		EdgeItem *createEdge(OutputItem *pOutput, InputItem *pInput);
-		void destroyEdge(EdgeItem *pEdge);
-		friend class OutputItem;
 
 		// Member variables
 		MainWindow *m_pWindow;
@@ -97,10 +102,18 @@ namespace MidiMe
 		typedef std::map<Processor *, ProcessorItem *> ProcessorItemMap;
 		ProcessorItemMap m_processorItems;
 
-		typedef std::set<EdgeItem *> EdgeItemSet;
-		EdgeItemSet m_edgeItems;
+		typedef std::map<Input *, InputItem *> InputItemMap;
+		InputItemMap m_inputItems;
 
-		EdgeItem *m_pConnectingEdge;
+		typedef std::map<Output *, OutputItem *> OutputItemMap;
+		OutputItemMap m_outputItems;
+
+		typedef std::map<Connection *, ConnectionItem *> ConnectionItemMap;
+		ConnectionItemMap m_connectionItems;
+
+		ConnectionItem *m_pTempConnection;
+		OutputItem *m_pConnectingOutput;
+		InputItem *m_pConnectingInput;
 	};
 }
 

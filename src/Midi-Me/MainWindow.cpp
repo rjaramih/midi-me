@@ -84,6 +84,7 @@ void MainWindow::newFile()
 	if(!checkDirty()) return;
 
 	m_pChain->clear();
+	properties->clear();
 }
 
 void MainWindow::openFile()
@@ -126,7 +127,8 @@ void MainWindow::saveFileAs()
 	if(filename.isNull()) return;
 
 	// Give a warning if the file exists already
-	if(QFile::exists(filename))
+	// Note: QT does this automatically in the save dialog
+	/*if(QFile::exists(filename))
 	{
 		int ret = QMessageBox::warning(this, tr("Midi-Me"),
 			tr("File %1 already exists.\nDo you want to overwrite it?")
@@ -136,7 +138,7 @@ void MainWindow::saveFileAs()
 
 		if(ret == QMessageBox::No)
 			return;
-	}
+	}*/
 
 	// Save the settings
 	if(!m_pChain->save(filename.toStdString()))
