@@ -10,7 +10,7 @@ namespace MidiMe
 {
 	// Forward declarations
 	class Output;
-	class InputItem;
+	class ConnectionItem;
 
 	/** Class Description */
 	class OutputItem: public ChainItem, protected Output::Listener
@@ -26,12 +26,13 @@ namespace MidiMe
 
 		// Information
 		Output *getOutput() const { return m_pOutput; }
-
-		// The connected edge
-		void disconnect();
-		void connect(InputItem *pInputItem);
+		bool isConnected() const;
+		ConnectionItem *getConnectionItem() const;
 
 	protected:
+		// Events
+		QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
 		// Output::Listener functions
 		void onValue(Output *pOutput, real value);
 

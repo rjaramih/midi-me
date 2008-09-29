@@ -1,6 +1,7 @@
 // Includes
 #include "ChainEnd.h"
 #include "MidiOutput.h"
+#include "Connection.h"
 using namespace MidiMe;
 
 #include <Properties/StandardProperties.h>
@@ -31,6 +32,20 @@ ChainEnd::~ChainEnd()
 /******************
 * Other functions *
 ******************/
+
+bool ChainEnd::isInverted() const
+{
+	if(m_pInput->isConnected())
+		return m_pInput->getConnection()->isInverted();
+
+	return false;
+}
+
+void ChainEnd::setInverted(bool inverted)
+{
+	if(m_pInput->isConnected())
+		m_pInput->getConnection()->setInverted(inverted);
+}
 
 
 /**********************
@@ -74,6 +89,12 @@ void ChainEnd::createProperties()
 	valueSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setEndValue);
 	pProperty = new UIntProperty("Ending value", valueGetter, valueSetter);
 	addProperty(pProperty);
+
+	// TEMP: inverted
+	BoolProperty::SetFunctor invSetter = fastdelegate::MakeDelegate(this, &ChainEnd::setInverted);
+	BoolProperty::GetFunctor invGetter = fastdelegate::MakeDelegate(this, &ChainEnd::isInverted);
+	BoolProperty *pInvProperty = new BoolProperty("Inverted", invGetter, invSetter);
+	addProperty(pInvProperty);
 }
 
 void ChainEnd::destroyProperties()

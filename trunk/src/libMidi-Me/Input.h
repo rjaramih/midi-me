@@ -8,16 +8,13 @@
 namespace MidiMe
 {
 	// Forward declarations
-	class Output;
+	class Connection;
 
 	/** This class represents an input to connect an output with.
-		An input has a mininum and maximum value and can be inverted.
+		An input has a mininum and maximum value.
 		
 		The input will automatically map the incoming value from an output between the minimum and maximum
 		value of this input when sending the value to the listeners.
-		
-		If you invert the input, the minimum value of the connected output will be mapped
-		to the maximum value of the input.
 	*/
 	class LIBMIDIME_API Input
 	{
@@ -30,40 +27,29 @@ namespace MidiMe
 		};
 
 		// Constructors and destructors
-		Input(bool inverted = false);
+		Input();
 		virtual ~Input();
 
 		// Information
-		unsigned int getID() const { return m_id; }
 		real getCurrentValue() const { return m_value; }
 
-		// Incoming connection (handled by Output)
-		Output *getConnectedOutput() const { return m_pOutput; }
-		bool isConnected() const { return (m_pOutput != 0); }
-
-		// Settings
-		bool isInverted() const { return m_inverted; }
-		void setInverted(bool inverted) { m_inverted = inverted; }
+		// Connection
+		Connection *getConnection() const { return m_pConnection; }
+		bool isConnected() const { return (m_pConnection != 0); }
 
 		// Listeners
 		void addListener(Listener *pListener);
 		void removeListener(Listener *pListener);
 
 	protected:
-		/// The unique ID for this input
-		unsigned int m_id;
-
 		/// The current value
 		real m_value;
 
 		/// The connected output
-		Output *m_pOutput;
+		Connection *m_pConnection;
 
-		/// If this is true, the value reported will be 1 - value.
-		bool m_inverted;
-
-		friend class Output;
-		void setOutput(Output *pOutput) { m_pOutput = pOutput; }
+		friend class Connection;
+		void setConnection(Connection *pConnection) { m_pConnection = pConnection; }
 		void processValue(real value);
 
 		// Listeners

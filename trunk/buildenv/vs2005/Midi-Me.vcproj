@@ -207,7 +207,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\Midi-Me\EdgeItem.cpp"
+				RelativePath="..\..\src\Midi-Me\ConnectionItem.cpp"
 				>
 			</File>
 			<File
@@ -307,11 +307,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\Midi-Me\DragData.h"
+				RelativePath="..\..\src\Midi-Me\ConnectionItem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\Midi-Me\EdgeItem.h"
+				RelativePath="..\..\src\Midi-Me\DragData.h"
 				>
 			</File>
 			<File

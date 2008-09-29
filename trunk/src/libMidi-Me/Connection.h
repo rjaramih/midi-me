@@ -28,6 +28,9 @@ namespace MidiMe
 		bool isInverted() const { return m_inverted; }
 		void setInverted(bool inverted) { m_inverted = inverted; }
 		void toggleInverted() { m_inverted = !m_inverted; }
+
+		// Other functions
+		void processValue(real value);
     
 	protected:
 		// Member variables

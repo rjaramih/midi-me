@@ -61,9 +61,9 @@ void Processor::clear()
 	m_outputs.clear();
 }
 
-Input *Processor::addInput(bool inverted)
+Input *Processor::addInput()
 {
-	Input *pInput = new Input(inverted);
+	Input *pInput = new Input();
 	m_inputs.insert(pInput);
 	pInput->addListener(this);
 	return pInput;

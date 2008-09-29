@@ -18,6 +18,9 @@ namespace MidiMe
 	class Input; class InputItem;
 	class Output; class OutputItem;
 
+	typedef std::map<Input *, InputItem *> InputItemMap;
+	typedef std::map<Output *, OutputItem *> OutputItemMap;
+
 	/** This widget displays the state of an input device. */
 	class ProcessorItem: public QGraphicsRectItem
 	{
@@ -27,6 +30,12 @@ namespace MidiMe
 		// Constructors and destructor
 		ProcessorItem(ChainWidget *pChainWidget, Processor *pProcessor, QGraphicsItem *pParent = 0);
 		virtual ~ProcessorItem();
+
+		// Input items
+		const InputItemMap &getAllInputs() const { return m_inputItems; }
+
+		// Output items
+		const OutputItemMap &getAllOutputs() const { return m_outputItems; }
 
 		// Properties
 		PropertiesEditor *getPropertyEditor() const { return m_pPropertyEditor; }
@@ -58,10 +67,7 @@ namespace MidiMe
 		PropertiesEditor *m_pPropertyEditor;
 		Processor *m_pProcessor;
 
-		typedef std::map<Input *, InputItem *> InputItemMap;
 		InputItemMap m_inputItems;
-
-		typedef std::map<Output *, OutputItem *> OutputItemMap;
 		OutputItemMap m_outputItems;
 	};
 }

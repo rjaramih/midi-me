@@ -49,7 +49,7 @@ namespace MidiMe
 		void clear();
 
 		// Used by derived classes
-		Input *addInput(bool inverted = false);
+		Input *addInput();
 		Output *addOutput(bool analog = true);
 
 		// Member variables

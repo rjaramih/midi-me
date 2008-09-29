@@ -1,6 +1,5 @@
 // Includes
 #include "Input.h"
-#include "Output.h"
 using namespace MidiMe;
 
 
@@ -8,12 +7,9 @@ using namespace MidiMe;
 * Constructors and destructor *
 ******************************/
 
-Input::Input(bool inverted)
-: m_value(0), m_pOutput(0), m_inverted(inverted)
+Input::Input()
+: m_value(0), m_pConnection(0)
 {
-	//! @todo There has to be a better solution for indexing the in- and outputs
-	static unsigned int currentID = 0;
-	m_id = currentID++;
 }
 
 Input::~Input()
@@ -40,8 +36,7 @@ void Input::processValue(real value)
 	// This should only be called by a connected output
 	assert(isConnected());
 
-	// Invert if necessary
-	m_value = m_inverted ? 1 - value : value;
+	m_value = value;
 
 	// Send to connected listeners
 	ListenerSet::iterator it;

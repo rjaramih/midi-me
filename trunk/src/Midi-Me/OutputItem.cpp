@@ -2,13 +2,13 @@
 #include "OutputItem.h"
 #include "InputItem.h"
 #include "ChainWidget.h"
-#include "EdgeItem.h"
+#include "ConnectionItem.h"
 using namespace MidiMe;
 
 
-/************
-* OutputItem *
-************/
+/******************************
+* Constructors and destructor *
+******************************/
 
 OutputItem::OutputItem(ChainWidget *pChainWidget, Output *pOutput, QGraphicsItem *pParent)
 : ChainItem(pChainWidget, pParent), m_pOutput(pOutput)
@@ -26,35 +26,22 @@ OutputItem::~OutputItem()
 	m_pOutput->removeListener(this);
 }
 
-void OutputItem::connect(InputItem *pInputItem)
-{
-	if(pInputItem)
-	{
-		// Connect
-		m_pOutput->connect(pInputItem->getInput());
 
-		// Add edge
-		m_pConnectedEdge = m_pChainWidget->createEdge(this, pInputItem);
-		pInputItem->setConnectedEdge(m_pConnectedEdge);
-	}
-	else
-		disconnect();
+/******************
+* Other functions *
+******************/
+
+bool OutputItem::isConnected() const
+{
+	return m_pOutput->isConnected();
 }
 
-void OutputItem::disconnect()
+ConnectionItem *OutputItem::getConnectionItem() const
 {
-	if(!m_pConnectedEdge)
-		return;
+	if(!m_pOutput->isConnected())
+		return 0;
 
-	// Disconnect
-	m_pOutput->disconnect();
-
-	// Destroy edge
-	InputItem *pInputItem = m_pConnectedEdge->getInputItem();
-	pInputItem->setConnectedEdge(0);
-
-	m_pChainWidget->destroyEdge(m_pConnectedEdge);
-	m_pConnectedEdge = 0;
+	return m_pChainWidget->getConnectionItem(m_pOutput->getConnection());
 }
 
 void OutputItem::onValue(Output *pOutput, real value)
@@ -67,4 +54,12 @@ void OutputItem::onValue(Output *pOutput, real value)
 	float meterWidth = u * width;
 
 	m_pMeterItem->setRect(0, 0, meterWidth, height);
+}
+
+QVariant OutputItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	if(change == ItemPositionHasChanged && m_pOutput->isConnected())
+		m_pChainWidget->getConnectionItem(m_pOutput->getConnection())->adjust();
+
+	return ChainItem::itemChange(change, value);
 }
