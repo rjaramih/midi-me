@@ -12,6 +12,7 @@ using namespace MidiMe;
 #include <libMidi-Me/DeviceManager.h>
 #include <libMidi-Me/InputDevice.h>
 #include <libMidi-Me/MidiOutput.h>
+#include <libMidi-Me/Output.h>
 
 // TEMP Test input device
 class DummyDevice: public InputDevice

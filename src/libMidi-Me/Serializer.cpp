@@ -184,6 +184,9 @@ bool Serializer::readChainStart(XmlElement *pElement)
 	// Add the chain start
 	ChainStart *pStart = m_pChain->addChainStart(pDevice, outputID);
 
+	// Read properties
+	readProperties(pElement, pStart);
+
 	// Index the output
 	m_outputs.push_back(pStart->getOutput());
 	
@@ -192,27 +195,13 @@ bool Serializer::readChainStart(XmlElement *pElement)
 
 bool Serializer::readChainEnd(XmlElement *pElement)
 {
-	// The control channel (defaults to 0)
-	unsigned int channel = StringUtil::toUInt(pElement->getAttribute("channel"));
-
-	// The controller (required)
-	unsigned int controller = StringUtil::toUInt(pElement->getAttribute("controller"));
-
-	// The start value (defaults to 0)
-	unsigned int startValue = StringUtil::toUInt(pElement->getAttribute("startValue"));
-
-	// The end value (defaults to 128)
-	unsigned int endValue = StringUtil::toUInt(pElement->getAttribute("endValue"));
-
 	// Add the chain end
 	ChainEnd *pEnd = m_pChain->addChainEnd();
 	if(!pEnd)
 		return false;
 
-	pEnd->setChannel(channel);
-	pEnd->setController(controller);
-	pEnd->setStartValue(startValue);
-	pEnd->setEndValue(endValue);
+	// Read properties
+	readProperties(pElement, pEnd);
 
 	// Index the input
 	m_inputs.push_back(pEnd->getInput());
@@ -229,7 +218,8 @@ bool Serializer::readProcessor(XmlElement *pElement)
 	if(!pProcessor)
 		return false;
 
-	//! @todo Read properties
+	// Read properties
+	readProperties(pElement, pProcessor);
 
 	// Index the outputs
 	const OutputSet &outputs = pProcessor->getOutputs();
@@ -250,23 +240,63 @@ bool Serializer::readConnection(XmlElement *pElement)
 	// Note: the IDs only match if the elements get read and written in the same order!
 	unsigned int outputID = StringUtil::toUInt(pElement->getAttribute("outputID"));
 	unsigned int inputID = StringUtil::toUInt(pElement->getAttribute("inputID"));
-	bool inverted = StringUtil::toBool(pElement->getAttribute("inverted"));
+
+	if(m_outputs.size() <= outputID || m_inputs.size() <= inputID)
+		return false;
 
 	Output *pOutput = m_outputs.at(outputID);
-	if(!pOutput)
-		return false;
-
 	Input *pInput = m_inputs.at(inputID);
-	if(!pInput)
-		return false;
 
 	// Create the connection
 	Connection *pConnection = m_pChain->addConnection(pInput, pOutput);
 	if(!pConnection)
 		return false;
 
-	pConnection->setInverted(inverted);
+	// Read properties
+	readProperties(pElement, pConnection);
 	return true;
+}
+
+void Serializer::readProperties(XmlElement *pElement, PropertyCollection *pProperties)
+{
+	XmlElement *pPropEl = pElement->getFirstChild("property");
+	while(pPropEl)
+	{
+		const string &type = pPropEl->getAttribute("type");
+		const string &name = pPropEl->getAttribute("name");
+		Property *pProperty = pProperties->getProperty(name);
+
+		if(pProperty)
+		{
+			if(type == "compound")
+				readCompoundProperty(pPropEl, (CompoundProperty *) pProperty);
+			else
+				pProperty->fromString(pPropEl->getAttribute("value"));
+		}
+
+		pPropEl = pPropEl->getNextSibling("property");
+	}
+}
+
+void Serializer::readCompoundProperty(XmlElement *pElement, CompoundProperty *pProperty)
+{
+	XmlElement *pPropEl = pElement->getFirstChild("property");
+	while(pPropEl)
+	{
+		const string &type = pPropEl->getAttribute("type");
+		const string &name = pPropEl->getAttribute("name");
+		Property *pChildProp = pProperty->getProperty(name);
+
+		if(pChildProp)
+		{
+			if(type == "compound")
+				readCompoundProperty(pPropEl, (CompoundProperty *) pChildProp);
+			else
+				pChildProp->fromString(pPropEl->getAttribute("value"));
+		}
+
+		pPropEl = pPropEl->getNextSibling("property");
+	}
 }
 
 
@@ -321,8 +351,11 @@ bool Serializer::writeChainStart(std::ostream &stream, ChainStart *pStart)
 {
 	stream << "\t<start";
 	stream << " device=\"" << pStart->getDevice()->getName() << "\"";
-	stream << " outputID=\"" << pStart->getOutputID() << "\"";
-	stream << " />\n";
+	stream << " outputID=\"" << pStart->getOutputID() << "\">" << endl;
+
+	writeProperties(stream,  pStart, 1);
+	
+	stream << "\t</start>" << endl;
 
 	// Index the output
 	m_outputIDs[pStart->getOutput()] = m_currentOutputID++;
@@ -332,12 +365,9 @@ bool Serializer::writeChainStart(std::ostream &stream, ChainStart *pStart)
 
 bool Serializer::writeChainEnd(std::ostream &stream, ChainEnd *pEnd)
 {
-	stream << "\t<end";
-	stream << " channel=\"" << pEnd->getChannel() << "\"";
-	stream << " controller=\"" << pEnd->getController() << "\"";
-	stream << " startValue=\"" << pEnd->getStartValue() << "\"";
-	stream << " endValue=\"" << pEnd->getEndValue() << "\"";
-	stream << " />\n";
+	stream << "\t<end>" << endl;
+	writeProperties(stream,  pEnd, 1);
+	stream << "\t</end>" << endl;
 
 	// Index the input
 	m_inputIDs[pEnd->getInput()] = m_currentInputID++;
@@ -347,9 +377,9 @@ bool Serializer::writeChainEnd(std::ostream &stream, ChainEnd *pEnd)
 
 bool Serializer::writeProcessor(std::ostream &stream, Processor *pProcessor)
 {
-	stream << "\t<processor type=\"" << pProcessor->getType() << "\">\n";
+	stream << "\t<processor type=\"" << pProcessor->getType() << "\">" << endl;;
 	writeProperties(stream,  pProcessor, 1);
-	stream << "\t</processor>\n";
+	stream << "\t</processor>" << endl;
 
 	// Index the outputs
 	const OutputSet &outputs = pProcessor->getOutputs();
@@ -368,8 +398,11 @@ bool Serializer::writeConnection(std::ostream &stream, Connection *pConnection)
 {
 	stream << "\t<connection";
 	stream << " outputID=\"" << m_outputIDs[pConnection->getOutput()] << "\"";
-	stream << " inputID=\"" << m_inputIDs[pConnection->getInput()] << "\"";
-	stream << " inverted=\"" << pConnection->isInverted() << "\" />\n";
+	stream << " inputID=\"" << m_inputIDs[pConnection->getInput()] << "\">" << endl;
+	
+	writeProperties(stream,  pConnection, 1);
+
+	stream << "\t</connection>" << endl;
 
 	return true;
 }

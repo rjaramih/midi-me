@@ -4,14 +4,11 @@
 #include "ChainEnd.h"
 #include "Processor.h"
 #include "ProcessorFactory.h"
+#include "Connection.h"
 #include "Serializer.h"
 #include "InputDevice.h"
 #include "DeviceManager.h"
 using namespace MidiMe;
-
-#if 1
-#include "Connection.h"
-#endif
 
 #include <RtMidi/RtMidi.h>
 
@@ -45,6 +42,7 @@ size_t Chain::numChainStartItems() const
 	return m_startItems.size();
 }
 
+/** @todo Only add a chain start when it is not already added (because there is only one output for each device output now) */
 ChainStart *Chain::addChainStart(InputDevice *pDevice, unsigned int outputID)
 {
 	ChainStart *pStart = new ChainStart(pDevice, outputID);
@@ -313,6 +311,7 @@ void Chain::fireConnectionRemoving(Connection *pConnection)
 * Serialization *
 ****************/
 
+//! @todo What to do with m_currentFile and m_dirty when the chain is not empty when loading?
 bool Chain::load(const string &filename)
 {
 	Serializer loader;
@@ -324,7 +323,6 @@ bool Chain::load(const string &filename)
 
 	m_currentFile = filename;
 	m_dirty = false;
-
 	return true;
 }
 

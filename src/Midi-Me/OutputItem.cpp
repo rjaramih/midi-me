@@ -5,6 +5,8 @@
 #include "ConnectionItem.h"
 using namespace MidiMe;
 
+#include <QtCore/QUrl>
+
 
 /******************************
 * Constructors and destructor *
@@ -19,6 +21,14 @@ OutputItem::OutputItem(ChainWidget *pChainWidget, Output *pOutput, QGraphicsItem
 	// The anchor to attach an edge to
 	m_localAnchor.setX(width - margin);
 	m_localAnchor.setY(height * 0.5f);
+
+	// Info text
+	QGraphicsTextItem *pInfo = new QGraphicsTextItem(this);
+	/*QString html = QString("<center>") + m_pOutput->getInfo().c_str() + "</center>";
+	pInfo->setHtml(html);*/
+	pInfo->setPlainText(m_pOutput->getInfo().c_str());
+	pInfo->setPos(2 * ChainItem::margin, 0);
+	pInfo->setTextWidth(rect().width() - 2 * ChainItem::margin);
 }
 
 OutputItem::~OutputItem()

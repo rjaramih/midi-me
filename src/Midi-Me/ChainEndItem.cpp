@@ -79,8 +79,7 @@ QVariant ChainEndItem::itemChange(GraphicsItemChange change, const QVariant &val
 	}
 	else if(change == ItemPositionHasChanged)
 	{
-		//! @todo Why is there always one colliding item?
-		if(collidingItems().size() > 1)
+		if(isColliding())
 			setBrush(Qt::red);
 		else
 			setBrush(Qt::NoBrush);

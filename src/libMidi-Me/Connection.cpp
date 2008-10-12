@@ -10,7 +10,7 @@ using namespace MidiMe;
 ******************************/
 
 Connection::Connection(Input *pInput, Output *pOutput)
-: m_pInput(pInput), m_pOutput(pOutput), m_inverted(false)
+: m_pInput(pInput), m_pOutput(pOutput)
 {
 	assert(m_pInput && m_pOutput);
 
@@ -33,10 +33,6 @@ Connection::~Connection()
 
 void Connection::processValue(real value)
 {
-	// Invert if necessary
-	if(m_inverted)
-		value = 1 - value;
-
 	m_pInput->processValue(value);
 }
 

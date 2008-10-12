@@ -50,6 +50,17 @@ ChainItem::~ChainItem()
 * Other functions *
 ******************/
 
+bool ChainItem::isColliding() const
+{
+	// TEMP
+	/*int numColliders = ChainWidget::getColliders(this).count();
+	if(numColliders > 0)
+		cerr << "[ChainItem::DEBUG] " << numColliders << " colliders" << endl;*/
+
+	// TEMP: There seems to be always one item colliding
+	return ChainWidget::getColliders(this).count() > 1;
+}
+
 
 /**********************
 * Protected functions *

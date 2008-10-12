@@ -8,6 +8,7 @@
 namespace MidiMe
 {
 	// Forward declarations
+	class InverterCreator;
 	class SplitterCreator;
 	class DuplicatorCreator;
 	class DelayCreator;
@@ -26,6 +27,7 @@ namespace MidiMe
 
 	protected:
 		// Member variables
+		InverterCreator *m_pInverterCreator;
 		SplitterCreator *m_pSplitterCreator;
 		DuplicatorCreator *m_pDuplicatorCreator;
 		DelayCreator *m_pDelayCreator;

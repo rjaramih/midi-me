@@ -19,7 +19,7 @@ namespace MidiMe
 	class Processor;
 	class Input; class Output;
 	class Connection;
-	class PropertyCollection; class Property;
+	class PropertyCollection; class Property; class CompoundProperty;
 
 	/** This class is used to serialize Midi-Me converter settings. */
 	class LIBMIDIME_API Serializer: public LastError
@@ -40,6 +40,8 @@ namespace MidiMe
 		bool readChainEnd(XmlElement *pElement);
 		bool readProcessor(XmlElement *pElement);
 		bool readConnection(XmlElement *pElement);
+		void readProperties(XmlElement *pElement, PropertyCollection *pProperties);
+		void readCompoundProperty(XmlElement *pElement, CompoundProperty *pProperty);
 
 		// Write functions
 		bool writeHeader(std::ostream &stream);

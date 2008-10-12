@@ -21,7 +21,10 @@ Splitter::Splitter()
 
 	// Add the outputs
 	m_pOutput1 = addOutput();
+	m_pOutput1->setInfo("<");
+
 	m_pOutput2 = addOutput();
+	m_pOutput2->setInfo(">=");
 
 	// Create the properties
 	createProperties();

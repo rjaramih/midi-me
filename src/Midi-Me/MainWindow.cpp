@@ -359,7 +359,7 @@ void MainWindow::populateMidiOutMenu()
 	m_pMidiGroup = new QActionGroup(menuMidiOut);
 
 	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
-	
+
 	unsigned int numPorts = pMidi->numPorts();
 	for(unsigned int i = 0; i < numPorts; ++i)
 	{
@@ -369,6 +369,13 @@ void MainWindow::populateMidiOutMenu()
 		pAction->setCheckable(true);
 		if(pMidi->isOpened() && i == pMidi->getOpenedPort())
 			pAction->setChecked(true);
+	}
+
+	// Open the first midi device by default (to avoid midi errors)
+	if(!pMidi->isOpened() && numPorts > 0)
+	{
+		if(pMidi->open(0))
+			m_pMidiGroup->actions().first()->setChecked(true);
 	}
 
 	menuMidiOut->addActions(m_pMidiGroup->actions());

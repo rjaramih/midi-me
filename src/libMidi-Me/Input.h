@@ -33,6 +33,10 @@ namespace MidiMe
 		// Information
 		real getCurrentValue() const { return m_value; }
 
+		// Short info message
+		const string &getInfo() const { return m_info; }
+		void setInfo(const string &info) { m_info = info; }
+
 		// Connection
 		Connection *getConnection() const { return m_pConnection; }
 		bool isConnected() const { return (m_pConnection != 0); }
@@ -42,6 +46,9 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
+		/// The (optional) short info text
+		string m_info;
+
 		/// The current value
 		real m_value;
 

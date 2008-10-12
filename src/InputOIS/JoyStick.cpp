@@ -1,6 +1,7 @@
 // Includes
 #include "JoyStick.h"
 #include <libMidi-Me/Output.h>
+#include <Properties/StringUtil.h>
 using namespace MidiMe;
 
 
@@ -73,12 +74,18 @@ void JoyStick::createOutputs()
 	// Buttons
 	short numButtons = m_pOISJoyStick->buttons();
 	for(short i = 0; i < numButtons; ++i)
-		addOutput(i, false);
+	{
+		Output *pOutput = addOutput(i, false);
+		pOutput->setInfo("B" + StringUtil::toString(i + 1));
+	}
 
 	// Axes
 	short numAxes = m_pOISJoyStick->axes();
 	for(short i = 0; i < numAxes; ++i)
-		addOutput(numButtons + i, true);
+	{
+		Output *pOutput = addOutput(numButtons + i, true);
+		pOutput->setInfo("A" + StringUtil::toString(i + 1));
+	}
 
 	//! @todo Pods and sliders
 }
