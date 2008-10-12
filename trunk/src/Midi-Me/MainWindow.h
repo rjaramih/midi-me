@@ -27,6 +27,7 @@ namespace MidiMe
 
 		// Information
 		PropertiesEditor *getPropertyEditor() const { return properties; }
+		Chain *getChain() const { return m_pChain; }
 
 	public slots:
 		void newFile();

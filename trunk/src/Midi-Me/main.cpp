@@ -13,6 +13,7 @@ using namespace MidiMe;
 #include <libMidi-Me/InputDevice.h>
 #include <libMidi-Me/MidiOutput.h>
 #include <libMidi-Me/Output.h>
+#include <libMidi-Me/Chain.h>
 
 // TEMP Test input device
 class DummyDevice: public InputDevice
@@ -151,6 +152,7 @@ int main(int argc, char *argv[])
 	int result = app.exec();
 
 	// Make sure everyting is cleaned up before the application ends
+	pWindow->getChain()->clear();
 	deinitPluginSystem();
 	delete pWindow;
 
