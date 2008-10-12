@@ -45,6 +45,8 @@ namespace MidiMe
 		OutputItem *getOutputItem(Output *pOutput) const;
 		ConnectionItem *getConnectionItem(Connection *pConnection) const;
 
+		static QList<QGraphicsItem *> getColliders(const QGraphicsItem *pItem);
+
 	public slots:
 		void update();
 		void startConnecting(const QPointF &mousePos);

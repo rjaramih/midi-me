@@ -27,6 +27,9 @@ namespace MidiMe
 		/// The position (in scene coordinates) where to anchor an edge to
 		QPointF getAnchor() const { return mapToScene(m_localAnchor); }
 
+		/// Returns true if there are non-children items that collide with this one
+		bool isColliding() const;
+
 		// Other functions
 		virtual bool isConnected() const = 0;
 		virtual ConnectionItem *getConnectionItem() const = 0;

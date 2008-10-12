@@ -24,11 +24,6 @@ namespace MidiMe
 		Input *getInput() const { return m_pInput; }
 		Output *getOutput() const { return m_pOutput; }
 
-		// Settings
-		bool isInverted() const { return m_inverted; }
-		void setInverted(bool inverted) { m_inverted = inverted; }
-		void toggleInverted() { m_inverted = !m_inverted; }
-
 		// Other functions
 		void processValue(real value);
     
@@ -36,7 +31,6 @@ namespace MidiMe
 		// Member variables
 		Input *m_pInput;
 		Output *m_pOutput;
-		bool m_inverted;
 	};
 }
 

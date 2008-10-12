@@ -22,6 +22,12 @@ InputItem::InputItem(ChainWidget *pChainWidget, Input *pInput, QGraphicsItem *pP
 	// The anchor to attach an edge to
 	m_localAnchor.setX(margin);
 	m_localAnchor.setY(height * 0.5f);
+
+	// Info text
+	QGraphicsTextItem *pInfo = new QGraphicsTextItem(this);
+	QString html = QString("<center>") + m_pInput->getInfo().c_str() + "</center>";
+	pInfo->setHtml(html);
+	pInfo->setTextWidth(rect().width());
 }
 
 InputItem::~InputItem()

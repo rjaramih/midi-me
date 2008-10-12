@@ -181,6 +181,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\StandardProcessors\Inverter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\StandardProcessors\Splitter.cpp"
 				>
 			</File>
@@ -204,6 +208,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\StandardProcessors\global.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\StandardProcessors\Inverter.h"
 				>
 			</File>
 			<File

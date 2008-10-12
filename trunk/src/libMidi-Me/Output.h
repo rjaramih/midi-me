@@ -36,6 +36,10 @@ namespace MidiMe
 		bool isAnalog() const { return m_analog; }
 		real getCurrentValue() const { return m_value; }
 
+		// Short info message
+		const string &getInfo() const { return m_info; }
+		void setInfo(const string &info) { m_info = info; }
+
 		// Other functions
 		void sendValue(real value);
 		void sendMinValue() { sendValue(0); }
@@ -46,6 +50,9 @@ namespace MidiMe
 		void removeListener(Listener *pListener);
 
 	protected:
+		/// The (optional) short info text
+		string m_info;
+
 		/// The current value
 		real m_value;
 

@@ -279,12 +279,16 @@ void ChainWidget::onStartAdded(ChainStart *pStart)
 	float y = g_margin;
 	pItem->setPos(x,y);
 
+	float maxY = rect().height() - ChainItem::height - ChainItem::margin;
+
 	// Make sure we don't collide with other items
-	//! @todo Find out why there is always one item in the collidingItems list
-	while(pItem->collidingItems().count() > 1)
+	QList<QGraphicsItem *> colItems = getColliders(pItem);
+	while(!colItems.empty() && y <= maxY)
 	{
 		y += 2 * g_margin;
 		pItem->setPos(x,y);
+
+		colItems = getColliders(pItem);
 	}
 
 	// Store the output item
@@ -323,12 +327,16 @@ void ChainWidget::onEndAdded(ChainEnd *pEnd)
 	float y = g_margin;
 	pItem->setPos(x,y);
 
+	float maxY = rect().height() - ChainItem::height - ChainItem::margin;
+
 	// Make sure we don't collide with other items
-	//! @todo Find out why there is always one item in the collidingItems list
-	while(pItem->collidingItems().count() > 1)
+	QList<QGraphicsItem *> colItems = getColliders(pItem);
+	while(!colItems.empty() && y <= maxY)
 	{
 		y += 2 * g_margin;
 		pItem->setPos(x,y);
+
+		colItems = getColliders(pItem);
 	}
 
 	// Store the input item
@@ -360,6 +368,23 @@ void ChainWidget::onProcessorAdded(Processor *pProcessor)
 	m_processorItems[pProcessor] = pItem;
 
 	pItem->setPropertyEditor(m_pWindow->getPropertyEditor());
+
+	// Position the item in the center
+	float x = 0.5f * rect().width() - pItem->rect().width();
+	float y = g_margin;
+	pItem->setPos(x,y);
+
+	float maxY = rect().height() - pItem->rect().height() - g_margin;
+
+	// Make sure we don't collide with other items
+	QList<QGraphicsItem *> colItems = getColliders(pItem);
+	while(!colItems.empty() && y <= maxY)
+	{
+		y += 2 * g_margin;
+		pItem->setPos(x,y);
+
+		colItems = getColliders(pItem);
+	}
 
 	// Add the input items
 	const InputItemMap &inputs = pItem->getAllInputs();
@@ -588,4 +613,20 @@ void ChainWidget::distributeProcessorItems()
 	ProcessorItemMap::iterator processorIt;
 	for(processorIt = m_processorItems.begin(); processorIt != m_processorItems.end(); ++processorIt)
 		processorIt->second->adjustPosition();
+}
+
+/** Returns the list of non-children items that collide with pItem. */
+QList<QGraphicsItem *> ChainWidget::getColliders(const QGraphicsItem *pItem)
+{
+	QList<QGraphicsItem *> result;
+	QList<QGraphicsItem *> items = pItem->collidingItems();
+	
+	//! @todo Why is there always one colliding item?
+	for(int i = 0; i < items.size(); ++i)
+	{
+		if(!pItem->isAncestorOf(items.at(i)) && !items.at(i)->isAncestorOf(pItem))
+			result.push_back(items.at(i));
+	}
+
+	return result;
 }
