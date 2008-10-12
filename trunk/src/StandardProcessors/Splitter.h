@@ -35,7 +35,7 @@ namespace MidiMe
 		void destroyProperties();
 
 		// Member variables
-		real m_splitValue;
+		real m_splitValue, m_prevValue;
 		Input *m_pInput;
 		Output *m_pOutput1, *m_pOutput2;
 	};

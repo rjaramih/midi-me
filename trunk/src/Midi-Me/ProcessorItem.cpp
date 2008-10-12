@@ -110,8 +110,8 @@ QVariant ProcessorItem::itemChange(GraphicsItemChange change, const QVariant &va
 
 void ProcessorItem::createInputs()
 {
-	const InputSet &inputs = m_pProcessor->getInputs();
-	const OutputSet &outputs = m_pProcessor->getOutputs();
+	const InputList &inputs = m_pProcessor->getInputs();
+	const OutputList &outputs = m_pProcessor->getOutputs();
 
 	// Calculate where to put the items
 	float heightOutputs = outputs.size() * (OutputItem::height + g_margin) + g_margin;
@@ -132,7 +132,7 @@ void ProcessorItem::createInputs()
 	float y = margin;
 
 	// Add inputs
-	InputSet::const_iterator it;
+	InputList::const_iterator it;
 	for(it = inputs.begin(); it != inputs.end(); ++it)
 	{
 		Input *pInput = *it;
@@ -159,8 +159,8 @@ void ProcessorItem::destroyInputs()
 
 void ProcessorItem::createOutputs()
 {
-	const InputSet &inputs = m_pProcessor->getInputs();
-	const OutputSet &outputs = m_pProcessor->getOutputs();
+	const InputList &inputs = m_pProcessor->getInputs();
+	const OutputList &outputs = m_pProcessor->getOutputs();
 
 	// Calculate where to put the items
 	float heightOutputs = outputs.size() * (OutputItem::height + g_margin) + g_margin;
@@ -181,7 +181,7 @@ void ProcessorItem::createOutputs()
 	float y = margin;
 
 	// Add outputs
-	OutputSet::const_iterator it;
+	OutputList::const_iterator it;
 	for(it = outputs.begin(); it != outputs.end(); ++it)
 	{
 		Output *pOutput = *it;

@@ -222,13 +222,13 @@ bool Serializer::readProcessor(XmlElement *pElement)
 	readProperties(pElement, pProcessor);
 
 	// Index the outputs
-	const OutputSet &outputs = pProcessor->getOutputs();
-	for(OutputSet::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+	const OutputList &outputs = pProcessor->getOutputs();
+	for(OutputList::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
 		m_outputs.push_back(*it);
 	
 	// Index the inputs
-	const InputSet &inputs = pProcessor->getInputs();
-	for(InputSet::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
+	const InputList &inputs = pProcessor->getInputs();
+	for(InputList::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
 		m_inputs.push_back(*it);
 	
 	return true;
@@ -382,13 +382,13 @@ bool Serializer::writeProcessor(std::ostream &stream, Processor *pProcessor)
 	stream << "\t</processor>" << endl;
 
 	// Index the outputs
-	const OutputSet &outputs = pProcessor->getOutputs();
-	for(OutputSet::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
+	const OutputList &outputs = pProcessor->getOutputs();
+	for(OutputList::const_iterator it = outputs.begin(); it != outputs.end(); ++it)
 		m_outputIDs[*it] = m_currentOutputID++;
 	
 	// Index the inputs
-	const InputSet &inputs = pProcessor->getInputs();
-	for(InputSet::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
+	const InputList &inputs = pProcessor->getInputs();
+	for(InputList::const_iterator it = inputs.begin(); it != inputs.end(); ++it)
 		m_inputIDs[*it] = m_currentInputID++;
 	
 	return true;

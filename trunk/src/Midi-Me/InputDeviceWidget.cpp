@@ -89,6 +89,7 @@ void InputDeviceWidget::update()
 			xDigital += 20.0f;
 		}
 
+		pItem->setToolTip(QString::fromStdString(pOutput->getInfo()));
 		m_items[pOutput] = pItem;
 	}
 }
@@ -126,7 +127,6 @@ void InputDeviceWidget::onValue(Output *pOutput, real value)
 		//pItem->setBrush(value == pOutput->getMinValue() ? Qt::red : Qt::green);
 		pItem->setBrush(value == 1 ? Qt::red : Qt::green);
 	}
-
 }
 
 // TEMP
