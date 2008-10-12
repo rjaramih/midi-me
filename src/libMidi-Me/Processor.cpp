@@ -23,7 +23,7 @@ Processor::~Processor()
 * Other functions *
 ******************/
 
-const InputSet &Processor::getInputs() const
+const InputList &Processor::getInputs() const
 {
 	return m_inputs;
 }
@@ -33,7 +33,7 @@ size_t Processor::numInputs() const
 	return m_inputs.size();
 }
 
-const OutputSet &Processor::getOutputs() const
+const OutputList &Processor::getOutputs() const
 {
 	return m_outputs;
 }
@@ -50,12 +50,12 @@ size_t Processor::numOutputs()
 
 void Processor::clear()
 {
-	InputSet::iterator input;
+	InputList::iterator input;
 	for(input = m_inputs.begin(); input != m_inputs.end(); ++input)
 		delete *input;
 	m_inputs.clear();
 
-	OutputSet::iterator output;
+	OutputList::iterator output;
 	for(output = m_outputs.begin(); output != m_outputs.end(); ++output)
 		delete *output;
 	m_outputs.clear();
@@ -64,7 +64,7 @@ void Processor::clear()
 Input *Processor::addInput()
 {
 	Input *pInput = new Input();
-	m_inputs.insert(pInput);
+	m_inputs.push_back(pInput);
 	pInput->addListener(this);
 	return pInput;
 }
@@ -72,7 +72,7 @@ Input *Processor::addInput()
 Output *Processor::addOutput(bool analog)
 {
 	Output *pOutput = new Output(analog);
-	m_outputs.insert(pOutput);
+	m_outputs.push_back(pOutput);
 	return pOutput;
 }
 

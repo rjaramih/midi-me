@@ -6,16 +6,16 @@
 #include "Input.h"
 #include "Output.h"
 #include <Properties/PropertyCollection.h>
-#include <set>
+#include <list>
 
 namespace MidiMe
 {
 	// Forward declarations
 	class Input;
-	typedef std::set<Input *> InputSet;
+	typedef std::list<Input *> InputList;
 
 	class Output;
-	typedef std::set<Output *> OutputSet;
+	typedef std::list<Output *> OutputList;
 
 	/** This is the base class for Midi-Me processors.
 		A processor has a set of inputs and outputs.
@@ -34,11 +34,11 @@ namespace MidiMe
 		const string &getType() const { return m_type; }
 
 		// Inputs
-		const InputSet &getInputs() const;
+		const InputList &getInputs() const;
 		size_t numInputs() const;
 
 		// Outputs
-		const OutputSet &getOutputs() const;
+		const OutputList &getOutputs() const;
 		size_t numOutputs();
 
 		// Step function
@@ -54,8 +54,8 @@ namespace MidiMe
 
 		// Member variables
 		string m_type;
-		InputSet m_inputs;
-		OutputSet m_outputs;
+		InputList m_inputs;
+		OutputList m_outputs;
 	};
 
 	/** Derive from this class to register a processor type in the ProcessorFactory.

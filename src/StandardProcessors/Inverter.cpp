@@ -37,7 +37,7 @@ Inverter::~Inverter()
 void Inverter::onValue(Input *pInput, real value)
 {
 	// Send the inverted signal to all outputs
-	OutputSet::iterator it;
+	OutputList::iterator it;
 	for(it = m_outputs.begin(); it != m_outputs.end(); ++it)
 		(*it)->sendValue(1 - value);
 }

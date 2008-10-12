@@ -14,7 +14,7 @@ string Splitter::type = "Splitter";
 ******************************/
 
 Splitter::Splitter()
-: Processor(type), m_splitValue(0.5)
+: Processor(type), m_splitValue(0.5), m_prevValue(0)
 {
 	// Add the input
 	m_pInput = addInput();
@@ -50,14 +50,24 @@ void Splitter::onValue(Input *pInput, real value)
 {
 	if(value < m_splitValue)
 	{
+		// Send border value to other output if the value crossed the split value
+		if(m_prevValue >= m_splitValue)
+			m_pOutput2->sendValue(0);
+
 		real mappedValue = value / m_splitValue;
 		m_pOutput1->sendValue(mappedValue);
 	}
 	else
 	{
+		// Send border value to other output if the value crossed the split value
+		if(m_prevValue < m_splitValue)
+			m_pOutput1->sendValue(1);
+
 		real mappedValue = (value - m_splitValue) / ((real) 1.0 - m_splitValue);
 		m_pOutput2->sendValue(mappedValue);
 	}
+
+	m_prevValue = value;
 }
 
 void Splitter::createProperties()
