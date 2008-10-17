@@ -2,6 +2,7 @@
 #include "Splitter.h"
 using namespace MidiMe;
 
+#include <Properties/StandardProperties.h>
 #include <libMidi-Me/Midi-MeProperties.h>
 
 
@@ -14,7 +15,7 @@ string Splitter::type = "Splitter";
 ******************************/
 
 Splitter::Splitter()
-: Processor(type), m_splitValue(0.5), m_prevValue(0)
+: Processor(type), m_splitValue(0.5), m_deadZone(0), m_prevValue(0)
 {
 	// Add the input
 	m_pInput = addInput();
@@ -48,22 +49,28 @@ Splitter::~Splitter()
 
 void Splitter::onValue(Input *pInput, real value)
 {
-	if(value < m_splitValue)
+	// If in the dead zone, send border value to previous output
+	if(value > m_splitValue - m_deadZone && value < m_splitValue + m_deadZone)
 	{
 		// Send border value to other output if the value crossed the split value
-		if(m_prevValue >= m_splitValue)
+		if(m_prevValue >= m_splitValue + m_deadZone)
 			m_pOutput2->sendValue(0);
 
-		real mappedValue = value / m_splitValue;
+		else if(m_prevValue <= m_splitValue - m_deadZone)
+			m_pOutput1->sendValue(1);
+
+		return;
+	}
+
+	if(value < m_splitValue)
+	{
+		real mappedValue = value / (m_splitValue - m_deadZone);
 		m_pOutput1->sendValue(mappedValue);
 	}
 	else
 	{
-		// Send border value to other output if the value crossed the split value
-		if(m_prevValue < m_splitValue)
-			m_pOutput1->sendValue(1);
-
-		real mappedValue = (value - m_splitValue) / ((real) 1.0 - m_splitValue);
+		real edgeValue = m_splitValue + m_deadZone;
+		real mappedValue = (value - edgeValue) / ((real) 1.0 - edgeValue);
 		m_pOutput2->sendValue(mappedValue);
 	}
 
@@ -77,6 +84,14 @@ void Splitter::createProperties()
 	InputValueProperty::SetFunctor valueSetter = fastdelegate::MakeDelegate(this, &Splitter::setSplitValue);
 	InputValueProperty *pSplitValue = new InputValueProperty("Split value", valueGetter, valueSetter, m_pInput);
 	addProperty(pSplitValue);
+
+	RealProperty::GetFunctor dzGetter = fastdelegate::MakeDelegate(this, &Splitter::getDeadZone);
+	RealProperty::SetFunctor dzSetter = fastdelegate::MakeDelegate(this, &Splitter::setDeadZone);
+	RealProperty *pDeadZone = new RealProperty("Dead zone", dzGetter, dzSetter);
+	addProperty(pDeadZone);
+
+	pDeadZone->setMin(0);
+	pDeadZone->setMax(1);
 }
 
 void Splitter::destroyProperties()
