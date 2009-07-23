@@ -210,10 +210,11 @@ void DynamicLibrary::correctFilename(string &filename)
 	if(!StringUtil::endsWith(filename, ".dylib"))
 		filename += ".dylib";
 
-	string path = "/usr/local/lib/";//StringUtil::getFilePath(filename);
+	//string path = "/usr/local/lib/";
+	string path = StringUtil::getFilePath(filename);
 	string name = StringUtil::getFileName(filename);
-	if(!StringUtil::startsWith(name, "lib"))
-		name.insert(0, "lib");
+	/*if(!StringUtil::startsWith(name, "lib"))
+		name.insert(0, "lib");*/
 	filename = path + name;
 #endif
 }

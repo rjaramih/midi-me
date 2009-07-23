@@ -29,6 +29,7 @@ namespace MidiMe
 
 		// Midi functions
 		bool open(unsigned int port);
+		bool openVirtual();
 		bool close();
 
 		// CCs
@@ -41,7 +42,7 @@ namespace MidiMe
 
 		// Member variables
 		RtMidiOut *m_pMidiOut;
-		bool m_opened;
+		bool m_opened, m_virtual;
 		unsigned int m_midiPort;
 	};
 }
