@@ -10,7 +10,7 @@ using namespace MidiMe;
 ******************************/
 
 MidiOutput::MidiOutput()
-: m_pMidiOut(0), m_opened(false), m_midiPort(0)
+: m_pMidiOut(0), m_opened(false), m_virtual(false), m_midiPort(0)
 {
 	initMidi();
 }
@@ -46,6 +46,7 @@ bool MidiOutput::open(unsigned int midiPort)
 	try
 	{
 		m_midiPort = midiPort;
+		m_virtual = false;
 		m_pMidiOut->openPort(m_midiPort);
 	}
 	catch(RtError &error)
@@ -54,6 +55,30 @@ bool MidiOutput::open(unsigned int midiPort)
 		return false;
 	}
 
+	m_opened = true;
+	return true;
+}
+
+/// Note: Not available on windows
+bool MidiOutput::openVirtual()
+{
+	if(m_opened)
+	{
+		setLastError("Already opened");
+		return false;
+	}
+	
+	try
+	{
+		m_virtual = true;
+		m_pMidiOut->openVirtualPort("Midi-Me");
+	}
+	catch(RtError &error)
+	{
+		setLastError("Error opening virtual port: " + error.getMessage());
+		return false;
+	}
+	
 	m_opened = true;
 	return true;
 }

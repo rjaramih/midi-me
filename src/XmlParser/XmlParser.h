@@ -4,10 +4,10 @@
 // Includes
 #include "global.h"
 
-#ifndef XML_STATIC
+/*#ifndef XML_STATIC
 	#define XML_STATIC
-#endif
-#include <expat/expat.h>
+#endif*/
+#include <expat.h>
 
 #include <map>
 using std::map;

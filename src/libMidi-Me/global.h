@@ -1,6 +1,17 @@
 #ifndef LIBMIDIME_GLOBAL_H
 #define LIBMIDIME_GLOBAL_H
 
+#include <string>
+using std::string;
+
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::cerr;
+using std::endl;
+
+#include <cassert>
+
 namespace MidiMe
 {
 	// The real number type used for values
@@ -49,7 +60,7 @@ namespace MidiMe
 // Linux, Mac OS, ...
 #else
 	// Window handle
-	typedef size_t HWND;
+	typedef std::size_t HWND;
 
 	// Make compatible with the windows function
 	#define stricmp strcasecmp
@@ -61,18 +72,6 @@ namespace MidiMe
 	#define PLUGIN_API extern "C"
 
 #endif
-
-
-#include <string>
-using std::string;
-
-#include <iostream>
-using std::cout;
-using std::cin;
-using std::cerr;
-using std::endl;
-
-#include <cassert>
 
 
 // Defines
