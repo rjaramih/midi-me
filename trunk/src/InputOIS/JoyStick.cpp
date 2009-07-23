@@ -51,7 +51,8 @@ bool JoyStick::buttonReleased(const OIS::JoyStickEvent &arg, int button)
 
 bool JoyStick::axisMoved(const OIS::JoyStickEvent &arg, int axis)
 {
-	unsigned int id = m_pOISJoyStick->buttons() + axis;
+	//unsigned int id = m_pOISJoyStick->buttons() + axis;
+	unsigned int id = m_pOISJoyStick->getNumberOfComponents(OIS::OIS_Button) + axis;
 	int value = arg.state.mAxes[axis].abs;
 	real mappedValue = (value - OIS::JoyStick::MIN_AXIS) / (real) (OIS::JoyStick::MAX_AXIS - OIS::JoyStick::MIN_AXIS);
 	return sendValue(id, mappedValue);
@@ -72,7 +73,8 @@ bool JoyStick::povMoved(const OIS::JoyStickEvent &arg, int pov)
 void JoyStick::createOutputs()
 {
 	// Buttons
-	short numButtons = m_pOISJoyStick->buttons();
+	//short numButtons = m_pOISJoyStick->buttons();
+	short numButtons = m_pOISJoyStick->getNumberOfComponents(OIS::OIS_Button);
 	for(short i = 0; i < numButtons; ++i)
 	{
 		Output *pOutput = addOutput(i, false);
@@ -80,7 +82,8 @@ void JoyStick::createOutputs()
 	}
 
 	// Axes
-	short numAxes = m_pOISJoyStick->axes();
+	//short numAxes = m_pOISJoyStick->axes();
+	short numAxes = m_pOISJoyStick->getNumberOfComponents(OIS::OIS_Axis);
 	for(short i = 0; i < numAxes; ++i)
 	{
 		Output *pOutput = addOutput(numButtons + i, true);

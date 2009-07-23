@@ -60,7 +60,9 @@ void initPluginSystem(QWidget *pParentWindow)
 	assert(pPluginMgr);
 
 	// Set the plugin path
+#ifdef WIN32
 	pPluginMgr->setSearchPath("Plugins/");
+#endif
 
 	// Get the previously loaded plugins
 	QSettings settings;

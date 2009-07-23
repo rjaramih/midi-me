@@ -94,7 +94,8 @@ bool InputOISPlugin::initOIS()
 	//! @todo Only create joysticks that are used
 	try
 	{
-		int num = m_pInputMgr->numJoySticks();
+		//int num = m_pInputMgr->numJoySticks();
+		int num = m_pInputMgr->getNumberOfDevices(OIS::OISJoyStick);
 
 		for(int i = 0; i < num; ++i)
 		{
