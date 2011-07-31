@@ -1,0 +1,2079 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
+		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
+		64670217101682DA00F69212 /* Chain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646700FC101681FB00F69212 /* Chain.cpp */; };
+		64670218101682DA00F69212 /* Chain.h in Headers */ = {isa = PBXBuildFile; fileRef = 646700FD101681FB00F69212 /* Chain.h */; };
+		64670219101682DA00F69212 /* ChainEnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646700FE101681FB00F69212 /* ChainEnd.cpp */; };
+		6467021A101682DA00F69212 /* ChainEnd.h in Headers */ = {isa = PBXBuildFile; fileRef = 646700FF101681FB00F69212 /* ChainEnd.h */; };
+		6467021B101682DA00F69212 /* ChainStart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670100101681FB00F69212 /* ChainStart.cpp */; };
+		6467021C101682DA00F69212 /* ChainStart.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670101101681FB00F69212 /* ChainStart.h */; };
+		6467021D101682DA00F69212 /* Connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670102101681FB00F69212 /* Connection.cpp */; };
+		6467021E101682DA00F69212 /* Connection.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670103101681FB00F69212 /* Connection.h */; };
+		6467021F101682DA00F69212 /* DeviceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670104101681FB00F69212 /* DeviceManager.cpp */; };
+		64670220101682DA00F69212 /* DeviceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670105101681FB00F69212 /* DeviceManager.h */; };
+		64670221101682DA00F69212 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670106101681FB00F69212 /* global.h */; };
+		64670222101682DA00F69212 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670107101681FB00F69212 /* Input.cpp */; };
+		64670223101682DA00F69212 /* Input.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670108101681FB00F69212 /* Input.h */; };
+		64670224101682DA00F69212 /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670109101681FB00F69212 /* InputDevice.cpp */; };
+		64670225101682DA00F69212 /* InputDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467010A101681FB00F69212 /* InputDevice.h */; };
+		64670226101682DA00F69212 /* LastError.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467010B101681FB00F69212 /* LastError.h */; };
+		64670227101682DA00F69212 /* libMidi-Me_doc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467010C101681FB00F69212 /* libMidi-Me_doc.h */; };
+		64670228101682DA00F69212 /* Midi-MeProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467010D101681FB00F69212 /* Midi-MeProperties.cpp */; };
+		64670229101682DA00F69212 /* Midi-MeProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467010E101681FB00F69212 /* Midi-MeProperties.h */; };
+		6467022A101682DA00F69212 /* MidiOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467010F101681FB00F69212 /* MidiOutput.cpp */; };
+		6467022B101682DA00F69212 /* MidiOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670110101681FB00F69212 /* MidiOutput.h */; };
+		6467022C101682DA00F69212 /* Output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670111101681FB00F69212 /* Output.cpp */; };
+		6467022D101682DA00F69212 /* Output.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670112101681FB00F69212 /* Output.h */; };
+		6467022E101682DA00F69212 /* Processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670113101681FB00F69212 /* Processor.cpp */; };
+		6467022F101682DA00F69212 /* Processor.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670114101681FB00F69212 /* Processor.h */; };
+		64670230101682DA00F69212 /* ProcessorFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670115101681FB00F69212 /* ProcessorFactory.cpp */; };
+		64670231101682DA00F69212 /* ProcessorFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670116101681FB00F69212 /* ProcessorFactory.h */; };
+		64670232101682DA00F69212 /* Serializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670117101681FB00F69212 /* Serializer.cpp */; };
+		64670233101682DA00F69212 /* Serializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670118101681FB00F69212 /* Serializer.h */; };
+		64670234101682DA00F69212 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670119101681FB00F69212 /* Timer.cpp */; };
+		64670235101682DA00F69212 /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467011A101681FB00F69212 /* Timer.h */; };
+		6467024F1016835600F69212 /* FastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467012B101681FB00F69212 /* FastDelegate.h */; };
+		646702501016835600F69212 /* FastDelegateBind.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467012C101681FB00F69212 /* FastDelegateBind.h */; };
+		646702511016835600F69212 /* GenericProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467012D101681FB00F69212 /* GenericProperty.h */; };
+		646702521016835600F69212 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467012E101681FB00F69212 /* global.h */; };
+		646702531016835600F69212 /* Property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467012F101681FB00F69212 /* Property.cpp */; };
+		646702541016835600F69212 /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670130101681FB00F69212 /* Property.h */; };
+		646702551016835600F69212 /* PropertyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670131101681FB00F69212 /* PropertyCollection.cpp */; };
+		646702561016835600F69212 /* PropertyCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670132101681FB00F69212 /* PropertyCollection.h */; };
+		646702571016835600F69212 /* StandardProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670133101681FB00F69212 /* StandardProperties.cpp */; };
+		646702581016835600F69212 /* StandardProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670134101681FB00F69212 /* StandardProperties.h */; };
+		646702591016835600F69212 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670135101681FB00F69212 /* StringUtil.cpp */; };
+		6467025A1016835600F69212 /* StringUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670136101681FB00F69212 /* StringUtil.h */; };
+		646702941016882B00F69212 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467015F101681FB00F69212 /* global.h */; };
+		646702951016882B00F69212 /* SimpleDomParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670160101681FB00F69212 /* SimpleDomParser.cpp */; };
+		646702961016882B00F69212 /* SimpleDomParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670161101681FB00F69212 /* SimpleDomParser.h */; };
+		646702971016882B00F69212 /* XmlElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670162101681FB00F69212 /* XmlElement.cpp */; };
+		646702981016882B00F69212 /* XmlElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670163101681FB00F69212 /* XmlElement.h */; };
+		646702991016882B00F69212 /* XmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670164101681FB00F69212 /* XmlParser.cpp */; };
+		6467029A1016882B00F69212 /* XmlParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670165101681FB00F69212 /* XmlParser.h */; };
+		6467038F101689F300F69212 /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467038E101689F300F69212 /* libexpat.dylib */; };
+		6467039810168A2D00F69212 /* Properties.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467024C1016834500F69212 /* Properties.dylib */; };
+		6467039910168A2D00F69212 /* XmlParser.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467028F1016879F00F69212 /* XmlParser.dylib */; };
+		646703B410168A9000F69212 /* RtError.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467014F101681FB00F69212 /* RtError.h */; };
+		646703B510168A9000F69212 /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670150101681FB00F69212 /* RtMidi.cpp */; };
+		646703B610168A9000F69212 /* RtMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670151101681FB00F69212 /* RtMidi.h */; };
+		646703BF10168AC500F69212 /* libRtMidi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703B110168A7500F69212 /* libRtMidi.a */; };
+		646703D610168B8400F69212 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703D510168B8400F69212 /* CoreAudio.framework */; };
+		646703D810168B8400F69212 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703D710168B8400F69212 /* CoreFoundation.framework */; };
+		646703DA10168B8400F69212 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703D910168B8400F69212 /* CoreMIDI.framework */; };
+		646703E410168BB500F69212 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703D510168B8400F69212 /* CoreAudio.framework */; };
+		646703E510168BB500F69212 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703D710168B8400F69212 /* CoreFoundation.framework */; };
+		646703E610168BB500F69212 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703D910168B8400F69212 /* CoreMIDI.framework */; };
+		646703EF10168C2C00F69212 /* DllManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467011C101681FB00F69212 /* DllManager.cpp */; };
+		646703F010168C2C00F69212 /* DllManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467011D101681FB00F69212 /* DllManager.h */; };
+		646703F110168C2C00F69212 /* DynamicLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467011E101681FB00F69212 /* DynamicLibrary.cpp */; };
+		646703F210168C2C00F69212 /* DynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467011F101681FB00F69212 /* DynamicLibrary.h */; };
+		646703F310168C2C00F69212 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670120101681FB00F69212 /* global.h */; };
+		646703F410168C2C00F69212 /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670121101681FB00F69212 /* Plugin.cpp */; };
+		646703F510168C2C00F69212 /* Plugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670122101681FB00F69212 /* Plugin.h */; };
+		646703F610168C2C00F69212 /* PluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670123101681FB00F69212 /* PluginManager.cpp */; };
+		646703F710168C2C00F69212 /* PluginManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670124101681FB00F69212 /* PluginManager.h */; };
+		646703F810168C2C00F69212 /* PluginSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670125101681FB00F69212 /* PluginSystem.cpp */; };
+		646703F910168C2C00F69212 /* PluginSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670126101681FB00F69212 /* PluginSystem.h */; };
+		646703FA10168C2C00F69212 /* PluginSystem_doc.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670127101681FB00F69212 /* PluginSystem_doc.h */; };
+		646703FB10168C2C00F69212 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670128101681FB00F69212 /* StringUtil.cpp */; };
+		646703FC10168C2C00F69212 /* StringUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670129101681FB00F69212 /* StringUtil.h */; };
+		6467040D10168CFD00F69212 /* PluginSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703EC10168C1C00F69212 /* PluginSystem.dylib */; };
+		6467040E10168CFD00F69212 /* libMidi-Me.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64670213101682BB00F69212 /* libMidi-Me.dylib */; };
+		6467041210168D1D00F69212 /* Delay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670153101681FB00F69212 /* Delay.cpp */; };
+		6467041310168D1D00F69212 /* Delay.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670154101681FB00F69212 /* Delay.h */; };
+		6467041410168D1D00F69212 /* Duplicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670155101681FB00F69212 /* Duplicator.cpp */; };
+		6467041510168D1D00F69212 /* Duplicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670156101681FB00F69212 /* Duplicator.h */; };
+		6467041610168D1D00F69212 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670157101681FB00F69212 /* global.h */; };
+		6467041710168D1D00F69212 /* Inverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670158101681FB00F69212 /* Inverter.cpp */; };
+		6467041810168D1D00F69212 /* Inverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 64670159101681FB00F69212 /* Inverter.h */; };
+		6467041910168D1D00F69212 /* Splitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467015A101681FB00F69212 /* Splitter.cpp */; };
+		6467041A10168D1D00F69212 /* Splitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467015B101681FB00F69212 /* Splitter.h */; };
+		6467041B10168D1D00F69212 /* StandardProcessorsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467015C101681FB00F69212 /* StandardProcessorsPlugin.cpp */; };
+		6467041C10168D1D00F69212 /* StandardProcessorsPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 6467015D101681FB00F69212 /* StandardProcessorsPlugin.h */; };
+		6467041F10168D4D00F69212 /* Properties.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467024C1016834500F69212 /* Properties.dylib */; };
+		6467043F1016912200F69212 /* PluginSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703EC10168C1C00F69212 /* PluginSystem.dylib */; };
+		646704401016912200F69212 /* libMidi-Me.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64670213101682BB00F69212 /* libMidi-Me.dylib */; };
+		646704D31017100900F69212 /* InputItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701E11016821300F69212 /* InputItem.cpp */; };
+		646704D41017100900F69212 /* ChainEndItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701D21016821300F69212 /* ChainEndItem.cpp */; };
+		646704D51017100900F69212 /* MainWindowBase.ui in Resources */ = {isa = PBXBuildFile; fileRef = 646701E61016821300F69212 /* MainWindowBase.ui */; };
+		646704D61017100900F69212 /* OutputItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701E81016821300F69212 /* OutputItem.cpp */; };
+		646704D71017100900F69212 /* PluginWidgetBase.ui in Resources */ = {isa = PBXBuildFile; fileRef = 646701EC1016821300F69212 /* PluginWidgetBase.ui */; };
+		646704D81017100900F69212 /* PluginWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701EA1016821300F69212 /* PluginWidget.cpp */; };
+		646704D91017100900F69212 /* ProcessorItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701ED1016821300F69212 /* ProcessorItem.cpp */; };
+		646704DA1017100900F69212 /* ChainWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701D81016821300F69212 /* ChainWidget.cpp */; };
+		646704DB1017100900F69212 /* ChainStartItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701D61016821300F69212 /* ChainStartItem.cpp */; };
+		646704DC1017100900F69212 /* ChainItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701D41016821300F69212 /* ChainItem.cpp */; };
+		646704DD1017100900F69212 /* PropertyWidgetInputValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701EF1016821300F69212 /* PropertyWidgetInputValue.cpp */; };
+		646704DE1017100900F69212 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701E41016821300F69212 /* MainWindow.cpp */; };
+		646704DF1017100900F69212 /* ConnectionItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701DA1016821300F69212 /* ConnectionItem.cpp */; };
+		646704E01017100900F69212 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701E31016821300F69212 /* main.cpp */; };
+		646704E11017100900F69212 /* InputDeviceWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646701DF1016821300F69212 /* InputDeviceWidget.cpp */; };
+		646704EC101710DD00F69212 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646704EB101710DD00F69212 /* QtCore.framework */; };
+		646704EE101710DD00F69212 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646704ED101710DD00F69212 /* QtGui.framework */; };
+		646705241017158800F69212 /* PluginSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703EC10168C1C00F69212 /* PluginSystem.dylib */; };
+		646705251017158800F69212 /* libMidi-Me.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64670213101682BB00F69212 /* libMidi-Me.dylib */; };
+		64670531101715C100F69212 /* Properties.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467024C1016834500F69212 /* Properties.dylib */; };
+		6467054A101716DD00F69212 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646704EB101710DD00F69212 /* QtCore.framework */; };
+		6467054B101716DD00F69212 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646704ED101710DD00F69212 /* QtGui.framework */; };
+		646705B61017DCC600F69212 /* PropertyWidgetBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467013D101681FB00F69212 /* PropertyWidgetBool.cpp */; };
+		646705B71017DCC600F69212 /* PropertiesEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670139101681FB00F69212 /* PropertiesEditor.cpp */; };
+		646705B81017DCC600F69212 /* PropertyWidgetReal.h in Sources */ = {isa = PBXBuildFile; fileRef = 64670148101681FB00F69212 /* PropertyWidgetReal.h */; };
+		646705B91017DCC600F69212 /* PropertyWidget.h in Sources */ = {isa = PBXBuildFile; fileRef = 6467013C101681FB00F69212 /* PropertyWidget.h */; };
+		646705BA1017DCC600F69212 /* PropertyWidgetCompound.h in Sources */ = {isa = PBXBuildFile; fileRef = 64670140101681FB00F69212 /* PropertyWidgetCompound.h */; };
+		646705BB1017DCC600F69212 /* PropertyWidgetReal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670147101681FB00F69212 /* PropertyWidgetReal.cpp */; };
+		646705BC1017DCC600F69212 /* PropertyWidgetFactory.h in Sources */ = {isa = PBXBuildFile; fileRef = 64670144101681FB00F69212 /* PropertyWidgetFactory.h */; };
+		646705BD1017DCC600F69212 /* PropertyWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467013B101681FB00F69212 /* PropertyWidget.cpp */; };
+		646705BE1017DCC600F69212 /* PropertyWidgetCompound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467013F101681FB00F69212 /* PropertyWidgetCompound.cpp */; };
+		646705BF1017DCC600F69212 /* PropertyWidgetUInt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6467014B101681FB00F69212 /* PropertyWidgetUInt.cpp */; };
+		646705C01017DCC600F69212 /* global.h in Sources */ = {isa = PBXBuildFile; fileRef = 64670138101681FB00F69212 /* global.h */; };
+		646705C11017DCC600F69212 /* PropertyWidgetBool.h in Sources */ = {isa = PBXBuildFile; fileRef = 6467013E101681FB00F69212 /* PropertyWidgetBool.h */; };
+		646705C21017DCC600F69212 /* PropertyWidgetInt.h in Sources */ = {isa = PBXBuildFile; fileRef = 64670146101681FB00F69212 /* PropertyWidgetInt.h */; };
+		646705C31017DCC600F69212 /* PropertyWidgetInt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670145101681FB00F69212 /* PropertyWidgetInt.cpp */; };
+		646705C41017DCC600F69212 /* PropertyWidgetUInt.h in Sources */ = {isa = PBXBuildFile; fileRef = 6467014C101681FB00F69212 /* PropertyWidgetUInt.h */; };
+		646705C61017DCC600F69212 /* PropertyWidgetCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670141101681FB00F69212 /* PropertyWidgetCreator.cpp */; };
+		646705C71017DCC600F69212 /* PropertyWidgetCreator.h in Sources */ = {isa = PBXBuildFile; fileRef = 64670142101681FB00F69212 /* PropertyWidgetCreator.h */; };
+		646705C81017DCC600F69212 /* PropertyWidgetFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670143101681FB00F69212 /* PropertyWidgetFactory.cpp */; };
+		646705C91017DCC600F69212 /* PropertyWidgetString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64670149101681FB00F69212 /* PropertyWidgetString.cpp */; };
+		646705CA1017DCC600F69212 /* PropertyWidgetString.h in Sources */ = {isa = PBXBuildFile; fileRef = 6467014A101681FB00F69212 /* PropertyWidgetString.h */; };
+		646706E51017E53900F69212 /* PropertiesEditor.h in Sources */ = {isa = PBXBuildFile; fileRef = 646706E41017E52700F69212 /* PropertiesEditor.h */; };
+		646706F11017E8FA00F69212 /* InputItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701E21016821300F69212 /* InputItem.h */; };
+		646706F21017E8FA00F69212 /* InputDeviceWidget.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701E01016821300F69212 /* InputDeviceWidget.h */; };
+		646706F31017E8FA00F69212 /* PluginWidget.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701EB1016821300F69212 /* PluginWidget.h */; };
+		646706F41017E8FA00F69212 /* ChainWidget.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701D91016821300F69212 /* ChainWidget.h */; };
+		646706F51017E8FA00F69212 /* ChainEndItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701D31016821300F69212 /* ChainEndItem.h */; };
+		646706F61017E8FA00F69212 /* ConnectionItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701DB1016821300F69212 /* ConnectionItem.h */; };
+		646706F71017E8FA00F69212 /* Midi-Me_doc.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701E71016821300F69212 /* Midi-Me_doc.h */; };
+		646706F81017E8FA00F69212 /* DragData.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701DD1016821300F69212 /* DragData.h */; };
+		646706F91017E8FA00F69212 /* ChainStartItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701D71016821300F69212 /* ChainStartItem.h */; };
+		646706FA1017E8FA00F69212 /* ConverterManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701DC1016821300F69212 /* ConverterManager.h */; };
+		646706FB1017E8FA00F69212 /* global.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701DE1016821300F69212 /* global.h */; };
+		646706FC1017E8FA00F69212 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701E51016821300F69212 /* MainWindow.h */; };
+		646706FD1017E8FA00F69212 /* OutputItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701E91016821300F69212 /* OutputItem.h */; };
+		646706FE1017E8FA00F69212 /* ProcessorItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701EE1016821300F69212 /* ProcessorItem.h */; };
+		646706FF1017E8FA00F69212 /* PropertyWidgetInputValue.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701F01016821300F69212 /* PropertyWidgetInputValue.h */; };
+		646707001017E8FA00F69212 /* ChainItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 646701D51016821300F69212 /* ChainItem.h */; };
+		646707061017E94300F69212 /* PropertiesEditor.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467052C101715B000F69212 /* PropertiesEditor.dylib */; };
+		646707B71017EC3700F69212 /* PluginSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 646703EC10168C1C00F69212 /* PluginSystem.dylib */; };
+		646707B81017EC3700F69212 /* Properties.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6467024C1016834500F69212 /* Properties.dylib */; };
+		646707B91017EC3700F69212 /* libMidi-Me.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64670213101682BB00F69212 /* libMidi-Me.dylib */; };
+		646707BC1017EC5800F69212 /* OIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646707BB1017EC5800F69212 /* OIS.framework */; };
+		646707C11017EC7600F69212 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 646700F6101681FB00F69212 /* global.h */; };
+		646707C21017EC7600F69212 /* InputOISPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646700F7101681FB00F69212 /* InputOISPlugin.cpp */; };
+		646707C31017EC7600F69212 /* InputOISPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 646700F8101681FB00F69212 /* InputOISPlugin.h */; };
+		646707C41017EC7600F69212 /* JoyStick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646700F9101681FB00F69212 /* JoyStick.cpp */; };
+		646707C51017EC7600F69212 /* JoyStick.h in Headers */ = {isa = PBXBuildFile; fileRef = 646700FA101681FB00F69212 /* JoyStick.h */; };
+		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		8D15AC310486D014006FF6A4 /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* MyDocument.mm */; settings = {ATTRIBUTES = (); }; };
+		8D15AC320486D014006FF6A4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.mm */; settings = {ATTRIBUTES = (); }; };
+		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		6467050F101711B100F69212 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ui";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE).h",
+			);
+			script = "uic -o ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.h ${INPUT_FILE_PATH}";
+		};
+		6467054D101716FC00F69212 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ui";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE).h",
+			);
+			script = "uic -o ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.h ${INPUT_FILE_PATH}";
+		};
+		6467058D1017852300F69212 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.h";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE)_moc.cpp",
+			);
+			script = "if grep --quiet Q_OBJECT ${INPUT_FILE_PATH} ; then echo \"Moc'ing ${INPUT_FILE_BASE}.h\" ; moc -o ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}_moc.cpp ${INPUT_FILE_PATH} ; else echo \"Not moc'ing ${INPUT_FILE_BASE}.h\" ; touch ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}_moc.cpp ; fi";
+		};
+		6467059D1017864700F69212 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.h";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE)_moc.cpp",
+			);
+			script = "if grep --quiet Q_OBJECT ${INPUT_FILE_PATH} ; then echo \"Moc'ing ${INPUT_FILE_BASE}.h\" ; moc -o ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}_moc.cpp ${INPUT_FILE_PATH} ; else echo \"Not moc'ing ${INPUT_FILE_BASE}.h\" ; touch ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}_moc.cpp ; fi";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		6467025D1016837E00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6467024B1016834500F69212;
+			remoteInfo = Properties;
+		};
+		6467039410168A1700F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6467028E1016879F00F69212;
+			remoteInfo = XmlParser;
+		};
+		646703C010168AC900F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 646703B010168A7500F69212;
+			remoteInfo = RtMidi;
+		};
+		6467040810168CC400F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 646703EB10168C1C00F69212;
+			remoteInfo = PluginSystem;
+		};
+		6467040A10168CCD00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64670212101682BB00F69212;
+			remoteInfo = "libMidi-Me";
+		};
+		6467042010168D5000F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6467024B1016834500F69212;
+			remoteInfo = Properties;
+		};
+		6467043B101690FF00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 646703EB10168C1C00F69212;
+			remoteInfo = PluginSystem;
+		};
+		6467043D1016911600F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64670212101682BB00F69212;
+			remoteInfo = "libMidi-Me";
+		};
+		646705201017157400F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64670212101682BB00F69212;
+			remoteInfo = "libMidi-Me";
+		};
+		646705221017157400F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 646703EB10168C1C00F69212;
+			remoteInfo = PluginSystem;
+		};
+		6467052F101715BD00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6467024B1016834500F69212;
+			remoteInfo = Properties;
+		};
+		646707041017E93600F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6467052B101715B000F69212;
+			remoteInfo = PropertiesEditor;
+		};
+		646707B11017EC2D00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 646703EB10168C1C00F69212;
+			remoteInfo = PluginSystem;
+		};
+		646707B31017EC2D00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64670212101682BB00F69212;
+			remoteInfo = "libMidi-Me";
+		};
+		646707B51017EC2D00F69212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6467024B1016834500F69212;
+			remoteInfo = Properties;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2A37F4ACFDCFA73011CA2CEA /* MyDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyDocument.mm; sourceTree = "<group>"; };
+		2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
+		2A37F4B0FDCFA73011CA2CEA /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32DBCF750370BD2300C91783 /* midi-me_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "midi-me_Prefix.pch"; sourceTree = "<group>"; };
+		646700EF101681A300F69212 /* Midi-Me-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Midi-Me-Info.plist"; sourceTree = "<group>"; };
+		646700F4101681FB00F69212 /* ButtonConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonConverter.cpp; sourceTree = "<group>"; };
+		646700F5101681FB00F69212 /* ButtonConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonConverter.h; sourceTree = "<group>"; };
+		646700F6101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		646700F7101681FB00F69212 /* InputOISPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputOISPlugin.cpp; sourceTree = "<group>"; };
+		646700F8101681FB00F69212 /* InputOISPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputOISPlugin.h; sourceTree = "<group>"; };
+		646700F9101681FB00F69212 /* JoyStick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JoyStick.cpp; sourceTree = "<group>"; };
+		646700FA101681FB00F69212 /* JoyStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoyStick.h; sourceTree = "<group>"; };
+		646700FC101681FB00F69212 /* Chain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chain.cpp; sourceTree = "<group>"; };
+		646700FD101681FB00F69212 /* Chain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chain.h; sourceTree = "<group>"; };
+		646700FE101681FB00F69212 /* ChainEnd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainEnd.cpp; sourceTree = "<group>"; };
+		646700FF101681FB00F69212 /* ChainEnd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainEnd.h; sourceTree = "<group>"; };
+		64670100101681FB00F69212 /* ChainStart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainStart.cpp; sourceTree = "<group>"; };
+		64670101101681FB00F69212 /* ChainStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainStart.h; sourceTree = "<group>"; };
+		64670102101681FB00F69212 /* Connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Connection.cpp; sourceTree = "<group>"; };
+		64670103101681FB00F69212 /* Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connection.h; sourceTree = "<group>"; };
+		64670104101681FB00F69212 /* DeviceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceManager.cpp; sourceTree = "<group>"; };
+		64670105101681FB00F69212 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
+		64670106101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		64670107101681FB00F69212 /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		64670108101681FB00F69212 /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
+		64670109101681FB00F69212 /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputDevice.cpp; sourceTree = "<group>"; };
+		6467010A101681FB00F69212 /* InputDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputDevice.h; sourceTree = "<group>"; };
+		6467010B101681FB00F69212 /* LastError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastError.h; sourceTree = "<group>"; };
+		6467010C101681FB00F69212 /* libMidi-Me_doc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libMidi-Me_doc.h"; sourceTree = "<group>"; };
+		6467010D101681FB00F69212 /* Midi-MeProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Midi-MeProperties.cpp"; sourceTree = "<group>"; };
+		6467010E101681FB00F69212 /* Midi-MeProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Midi-MeProperties.h"; sourceTree = "<group>"; };
+		6467010F101681FB00F69212 /* MidiOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MidiOutput.cpp; sourceTree = "<group>"; };
+		64670110101681FB00F69212 /* MidiOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiOutput.h; sourceTree = "<group>"; };
+		64670111101681FB00F69212 /* Output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Output.cpp; sourceTree = "<group>"; };
+		64670112101681FB00F69212 /* Output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Output.h; sourceTree = "<group>"; };
+		64670113101681FB00F69212 /* Processor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Processor.cpp; sourceTree = "<group>"; };
+		64670114101681FB00F69212 /* Processor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processor.h; sourceTree = "<group>"; };
+		64670115101681FB00F69212 /* ProcessorFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorFactory.cpp; sourceTree = "<group>"; };
+		64670116101681FB00F69212 /* ProcessorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessorFactory.h; sourceTree = "<group>"; };
+		64670117101681FB00F69212 /* Serializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Serializer.cpp; sourceTree = "<group>"; };
+		64670118101681FB00F69212 /* Serializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Serializer.h; sourceTree = "<group>"; };
+		64670119101681FB00F69212 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
+		6467011A101681FB00F69212 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
+		6467011C101681FB00F69212 /* DllManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DllManager.cpp; sourceTree = "<group>"; };
+		6467011D101681FB00F69212 /* DllManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DllManager.h; sourceTree = "<group>"; };
+		6467011E101681FB00F69212 /* DynamicLibrary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicLibrary.cpp; sourceTree = "<group>"; };
+		6467011F101681FB00F69212 /* DynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicLibrary.h; sourceTree = "<group>"; };
+		64670120101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		64670121101681FB00F69212 /* Plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plugin.cpp; sourceTree = "<group>"; };
+		64670122101681FB00F69212 /* Plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plugin.h; sourceTree = "<group>"; };
+		64670123101681FB00F69212 /* PluginManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PluginManager.cpp; sourceTree = "<group>"; };
+		64670124101681FB00F69212 /* PluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginManager.h; sourceTree = "<group>"; };
+		64670125101681FB00F69212 /* PluginSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PluginSystem.cpp; sourceTree = "<group>"; };
+		64670126101681FB00F69212 /* PluginSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginSystem.h; sourceTree = "<group>"; };
+		64670127101681FB00F69212 /* PluginSystem_doc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginSystem_doc.h; sourceTree = "<group>"; };
+		64670128101681FB00F69212 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtil.cpp; sourceTree = "<group>"; };
+		64670129101681FB00F69212 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
+		6467012B101681FB00F69212 /* FastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastDelegate.h; sourceTree = "<group>"; };
+		6467012C101681FB00F69212 /* FastDelegateBind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastDelegateBind.h; sourceTree = "<group>"; };
+		6467012D101681FB00F69212 /* GenericProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericProperty.h; sourceTree = "<group>"; };
+		6467012E101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		6467012F101681FB00F69212 /* Property.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Property.cpp; sourceTree = "<group>"; };
+		64670130101681FB00F69212 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
+		64670131101681FB00F69212 /* PropertyCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyCollection.cpp; sourceTree = "<group>"; };
+		64670132101681FB00F69212 /* PropertyCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyCollection.h; sourceTree = "<group>"; };
+		64670133101681FB00F69212 /* StandardProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StandardProperties.cpp; sourceTree = "<group>"; };
+		64670134101681FB00F69212 /* StandardProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardProperties.h; sourceTree = "<group>"; };
+		64670135101681FB00F69212 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtil.cpp; sourceTree = "<group>"; };
+		64670136101681FB00F69212 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
+		64670138101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		64670139101681FB00F69212 /* PropertiesEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertiesEditor.cpp; sourceTree = "<group>"; };
+		6467013B101681FB00F69212 /* PropertyWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidget.cpp; sourceTree = "<group>"; };
+		6467013C101681FB00F69212 /* PropertyWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidget.h; sourceTree = "<group>"; };
+		6467013D101681FB00F69212 /* PropertyWidgetBool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetBool.cpp; sourceTree = "<group>"; };
+		6467013E101681FB00F69212 /* PropertyWidgetBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetBool.h; sourceTree = "<group>"; };
+		6467013F101681FB00F69212 /* PropertyWidgetCompound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetCompound.cpp; sourceTree = "<group>"; };
+		64670140101681FB00F69212 /* PropertyWidgetCompound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetCompound.h; sourceTree = "<group>"; };
+		64670141101681FB00F69212 /* PropertyWidgetCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetCreator.cpp; sourceTree = "<group>"; };
+		64670142101681FB00F69212 /* PropertyWidgetCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetCreator.h; sourceTree = "<group>"; };
+		64670143101681FB00F69212 /* PropertyWidgetFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetFactory.cpp; sourceTree = "<group>"; };
+		64670144101681FB00F69212 /* PropertyWidgetFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetFactory.h; sourceTree = "<group>"; };
+		64670145101681FB00F69212 /* PropertyWidgetInt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetInt.cpp; sourceTree = "<group>"; };
+		64670146101681FB00F69212 /* PropertyWidgetInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetInt.h; sourceTree = "<group>"; };
+		64670147101681FB00F69212 /* PropertyWidgetReal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetReal.cpp; sourceTree = "<group>"; };
+		64670148101681FB00F69212 /* PropertyWidgetReal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetReal.h; sourceTree = "<group>"; };
+		64670149101681FB00F69212 /* PropertyWidgetString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetString.cpp; sourceTree = "<group>"; };
+		6467014A101681FB00F69212 /* PropertyWidgetString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetString.h; sourceTree = "<group>"; };
+		6467014B101681FB00F69212 /* PropertyWidgetUInt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetUInt.cpp; sourceTree = "<group>"; };
+		6467014C101681FB00F69212 /* PropertyWidgetUInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetUInt.h; sourceTree = "<group>"; };
+		6467014E101681FB00F69212 /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
+		6467014F101681FB00F69212 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtError.h; sourceTree = "<group>"; };
+		64670150101681FB00F69212 /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtMidi.cpp; sourceTree = "<group>"; };
+		64670151101681FB00F69212 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtMidi.h; sourceTree = "<group>"; };
+		64670153101681FB00F69212 /* Delay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Delay.cpp; sourceTree = "<group>"; };
+		64670154101681FB00F69212 /* Delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delay.h; sourceTree = "<group>"; };
+		64670155101681FB00F69212 /* Duplicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Duplicator.cpp; sourceTree = "<group>"; };
+		64670156101681FB00F69212 /* Duplicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Duplicator.h; sourceTree = "<group>"; };
+		64670157101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		64670158101681FB00F69212 /* Inverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Inverter.cpp; sourceTree = "<group>"; };
+		64670159101681FB00F69212 /* Inverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Inverter.h; sourceTree = "<group>"; };
+		6467015A101681FB00F69212 /* Splitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Splitter.cpp; sourceTree = "<group>"; };
+		6467015B101681FB00F69212 /* Splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Splitter.h; sourceTree = "<group>"; };
+		6467015C101681FB00F69212 /* StandardProcessorsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StandardProcessorsPlugin.cpp; sourceTree = "<group>"; };
+		6467015D101681FB00F69212 /* StandardProcessorsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardProcessorsPlugin.h; sourceTree = "<group>"; };
+		6467015F101681FB00F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		64670160101681FB00F69212 /* SimpleDomParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleDomParser.cpp; sourceTree = "<group>"; };
+		64670161101681FB00F69212 /* SimpleDomParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleDomParser.h; sourceTree = "<group>"; };
+		64670162101681FB00F69212 /* XmlElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlElement.cpp; sourceTree = "<group>"; };
+		64670163101681FB00F69212 /* XmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlElement.h; sourceTree = "<group>"; };
+		64670164101681FB00F69212 /* XmlParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlParser.cpp; sourceTree = "<group>"; };
+		64670165101681FB00F69212 /* XmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlParser.h; sourceTree = "<group>"; };
+		646701D21016821300F69212 /* ChainEndItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainEndItem.cpp; sourceTree = "<group>"; };
+		646701D31016821300F69212 /* ChainEndItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainEndItem.h; sourceTree = "<group>"; };
+		646701D41016821300F69212 /* ChainItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainItem.cpp; sourceTree = "<group>"; };
+		646701D51016821300F69212 /* ChainItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainItem.h; sourceTree = "<group>"; };
+		646701D61016821300F69212 /* ChainStartItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainStartItem.cpp; sourceTree = "<group>"; };
+		646701D71016821300F69212 /* ChainStartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainStartItem.h; sourceTree = "<group>"; };
+		646701D81016821300F69212 /* ChainWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainWidget.cpp; sourceTree = "<group>"; };
+		646701D91016821300F69212 /* ChainWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainWidget.h; sourceTree = "<group>"; };
+		646701DA1016821300F69212 /* ConnectionItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionItem.cpp; sourceTree = "<group>"; };
+		646701DB1016821300F69212 /* ConnectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionItem.h; sourceTree = "<group>"; };
+		646701DC1016821300F69212 /* ConverterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConverterManager.h; sourceTree = "<group>"; };
+		646701DD1016821300F69212 /* DragData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragData.h; sourceTree = "<group>"; };
+		646701DE1016821300F69212 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		646701DF1016821300F69212 /* InputDeviceWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputDeviceWidget.cpp; sourceTree = "<group>"; };
+		646701E01016821300F69212 /* InputDeviceWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputDeviceWidget.h; sourceTree = "<group>"; };
+		646701E11016821300F69212 /* InputItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputItem.cpp; sourceTree = "<group>"; };
+		646701E21016821300F69212 /* InputItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputItem.h; sourceTree = "<group>"; };
+		646701E31016821300F69212 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		646701E41016821300F69212 /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainWindow.cpp; sourceTree = "<group>"; };
+		646701E51016821300F69212 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
+		646701E61016821300F69212 /* MainWindowBase.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MainWindowBase.ui; sourceTree = "<group>"; };
+		646701E71016821300F69212 /* Midi-Me_doc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Midi-Me_doc.h"; sourceTree = "<group>"; };
+		646701E81016821300F69212 /* OutputItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputItem.cpp; sourceTree = "<group>"; };
+		646701E91016821300F69212 /* OutputItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputItem.h; sourceTree = "<group>"; };
+		646701EA1016821300F69212 /* PluginWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PluginWidget.cpp; sourceTree = "<group>"; };
+		646701EB1016821300F69212 /* PluginWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginWidget.h; sourceTree = "<group>"; };
+		646701EC1016821300F69212 /* PluginWidgetBase.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PluginWidgetBase.ui; sourceTree = "<group>"; };
+		646701ED1016821300F69212 /* ProcessorItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorItem.cpp; sourceTree = "<group>"; };
+		646701EE1016821300F69212 /* ProcessorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessorItem.h; sourceTree = "<group>"; };
+		646701EF1016821300F69212 /* PropertyWidgetInputValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWidgetInputValue.cpp; sourceTree = "<group>"; };
+		646701F01016821300F69212 /* PropertyWidgetInputValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyWidgetInputValue.h; sourceTree = "<group>"; };
+		64670213101682BB00F69212 /* libMidi-Me.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libMidi-Me.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6467024C1016834500F69212 /* Properties.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Properties.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		646702681016845D00F69212 /* CommonBuildSettings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CommonBuildSettings.xcconfig; sourceTree = "<group>"; };
+		6467028F1016879F00F69212 /* XmlParser.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = XmlParser.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		6467038E101689F300F69212 /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
+		646703B110168A7500F69212 /* libRtMidi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRtMidi.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		646703D510168B8400F69212 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		646703D710168B8400F69212 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		646703D910168B8400F69212 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		646703EC10168C1C00F69212 /* PluginSystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = PluginSystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		6467040510168CAF00F69212 /* StandardProcessors.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = StandardProcessors.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		646704CD10170F7C00F69212 /* Midi-Me-Qt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Midi-Me-Qt.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		646704CF10170F7C00F69212 /* Midi-Me-Qt-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Midi-Me-Qt-Info.plist"; sourceTree = "<group>"; };
+		646704EB101710DD00F69212 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Library/Frameworks/QtCore.framework; sourceTree = SDKROOT; };
+		646704ED101710DD00F69212 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
+		6467052C101715B000F69212 /* PropertiesEditor.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = PropertiesEditor.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		646706E41017E52700F69212 /* PropertiesEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesEditor.h; sourceTree = "<group>"; };
+		646707AE1017EC1900F69212 /* InputOIS.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = InputOIS.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		646707BB1017EC5800F69212 /* OIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OIS.framework; path = Library/Frameworks/OIS.framework; sourceTree = SDKROOT; };
+		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D15AC370486D014006FF6A4 /* midi-me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "midi-me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		64670211101682BB00F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6467039810168A2D00F69212 /* Properties.dylib in Frameworks */,
+				6467039910168A2D00F69212 /* XmlParser.dylib in Frameworks */,
+				646703BF10168AC500F69212 /* libRtMidi.a in Frameworks */,
+				646703E410168BB500F69212 /* CoreAudio.framework in Frameworks */,
+				646703E510168BB500F69212 /* CoreFoundation.framework in Frameworks */,
+				646703E610168BB500F69212 /* CoreMIDI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467024A1016834500F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467028D1016879F00F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6467038F101689F300F69212 /* libexpat.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646703AF10168A7500F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646703D610168B8400F69212 /* CoreAudio.framework in Frameworks */,
+				646703D810168B8400F69212 /* CoreFoundation.framework in Frameworks */,
+				646703DA10168B8400F69212 /* CoreMIDI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646703EA10168C1C00F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467040310168CAF00F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6467040D10168CFD00F69212 /* PluginSystem.dylib in Frameworks */,
+				6467040E10168CFD00F69212 /* libMidi-Me.dylib in Frameworks */,
+				6467041F10168D4D00F69212 /* Properties.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646704CB10170F7C00F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646704EC101710DD00F69212 /* QtCore.framework in Frameworks */,
+				646704EE101710DD00F69212 /* QtGui.framework in Frameworks */,
+				646705241017158800F69212 /* PluginSystem.dylib in Frameworks */,
+				646705251017158800F69212 /* libMidi-Me.dylib in Frameworks */,
+				646707061017E94300F69212 /* PropertiesEditor.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467052A101715B000F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64670531101715C100F69212 /* Properties.dylib in Frameworks */,
+				6467054A101716DD00F69212 /* QtCore.framework in Frameworks */,
+				6467054B101716DD00F69212 /* QtGui.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646707AC1017EC1900F69212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646707B71017EC3700F69212 /* PluginSystem.dylib in Frameworks */,
+				646707B81017EC3700F69212 /* Properties.dylib in Frameworks */,
+				646707B91017EC3700F69212 /* libMidi-Me.dylib in Frameworks */,
+				646707BC1017EC5800F69212 /* OIS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC330486D014006FF6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				6467043F1016912200F69212 /* PluginSystem.dylib in Frameworks */,
+				646704401016912200F69212 /* libMidi-Me.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC370486D014006FF6A4 /* midi-me.app */,
+				64670213101682BB00F69212 /* libMidi-Me.dylib */,
+				6467024C1016834500F69212 /* Properties.dylib */,
+				6467028F1016879F00F69212 /* XmlParser.dylib */,
+				646703B110168A7500F69212 /* libRtMidi.a */,
+				646703EC10168C1C00F69212 /* PluginSystem.dylib */,
+				6467040510168CAF00F69212 /* StandardProcessors.dylib */,
+				646704CD10170F7C00F69212 /* Midi-Me-Qt.app */,
+				6467052C101715B000F69212 /* PropertiesEditor.dylib */,
+				646707AE1017EC1900F69212 /* InputOIS.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* midi-me */ = {
+			isa = PBXGroup;
+			children = (
+				646702841016863C00F69212 /* Dependencies */,
+				646700E0101680ED00F69212 /* Source */,
+				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+				646700EF101681A300F69212 /* Midi-Me-Info.plist */,
+				646704CF10170F7C00F69212 /* Midi-Me-Qt-Info.plist */,
+			);
+			name = "midi-me";
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
+				2A37F4ACFDCFA73011CA2CEA /* MyDocument.mm */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF750370BD2300C91783 /* midi-me_Prefix.pch */,
+				2A37F4B0FDCFA73011CA2CEA /* main.mm */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				646702681016845D00F69212 /* CommonBuildSettings.xcconfig */,
+				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
+				8D15AC360486D014006FF6A4 /* Info.plist */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+				1DDD58280DA1D0D100B32029 /* MyDocument.xib */,
+				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
+				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		646700E0101680ED00F69212 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				646701D11016821300F69212 /* Midi-Me */,
+				646700F3101681FB00F69212 /* InputOIS */,
+				646700FB101681FB00F69212 /* libMidi-Me */,
+				6467011B101681FB00F69212 /* PluginSystem */,
+				6467012A101681FB00F69212 /* Properties */,
+				64670137101681FB00F69212 /* PropertiesEditor */,
+				6467014D101681FB00F69212 /* RtMidi */,
+				64670152101681FB00F69212 /* StandardProcessors */,
+				6467015E101681FB00F69212 /* XmlParser */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		646700F3101681FB00F69212 /* InputOIS */ = {
+			isa = PBXGroup;
+			children = (
+				646700F4101681FB00F69212 /* ButtonConverter.cpp */,
+				646700F5101681FB00F69212 /* ButtonConverter.h */,
+				646700F6101681FB00F69212 /* global.h */,
+				646700F7101681FB00F69212 /* InputOISPlugin.cpp */,
+				646700F8101681FB00F69212 /* InputOISPlugin.h */,
+				646700F9101681FB00F69212 /* JoyStick.cpp */,
+				646700FA101681FB00F69212 /* JoyStick.h */,
+			);
+			name = InputOIS;
+			path = ../../../src/InputOIS;
+			sourceTree = SOURCE_ROOT;
+		};
+		646700FB101681FB00F69212 /* libMidi-Me */ = {
+			isa = PBXGroup;
+			children = (
+				646700FC101681FB00F69212 /* Chain.cpp */,
+				646700FD101681FB00F69212 /* Chain.h */,
+				646700FE101681FB00F69212 /* ChainEnd.cpp */,
+				646700FF101681FB00F69212 /* ChainEnd.h */,
+				64670100101681FB00F69212 /* ChainStart.cpp */,
+				64670101101681FB00F69212 /* ChainStart.h */,
+				64670102101681FB00F69212 /* Connection.cpp */,
+				64670103101681FB00F69212 /* Connection.h */,
+				64670104101681FB00F69212 /* DeviceManager.cpp */,
+				64670105101681FB00F69212 /* DeviceManager.h */,
+				64670106101681FB00F69212 /* global.h */,
+				64670107101681FB00F69212 /* Input.cpp */,
+				64670108101681FB00F69212 /* Input.h */,
+				64670109101681FB00F69212 /* InputDevice.cpp */,
+				6467010A101681FB00F69212 /* InputDevice.h */,
+				6467010B101681FB00F69212 /* LastError.h */,
+				6467010C101681FB00F69212 /* libMidi-Me_doc.h */,
+				6467010D101681FB00F69212 /* Midi-MeProperties.cpp */,
+				6467010E101681FB00F69212 /* Midi-MeProperties.h */,
+				6467010F101681FB00F69212 /* MidiOutput.cpp */,
+				64670110101681FB00F69212 /* MidiOutput.h */,
+				64670111101681FB00F69212 /* Output.cpp */,
+				64670112101681FB00F69212 /* Output.h */,
+				64670113101681FB00F69212 /* Processor.cpp */,
+				64670114101681FB00F69212 /* Processor.h */,
+				64670115101681FB00F69212 /* ProcessorFactory.cpp */,
+				64670116101681FB00F69212 /* ProcessorFactory.h */,
+				64670117101681FB00F69212 /* Serializer.cpp */,
+				64670118101681FB00F69212 /* Serializer.h */,
+				64670119101681FB00F69212 /* Timer.cpp */,
+				6467011A101681FB00F69212 /* Timer.h */,
+			);
+			name = "libMidi-Me";
+			path = "../../../src/libMidi-Me";
+			sourceTree = SOURCE_ROOT;
+		};
+		6467011B101681FB00F69212 /* PluginSystem */ = {
+			isa = PBXGroup;
+			children = (
+				6467011C101681FB00F69212 /* DllManager.cpp */,
+				6467011D101681FB00F69212 /* DllManager.h */,
+				6467011E101681FB00F69212 /* DynamicLibrary.cpp */,
+				6467011F101681FB00F69212 /* DynamicLibrary.h */,
+				64670120101681FB00F69212 /* global.h */,
+				64670121101681FB00F69212 /* Plugin.cpp */,
+				64670122101681FB00F69212 /* Plugin.h */,
+				64670123101681FB00F69212 /* PluginManager.cpp */,
+				64670124101681FB00F69212 /* PluginManager.h */,
+				64670125101681FB00F69212 /* PluginSystem.cpp */,
+				64670126101681FB00F69212 /* PluginSystem.h */,
+				64670127101681FB00F69212 /* PluginSystem_doc.h */,
+				64670128101681FB00F69212 /* StringUtil.cpp */,
+				64670129101681FB00F69212 /* StringUtil.h */,
+			);
+			name = PluginSystem;
+			path = ../../../src/PluginSystem;
+			sourceTree = SOURCE_ROOT;
+		};
+		6467012A101681FB00F69212 /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				6467012B101681FB00F69212 /* FastDelegate.h */,
+				6467012C101681FB00F69212 /* FastDelegateBind.h */,
+				6467012D101681FB00F69212 /* GenericProperty.h */,
+				6467012E101681FB00F69212 /* global.h */,
+				6467012F101681FB00F69212 /* Property.cpp */,
+				64670130101681FB00F69212 /* Property.h */,
+				64670131101681FB00F69212 /* PropertyCollection.cpp */,
+				64670132101681FB00F69212 /* PropertyCollection.h */,
+				64670133101681FB00F69212 /* StandardProperties.cpp */,
+				64670134101681FB00F69212 /* StandardProperties.h */,
+				64670135101681FB00F69212 /* StringUtil.cpp */,
+				64670136101681FB00F69212 /* StringUtil.h */,
+			);
+			name = Properties;
+			path = ../../../src/Properties;
+			sourceTree = SOURCE_ROOT;
+		};
+		64670137101681FB00F69212 /* PropertiesEditor */ = {
+			isa = PBXGroup;
+			children = (
+				646706E41017E52700F69212 /* PropertiesEditor.h */,
+				64670138101681FB00F69212 /* global.h */,
+				64670139101681FB00F69212 /* PropertiesEditor.cpp */,
+				6467013B101681FB00F69212 /* PropertyWidget.cpp */,
+				6467013C101681FB00F69212 /* PropertyWidget.h */,
+				6467013D101681FB00F69212 /* PropertyWidgetBool.cpp */,
+				6467013E101681FB00F69212 /* PropertyWidgetBool.h */,
+				6467013F101681FB00F69212 /* PropertyWidgetCompound.cpp */,
+				64670140101681FB00F69212 /* PropertyWidgetCompound.h */,
+				64670141101681FB00F69212 /* PropertyWidgetCreator.cpp */,
+				64670142101681FB00F69212 /* PropertyWidgetCreator.h */,
+				64670143101681FB00F69212 /* PropertyWidgetFactory.cpp */,
+				64670144101681FB00F69212 /* PropertyWidgetFactory.h */,
+				64670145101681FB00F69212 /* PropertyWidgetInt.cpp */,
+				64670146101681FB00F69212 /* PropertyWidgetInt.h */,
+				64670147101681FB00F69212 /* PropertyWidgetReal.cpp */,
+				64670148101681FB00F69212 /* PropertyWidgetReal.h */,
+				64670149101681FB00F69212 /* PropertyWidgetString.cpp */,
+				6467014A101681FB00F69212 /* PropertyWidgetString.h */,
+				6467014B101681FB00F69212 /* PropertyWidgetUInt.cpp */,
+				6467014C101681FB00F69212 /* PropertyWidgetUInt.h */,
+			);
+			name = PropertiesEditor;
+			path = ../../../src/PropertiesEditor;
+			sourceTree = SOURCE_ROOT;
+		};
+		6467014D101681FB00F69212 /* RtMidi */ = {
+			isa = PBXGroup;
+			children = (
+				6467014E101681FB00F69212 /* readme */,
+				6467014F101681FB00F69212 /* RtError.h */,
+				64670150101681FB00F69212 /* RtMidi.cpp */,
+				64670151101681FB00F69212 /* RtMidi.h */,
+			);
+			name = RtMidi;
+			path = ../../../src/RtMidi;
+			sourceTree = SOURCE_ROOT;
+		};
+		64670152101681FB00F69212 /* StandardProcessors */ = {
+			isa = PBXGroup;
+			children = (
+				64670153101681FB00F69212 /* Delay.cpp */,
+				64670154101681FB00F69212 /* Delay.h */,
+				64670155101681FB00F69212 /* Duplicator.cpp */,
+				64670156101681FB00F69212 /* Duplicator.h */,
+				64670157101681FB00F69212 /* global.h */,
+				64670158101681FB00F69212 /* Inverter.cpp */,
+				64670159101681FB00F69212 /* Inverter.h */,
+				6467015A101681FB00F69212 /* Splitter.cpp */,
+				6467015B101681FB00F69212 /* Splitter.h */,
+				6467015C101681FB00F69212 /* StandardProcessorsPlugin.cpp */,
+				6467015D101681FB00F69212 /* StandardProcessorsPlugin.h */,
+			);
+			name = StandardProcessors;
+			path = ../../../src/StandardProcessors;
+			sourceTree = SOURCE_ROOT;
+		};
+		6467015E101681FB00F69212 /* XmlParser */ = {
+			isa = PBXGroup;
+			children = (
+				6467015F101681FB00F69212 /* global.h */,
+				64670160101681FB00F69212 /* SimpleDomParser.cpp */,
+				64670161101681FB00F69212 /* SimpleDomParser.h */,
+				64670162101681FB00F69212 /* XmlElement.cpp */,
+				64670163101681FB00F69212 /* XmlElement.h */,
+				64670164101681FB00F69212 /* XmlParser.cpp */,
+				64670165101681FB00F69212 /* XmlParser.h */,
+			);
+			name = XmlParser;
+			path = ../../../src/XmlParser;
+			sourceTree = SOURCE_ROOT;
+		};
+		646701D11016821300F69212 /* Midi-Me */ = {
+			isa = PBXGroup;
+			children = (
+				646701D21016821300F69212 /* ChainEndItem.cpp */,
+				646701D31016821300F69212 /* ChainEndItem.h */,
+				646701D41016821300F69212 /* ChainItem.cpp */,
+				646701D51016821300F69212 /* ChainItem.h */,
+				646701D61016821300F69212 /* ChainStartItem.cpp */,
+				646701D71016821300F69212 /* ChainStartItem.h */,
+				646701D81016821300F69212 /* ChainWidget.cpp */,
+				646701D91016821300F69212 /* ChainWidget.h */,
+				646701DA1016821300F69212 /* ConnectionItem.cpp */,
+				646701DB1016821300F69212 /* ConnectionItem.h */,
+				646701DC1016821300F69212 /* ConverterManager.h */,
+				646701DD1016821300F69212 /* DragData.h */,
+				646701DE1016821300F69212 /* global.h */,
+				646701DF1016821300F69212 /* InputDeviceWidget.cpp */,
+				646701E01016821300F69212 /* InputDeviceWidget.h */,
+				646701E11016821300F69212 /* InputItem.cpp */,
+				646701E21016821300F69212 /* InputItem.h */,
+				646701E31016821300F69212 /* main.cpp */,
+				646701E41016821300F69212 /* MainWindow.cpp */,
+				646701E51016821300F69212 /* MainWindow.h */,
+				646701E61016821300F69212 /* MainWindowBase.ui */,
+				646701E71016821300F69212 /* Midi-Me_doc.h */,
+				646701E81016821300F69212 /* OutputItem.cpp */,
+				646701E91016821300F69212 /* OutputItem.h */,
+				646701EA1016821300F69212 /* PluginWidget.cpp */,
+				646701EB1016821300F69212 /* PluginWidget.h */,
+				646701EC1016821300F69212 /* PluginWidgetBase.ui */,
+				646701ED1016821300F69212 /* ProcessorItem.cpp */,
+				646701EE1016821300F69212 /* ProcessorItem.h */,
+				646701EF1016821300F69212 /* PropertyWidgetInputValue.cpp */,
+				646701F01016821300F69212 /* PropertyWidgetInputValue.h */,
+			);
+			name = "Midi-Me";
+			path = "../../../src/Midi-Me";
+			sourceTree = SOURCE_ROOT;
+		};
+		646702841016863C00F69212 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				646704EB101710DD00F69212 /* QtCore.framework */,
+				646704ED101710DD00F69212 /* QtGui.framework */,
+				646707BB1017EC5800F69212 /* OIS.framework */,
+				6467038E101689F300F69212 /* libexpat.dylib */,
+				646703D510168B8400F69212 /* CoreAudio.framework */,
+				646703D710168B8400F69212 /* CoreFoundation.framework */,
+				646703D910168B8400F69212 /* CoreMIDI.framework */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6467020F101682BB00F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64670218101682DA00F69212 /* Chain.h in Headers */,
+				6467021A101682DA00F69212 /* ChainEnd.h in Headers */,
+				6467021C101682DA00F69212 /* ChainStart.h in Headers */,
+				6467021E101682DA00F69212 /* Connection.h in Headers */,
+				64670220101682DA00F69212 /* DeviceManager.h in Headers */,
+				64670221101682DA00F69212 /* global.h in Headers */,
+				64670223101682DA00F69212 /* Input.h in Headers */,
+				64670225101682DA00F69212 /* InputDevice.h in Headers */,
+				64670226101682DA00F69212 /* LastError.h in Headers */,
+				64670227101682DA00F69212 /* libMidi-Me_doc.h in Headers */,
+				64670229101682DA00F69212 /* Midi-MeProperties.h in Headers */,
+				6467022B101682DA00F69212 /* MidiOutput.h in Headers */,
+				6467022D101682DA00F69212 /* Output.h in Headers */,
+				6467022F101682DA00F69212 /* Processor.h in Headers */,
+				64670231101682DA00F69212 /* ProcessorFactory.h in Headers */,
+				64670233101682DA00F69212 /* Serializer.h in Headers */,
+				64670235101682DA00F69212 /* Timer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646702481016834500F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6467024F1016835600F69212 /* FastDelegate.h in Headers */,
+				646702501016835600F69212 /* FastDelegateBind.h in Headers */,
+				646702511016835600F69212 /* GenericProperty.h in Headers */,
+				646702521016835600F69212 /* global.h in Headers */,
+				646702541016835600F69212 /* Property.h in Headers */,
+				646702561016835600F69212 /* PropertyCollection.h in Headers */,
+				646702581016835600F69212 /* StandardProperties.h in Headers */,
+				6467025A1016835600F69212 /* StringUtil.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467028B1016879F00F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646702941016882B00F69212 /* global.h in Headers */,
+				646702961016882B00F69212 /* SimpleDomParser.h in Headers */,
+				646702981016882B00F69212 /* XmlElement.h in Headers */,
+				6467029A1016882B00F69212 /* XmlParser.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646703AD10168A7500F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646703B410168A9000F69212 /* RtError.h in Headers */,
+				646703B610168A9000F69212 /* RtMidi.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646703E810168C1C00F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646703F010168C2C00F69212 /* DllManager.h in Headers */,
+				646703F210168C2C00F69212 /* DynamicLibrary.h in Headers */,
+				646703F310168C2C00F69212 /* global.h in Headers */,
+				646703F510168C2C00F69212 /* Plugin.h in Headers */,
+				646703F710168C2C00F69212 /* PluginManager.h in Headers */,
+				646703F910168C2C00F69212 /* PluginSystem.h in Headers */,
+				646703FA10168C2C00F69212 /* PluginSystem_doc.h in Headers */,
+				646703FC10168C2C00F69212 /* StringUtil.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467040110168CAF00F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6467041310168D1D00F69212 /* Delay.h in Headers */,
+				6467041510168D1D00F69212 /* Duplicator.h in Headers */,
+				6467041610168D1D00F69212 /* global.h in Headers */,
+				6467041810168D1D00F69212 /* Inverter.h in Headers */,
+				6467041A10168D1D00F69212 /* Splitter.h in Headers */,
+				6467041C10168D1D00F69212 /* StandardProcessorsPlugin.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64670528101715B000F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646707AA1017EC1900F69212 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646707C11017EC7600F69212 /* global.h in Headers */,
+				646707C31017EC7600F69212 /* InputOISPlugin.h in Headers */,
+				646707C51017EC7600F69212 /* JoyStick.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		64670212101682BB00F69212 /* libMidi-Me */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64670216101682CC00F69212 /* Build configuration list for PBXNativeTarget "libMidi-Me" */;
+			buildPhases = (
+				6467020F101682BB00F69212 /* Headers */,
+				64670210101682BB00F69212 /* Sources */,
+				64670211101682BB00F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6467039510168A1700F69212 /* PBXTargetDependency */,
+				6467025E1016837E00F69212 /* PBXTargetDependency */,
+				646703C110168AC900F69212 /* PBXTargetDependency */,
+			);
+			name = "libMidi-Me";
+			productName = "libMidi-Me";
+			productReference = 64670213101682BB00F69212 /* libMidi-Me.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		6467024B1016834500F69212 /* Properties */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 646702671016839300F69212 /* Build configuration list for PBXNativeTarget "Properties" */;
+			buildPhases = (
+				646702481016834500F69212 /* Headers */,
+				646702491016834500F69212 /* Sources */,
+				6467024A1016834500F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Properties;
+			productName = Properties;
+			productReference = 6467024C1016834500F69212 /* Properties.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		6467028E1016879F00F69212 /* XmlParser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64670292101687C100F69212 /* Build configuration list for PBXNativeTarget "XmlParser" */;
+			buildPhases = (
+				6467028B1016879F00F69212 /* Headers */,
+				6467028C1016879F00F69212 /* Sources */,
+				6467028D1016879F00F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XmlParser;
+			productName = XmlParser;
+			productReference = 6467028F1016879F00F69212 /* XmlParser.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		646703B010168A7500F69212 /* RtMidi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 646703C310168AE700F69212 /* Build configuration list for PBXNativeTarget "RtMidi" */;
+			buildPhases = (
+				646703AD10168A7500F69212 /* Headers */,
+				646703AE10168A7500F69212 /* Sources */,
+				646703AF10168A7500F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RtMidi;
+			productName = RtMidi;
+			productReference = 646703B110168A7500F69212 /* libRtMidi.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		646703EB10168C1C00F69212 /* PluginSystem */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6467040010168C6100F69212 /* Build configuration list for PBXNativeTarget "PluginSystem" */;
+			buildPhases = (
+				646703E810168C1C00F69212 /* Headers */,
+				646703E910168C1C00F69212 /* Sources */,
+				646703EA10168C1C00F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PluginSystem;
+			productName = PluginSystem;
+			productReference = 646703EC10168C1C00F69212 /* PluginSystem.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		6467040410168CAF00F69212 /* StandardProcessors */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6467040C10168CEB00F69212 /* Build configuration list for PBXNativeTarget "StandardProcessors" */;
+			buildPhases = (
+				6467040110168CAF00F69212 /* Headers */,
+				6467040210168CAF00F69212 /* Sources */,
+				6467040310168CAF00F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6467040B10168CCD00F69212 /* PBXTargetDependency */,
+				6467040910168CC400F69212 /* PBXTargetDependency */,
+				6467042110168D5000F69212 /* PBXTargetDependency */,
+			);
+			name = StandardProcessors;
+			productName = StandardProcessors;
+			productReference = 6467040510168CAF00F69212 /* StandardProcessors.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		646704CC10170F7C00F69212 /* Midi-Me-Qt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 646704D210170F7D00F69212 /* Build configuration list for PBXNativeTarget "Midi-Me-Qt" */;
+			buildPhases = (
+				646704C910170F7C00F69212 /* Resources */,
+				646704CA10170F7C00F69212 /* Sources */,
+				646704CB10170F7C00F69212 /* Frameworks */,
+			);
+			buildRules = (
+				6467058D1017852300F69212 /* PBXBuildRule */,
+				6467050F101711B100F69212 /* PBXBuildRule */,
+			);
+			dependencies = (
+				646707051017E93600F69212 /* PBXTargetDependency */,
+				646705231017157400F69212 /* PBXTargetDependency */,
+				646705211017157400F69212 /* PBXTargetDependency */,
+			);
+			name = "Midi-Me-Qt";
+			productName = "Midi-Me-Qt";
+			productReference = 646704CD10170F7C00F69212 /* Midi-Me-Qt.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6467052B101715B000F69212 /* PropertiesEditor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64670532101715E800F69212 /* Build configuration list for PBXNativeTarget "PropertiesEditor" */;
+			buildPhases = (
+				64670528101715B000F69212 /* Headers */,
+				64670529101715B000F69212 /* Sources */,
+				6467052A101715B000F69212 /* Frameworks */,
+			);
+			buildRules = (
+				6467059D1017864700F69212 /* PBXBuildRule */,
+				6467054D101716FC00F69212 /* PBXBuildRule */,
+			);
+			dependencies = (
+				64670530101715BD00F69212 /* PBXTargetDependency */,
+			);
+			name = PropertiesEditor;
+			productName = PropertyEditor;
+			productReference = 6467052C101715B000F69212 /* PropertiesEditor.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		646707AD1017EC1900F69212 /* InputOIS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 646707BA1017EC5500F69212 /* Build configuration list for PBXNativeTarget "InputOIS" */;
+			buildPhases = (
+				646707AA1017EC1900F69212 /* Headers */,
+				646707AB1017EC1900F69212 /* Sources */,
+				646707AC1017EC1900F69212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				646707B21017EC2D00F69212 /* PBXTargetDependency */,
+				646707B41017EC2D00F69212 /* PBXTargetDependency */,
+				646707B61017EC2D00F69212 /* PBXTargetDependency */,
+			);
+			name = InputOIS;
+			productName = InputOIS;
+			productReference = 646707AE1017EC1900F69212 /* InputOIS.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		8D15AC270486D014006FF6A4 /* midi-me */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "midi-me" */;
+			buildPhases = (
+				8D15AC2B0486D014006FF6A4 /* Resources */,
+				8D15AC300486D014006FF6A4 /* Sources */,
+				8D15AC330486D014006FF6A4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6467043E1016911600F69212 /* PBXTargetDependency */,
+				6467043C101690FF00F69212 /* PBXTargetDependency */,
+			);
+			name = "midi-me";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "midi-me";
+			productReference = 8D15AC370486D014006FF6A4 /* midi-me.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "midi-me" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* midi-me */;
+			projectDirPath = "";
+			projectRoot = ../../..;
+			targets = (
+				646703EB10168C1C00F69212 /* PluginSystem */,
+				8D15AC270486D014006FF6A4 /* midi-me */,
+				64670212101682BB00F69212 /* libMidi-Me */,
+				6467024B1016834500F69212 /* Properties */,
+				6467028E1016879F00F69212 /* XmlParser */,
+				646703B010168A7500F69212 /* RtMidi */,
+				6467040410168CAF00F69212 /* StandardProcessors */,
+				646704CC10170F7C00F69212 /* Midi-Me-Qt */,
+				6467052B101715B000F69212 /* PropertiesEditor */,
+				646707AD1017EC1900F69212 /* InputOIS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		646704C910170F7C00F69212 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646704D51017100900F69212 /* MainWindowBase.ui in Resources */,
+				646704D71017100900F69212 /* PluginWidgetBase.ui in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC2B0486D014006FF6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
+				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */,
+				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		64670210101682BB00F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64670217101682DA00F69212 /* Chain.cpp in Sources */,
+				64670219101682DA00F69212 /* ChainEnd.cpp in Sources */,
+				6467021B101682DA00F69212 /* ChainStart.cpp in Sources */,
+				6467021D101682DA00F69212 /* Connection.cpp in Sources */,
+				6467021F101682DA00F69212 /* DeviceManager.cpp in Sources */,
+				64670222101682DA00F69212 /* Input.cpp in Sources */,
+				64670224101682DA00F69212 /* InputDevice.cpp in Sources */,
+				64670228101682DA00F69212 /* Midi-MeProperties.cpp in Sources */,
+				6467022A101682DA00F69212 /* MidiOutput.cpp in Sources */,
+				6467022C101682DA00F69212 /* Output.cpp in Sources */,
+				6467022E101682DA00F69212 /* Processor.cpp in Sources */,
+				64670230101682DA00F69212 /* ProcessorFactory.cpp in Sources */,
+				64670232101682DA00F69212 /* Serializer.cpp in Sources */,
+				64670234101682DA00F69212 /* Timer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646702491016834500F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646702531016835600F69212 /* Property.cpp in Sources */,
+				646702551016835600F69212 /* PropertyCollection.cpp in Sources */,
+				646702571016835600F69212 /* StandardProperties.cpp in Sources */,
+				646702591016835600F69212 /* StringUtil.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467028C1016879F00F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646702951016882B00F69212 /* SimpleDomParser.cpp in Sources */,
+				646702971016882B00F69212 /* XmlElement.cpp in Sources */,
+				646702991016882B00F69212 /* XmlParser.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646703AE10168A7500F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646703B510168A9000F69212 /* RtMidi.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646703E910168C1C00F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646703EF10168C2C00F69212 /* DllManager.cpp in Sources */,
+				646703F110168C2C00F69212 /* DynamicLibrary.cpp in Sources */,
+				646703F410168C2C00F69212 /* Plugin.cpp in Sources */,
+				646703F610168C2C00F69212 /* PluginManager.cpp in Sources */,
+				646703F810168C2C00F69212 /* PluginSystem.cpp in Sources */,
+				646703FB10168C2C00F69212 /* StringUtil.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6467040210168CAF00F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6467041210168D1D00F69212 /* Delay.cpp in Sources */,
+				6467041410168D1D00F69212 /* Duplicator.cpp in Sources */,
+				6467041710168D1D00F69212 /* Inverter.cpp in Sources */,
+				6467041910168D1D00F69212 /* Splitter.cpp in Sources */,
+				6467041B10168D1D00F69212 /* StandardProcessorsPlugin.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646704CA10170F7C00F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646706F11017E8FA00F69212 /* InputItem.h in Sources */,
+				646706F21017E8FA00F69212 /* InputDeviceWidget.h in Sources */,
+				646706F31017E8FA00F69212 /* PluginWidget.h in Sources */,
+				646706F41017E8FA00F69212 /* ChainWidget.h in Sources */,
+				646706F51017E8FA00F69212 /* ChainEndItem.h in Sources */,
+				646706F61017E8FA00F69212 /* ConnectionItem.h in Sources */,
+				646706F71017E8FA00F69212 /* Midi-Me_doc.h in Sources */,
+				646706F81017E8FA00F69212 /* DragData.h in Sources */,
+				646706F91017E8FA00F69212 /* ChainStartItem.h in Sources */,
+				646706FA1017E8FA00F69212 /* ConverterManager.h in Sources */,
+				646706FB1017E8FA00F69212 /* global.h in Sources */,
+				646706FC1017E8FA00F69212 /* MainWindow.h in Sources */,
+				646706FD1017E8FA00F69212 /* OutputItem.h in Sources */,
+				646706FE1017E8FA00F69212 /* ProcessorItem.h in Sources */,
+				646706FF1017E8FA00F69212 /* PropertyWidgetInputValue.h in Sources */,
+				646707001017E8FA00F69212 /* ChainItem.h in Sources */,
+				646704D31017100900F69212 /* InputItem.cpp in Sources */,
+				646704D41017100900F69212 /* ChainEndItem.cpp in Sources */,
+				646704D61017100900F69212 /* OutputItem.cpp in Sources */,
+				646704D81017100900F69212 /* PluginWidget.cpp in Sources */,
+				646704D91017100900F69212 /* ProcessorItem.cpp in Sources */,
+				646704DA1017100900F69212 /* ChainWidget.cpp in Sources */,
+				646704DB1017100900F69212 /* ChainStartItem.cpp in Sources */,
+				646704DC1017100900F69212 /* ChainItem.cpp in Sources */,
+				646704DD1017100900F69212 /* PropertyWidgetInputValue.cpp in Sources */,
+				646704DE1017100900F69212 /* MainWindow.cpp in Sources */,
+				646704DF1017100900F69212 /* ConnectionItem.cpp in Sources */,
+				646704E01017100900F69212 /* main.cpp in Sources */,
+				646704E11017100900F69212 /* InputDeviceWidget.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64670529101715B000F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646705B81017DCC600F69212 /* PropertyWidgetReal.h in Sources */,
+				646705B91017DCC600F69212 /* PropertyWidget.h in Sources */,
+				646705BA1017DCC600F69212 /* PropertyWidgetCompound.h in Sources */,
+				646705BC1017DCC600F69212 /* PropertyWidgetFactory.h in Sources */,
+				646705C01017DCC600F69212 /* global.h in Sources */,
+				646705C11017DCC600F69212 /* PropertyWidgetBool.h in Sources */,
+				646705C21017DCC600F69212 /* PropertyWidgetInt.h in Sources */,
+				646705C41017DCC600F69212 /* PropertyWidgetUInt.h in Sources */,
+				646705C71017DCC600F69212 /* PropertyWidgetCreator.h in Sources */,
+				646705CA1017DCC600F69212 /* PropertyWidgetString.h in Sources */,
+				646706E51017E53900F69212 /* PropertiesEditor.h in Sources */,
+				646705B61017DCC600F69212 /* PropertyWidgetBool.cpp in Sources */,
+				646705B71017DCC600F69212 /* PropertiesEditor.cpp in Sources */,
+				646705BB1017DCC600F69212 /* PropertyWidgetReal.cpp in Sources */,
+				646705BD1017DCC600F69212 /* PropertyWidget.cpp in Sources */,
+				646705BE1017DCC600F69212 /* PropertyWidgetCompound.cpp in Sources */,
+				646705BF1017DCC600F69212 /* PropertyWidgetUInt.cpp in Sources */,
+				646705C31017DCC600F69212 /* PropertyWidgetInt.cpp in Sources */,
+				646705C61017DCC600F69212 /* PropertyWidgetCreator.cpp in Sources */,
+				646705C81017DCC600F69212 /* PropertyWidgetFactory.cpp in Sources */,
+				646705C91017DCC600F69212 /* PropertyWidgetString.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		646707AB1017EC1900F69212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646707C21017EC7600F69212 /* InputOISPlugin.cpp in Sources */,
+				646707C41017EC7600F69212 /* JoyStick.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC300486D014006FF6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC310486D014006FF6A4 /* MyDocument.mm in Sources */,
+				8D15AC320486D014006FF6A4 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6467025E1016837E00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6467024B1016834500F69212 /* Properties */;
+			targetProxy = 6467025D1016837E00F69212 /* PBXContainerItemProxy */;
+		};
+		6467039510168A1700F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6467028E1016879F00F69212 /* XmlParser */;
+			targetProxy = 6467039410168A1700F69212 /* PBXContainerItemProxy */;
+		};
+		646703C110168AC900F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 646703B010168A7500F69212 /* RtMidi */;
+			targetProxy = 646703C010168AC900F69212 /* PBXContainerItemProxy */;
+		};
+		6467040910168CC400F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 646703EB10168C1C00F69212 /* PluginSystem */;
+			targetProxy = 6467040810168CC400F69212 /* PBXContainerItemProxy */;
+		};
+		6467040B10168CCD00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64670212101682BB00F69212 /* libMidi-Me */;
+			targetProxy = 6467040A10168CCD00F69212 /* PBXContainerItemProxy */;
+		};
+		6467042110168D5000F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6467024B1016834500F69212 /* Properties */;
+			targetProxy = 6467042010168D5000F69212 /* PBXContainerItemProxy */;
+		};
+		6467043C101690FF00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 646703EB10168C1C00F69212 /* PluginSystem */;
+			targetProxy = 6467043B101690FF00F69212 /* PBXContainerItemProxy */;
+		};
+		6467043E1016911600F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64670212101682BB00F69212 /* libMidi-Me */;
+			targetProxy = 6467043D1016911600F69212 /* PBXContainerItemProxy */;
+		};
+		646705211017157400F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64670212101682BB00F69212 /* libMidi-Me */;
+			targetProxy = 646705201017157400F69212 /* PBXContainerItemProxy */;
+		};
+		646705231017157400F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 646703EB10168C1C00F69212 /* PluginSystem */;
+			targetProxy = 646705221017157400F69212 /* PBXContainerItemProxy */;
+		};
+		64670530101715BD00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6467024B1016834500F69212 /* Properties */;
+			targetProxy = 6467052F101715BD00F69212 /* PBXContainerItemProxy */;
+		};
+		646707051017E93600F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6467052B101715B000F69212 /* PropertiesEditor */;
+			targetProxy = 646707041017E93600F69212 /* PBXContainerItemProxy */;
+		};
+		646707B21017EC2D00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 646703EB10168C1C00F69212 /* PluginSystem */;
+			targetProxy = 646707B11017EC2D00F69212 /* PBXContainerItemProxy */;
+		};
+		646707B41017EC2D00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64670212101682BB00F69212 /* libMidi-Me */;
+			targetProxy = 646707B31017EC2D00F69212 /* PBXContainerItemProxy */;
+		};
+		646707B61017EC2D00F69212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6467024B1016834500F69212 /* Properties */;
+			targetProxy = 646707B51017EC2D00F69212 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1660FE840EACC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58280DA1D0D100B32029 /* MyDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58290DA1D0D100B32029 /* English */,
+			);
+			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD582B0DA1D0D100B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4BAFDCFA73011CA2CEA /* English */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		64670214101682BB00F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = "libMidi-Me";
+			};
+			name = Debug;
+		};
+		64670215101682BB00F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = "libMidi-Me";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		6467024D1016834500F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = Properties;
+			};
+			name = Debug;
+		};
+		6467024E1016834500F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = Properties;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		646702901016879F00F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = XmlParser;
+			};
+			name = Debug;
+		};
+		646702911016879F00F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = XmlParser;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		646703B210168A7500F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = RtMidi;
+			};
+			name = Debug;
+		};
+		646703B310168A7500F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = RtMidi;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		646703ED10168C1C00F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = PluginSystem;
+			};
+			name = Debug;
+		};
+		646703EE10168C1C00F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = PluginSystem;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		6467040610168CB000F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = StandardProcessors;
+			};
+			name = Debug;
+		};
+		6467040710168CB000F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = StandardProcessors;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		646704D010170F7D00F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Midi-Me-Qt-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = "Midi-Me-Qt";
+			};
+			name = Debug;
+		};
+		646704D110170F7D00F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Midi-Me-Qt-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Midi-Me-Qt";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		6467052D101715B000F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = PropertiesEditor;
+			};
+			name = Debug;
+		};
+		6467052E101715B000F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = PropertiesEditor;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		646707AF1017EC1900F69212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = InputOIS;
+			};
+			name = Debug;
+		};
+		646707B01017EC1900F69212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = InputOIS;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C05733C808A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "midi-me_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "midi-me";
+			};
+			name = Debug;
+		};
+		C05733C908A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 646702681016845D00F69212 /* CommonBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "midi-me_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "midi-me";
+			};
+			name = Release;
+		};
+		C05733CC08A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CURRENT_PROJECT_VERSION = 0.1;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C05733CD08A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CURRENT_PROJECT_VERSION = 0.1;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		64670216101682CC00F69212 /* Build configuration list for PBXNativeTarget "libMidi-Me" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64670214101682BB00F69212 /* Debug */,
+				64670215101682BB00F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		646702671016839300F69212 /* Build configuration list for PBXNativeTarget "Properties" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6467024D1016834500F69212 /* Debug */,
+				6467024E1016834500F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64670292101687C100F69212 /* Build configuration list for PBXNativeTarget "XmlParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				646702901016879F00F69212 /* Debug */,
+				646702911016879F00F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		646703C310168AE700F69212 /* Build configuration list for PBXNativeTarget "RtMidi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				646703B210168A7500F69212 /* Debug */,
+				646703B310168A7500F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6467040010168C6100F69212 /* Build configuration list for PBXNativeTarget "PluginSystem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				646703ED10168C1C00F69212 /* Debug */,
+				646703EE10168C1C00F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6467040C10168CEB00F69212 /* Build configuration list for PBXNativeTarget "StandardProcessors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6467040610168CB000F69212 /* Debug */,
+				6467040710168CB000F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		646704D210170F7D00F69212 /* Build configuration list for PBXNativeTarget "Midi-Me-Qt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				646704D010170F7D00F69212 /* Debug */,
+				646704D110170F7D00F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64670532101715E800F69212 /* Build configuration list for PBXNativeTarget "PropertiesEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6467052D101715B000F69212 /* Debug */,
+				6467052E101715B000F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		646707BA1017EC5500F69212 /* Build configuration list for PBXNativeTarget "InputOIS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				646707AF1017EC1900F69212 /* Debug */,
+				646707B01017EC1900F69212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "midi-me" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "midi-me" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}

@@ -1,0 +1,4 @@
+000000004a67b661000000000000061b 90cf7db3ed5e97140e756b38c457152e ffffffffffffffffffffffffffffffff 98696 /Users/jdierckx/svnprojects/midi-me/platform/Xcode/buildenv/build/midi-me.build/Debug/InputOIS.build/Objects-normal/i386/JoyStick.o
+000000004a67b359000000000000172c 3626a36fc334ba104d61e116f9778cae ffffffffffffffffffffffffffffffff 185216 /Users/jdierckx/svnprojects/midi-me/platform/Xcode/buildenv/build/midi-me.build/Debug/InputOIS.build/Objects-normal/i386/InputOISPlugin.o
+a6e9dedc64ed503c43148a2e3d2904c5 a16475ea22f753728569beb131c76525 ffffffffffffffffffffffffffffffff 75792 /Users/jdierckx/svnprojects/midi-me/platform/Xcode/buildenv/build/Debug/InputOIS.dylib
+000000004a66483d00000000000006f4 a72e17b4674f9b3bfec39c2a3bfda227 ffffffffffffffffffffffffffffffff 0 /Users/jdierckx/svnprojects/midi-me/platform/Xcode/buildenv/build/midi-me.build/Debug/InputOIS.build/Objects-normal/i386/ButtonConverter.o

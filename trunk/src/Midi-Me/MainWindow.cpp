@@ -156,6 +156,23 @@ void MainWindow::openRecentFile(QAction *pAction)
 	QMessageBox::information(this, "Not implemented yet!", "This function is not yet implemented...");
 }
 
+void MainWindow::openVirtualMidiPort()
+{
+	MidiOutput *pMidiOut = DeviceManager::getInstance().getMidiOutput();
+
+#ifdef WIN32
+	QMessageBox::warning(this, "Error opening virtual midi port!",
+		"Virtual midi ports are not available on windows for now.\nUse an external application to provide the virtual midi ports.");
+#else
+	// Open a virtual midi port (note: not available on windows)
+	if(!pMidiOut->openVirtual())
+	{
+		QString message = "Error opening virtual midi port:\n" + QString::fromStdString(pMidiOut->getLastError());
+		QMessageBox::warning(this, "Error opening virtual midi port!", message);
+	}
+#endif
+}
+
 void MainWindow::showPluginManager()
 {
 	// Create the plugin widget, and make sure it is deleted when closed
@@ -360,6 +377,7 @@ void MainWindow::populateMidiOutMenu()
 
 	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
 
+	// Actual midi port
 	unsigned int numPorts = pMidi->numPorts();
 	for(unsigned int i = 0; i < numPorts; ++i)
 	{
@@ -367,26 +385,50 @@ void MainWindow::populateMidiOutMenu()
 		pAction->setData(i);
 		
 		pAction->setCheckable(true);
-		if(pMidi->isOpened() && i == pMidi->getOpenedPort())
+		if(pMidi->isOpened() && !pMidi->isVirtual() && i == pMidi->getOpenedPort())
 			pAction->setChecked(true);
 	}
 
+	menuMidiOut->addActions(m_pMidiGroup->actions());
+	if(numPorts == 0)
+		menuMidiOut->addAction("No midi outputs available")->setEnabled(false);
+	
+	menuMidiOut->addSeparator();
+
+	// Virtual midi port
+	QAction *pVirtualAction = menuMidiOut->addAction("&Virtual Midi Port");
+	pVirtualAction->setData(numPorts); // Note: this way we can determine if the virtual port is chosen
+	
+	pVirtualAction->setCheckable(true);
+	if(pMidi->isOpened() && pMidi->isVirtual())
+		pVirtualAction->setChecked(true);
+
+#ifdef WIN32
 	// Open the first midi device by default (to avoid midi errors)
 	if(!pMidi->isOpened() && numPorts > 0)
 	{
 		if(pMidi->open(0))
 			m_pMidiGroup->actions().first()->setChecked(true);
 	}
-
-	menuMidiOut->addActions(m_pMidiGroup->actions());
+#else
+	// Open the virtual midi device by default (to avoid midi errors)
+	if(!pMidi->isOpened() && pMidi->openVirtual())
+		pVirtualAction->setChecked(true);
+#endif
 }
 
 void MainWindow::selectMidiOut(QAction *pAction)
 {
 	MidiOutput *pMidi = DeviceManager::getInstance().getMidiOutput();
 	unsigned int port = pAction->data().toUInt();
+	bool virtualPort = (port >= pMidi->numPorts());
 
-	if(pMidi->isOpened() && pMidi->getOpenedPort() == port)
+	// Actual port
+	if(pMidi->isOpened() && !pMidi->isVirtual() && pMidi->getOpenedPort() == port)
+		return;
+	
+	// Virtual port
+	if(pMidi->isOpened() && pMidi->isVirtual() && virtualPort)
 		return;
 
 	// Close if already opened
@@ -394,6 +436,9 @@ void MainWindow::selectMidiOut(QAction *pAction)
 		if(!pMidi->close())
 			QMessageBox::warning(this, "Midi output error", pMidi->getLastError().c_str());
 
-	if(!pMidi->open(port))
+	// Normal port
+	if(!virtualPort && !pMidi->open(port))
+		QMessageBox::warning(this, "Midi output error", pMidi->getLastError().c_str());
+	else if(virtualPort && !pMidi->open(port))
 		QMessageBox::warning(this, "Midi output error", pMidi->getLastError().c_str());
 }

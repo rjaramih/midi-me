@@ -35,6 +35,7 @@ namespace MidiMe
 		void saveFile();
 		void saveFileAs();
 		void showPluginManager();
+		void openVirtualMidiPort();
 		void aboutDialog();
 		
 		void setStarted(bool started);
