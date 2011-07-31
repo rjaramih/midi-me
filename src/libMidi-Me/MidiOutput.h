@@ -26,6 +26,7 @@ namespace MidiMe
 		string getPortName(unsigned int port) const;
 		bool isOpened() const { return m_opened; }
 		unsigned int getOpenedPort() const { return m_midiPort; }
+		bool isVirtual() const { return m_virtual; }
 
 		// Midi functions
 		bool open(unsigned int port);
